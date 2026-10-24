@@ -1,5 +1,5 @@
 {
- "stand": "24.10.2026, 14:22 Uhr",
+ "stand": "24.10.2026, 14:35 Uhr",
  "players": [
   {
    "name": "Marcel Schulz",
@@ -168,7 +168,29 @@
    "sb": 8,
    "la": 22,
    "lb": 31,
-   "sp": 1
+   "sp": 1,
+   "dbl": [
+    [
+     "Dominic Hanke",
+     "Thomas Bauer",
+     0
+    ],
+    [
+     "Christopher Lamb",
+     "Marcel Schulz",
+     0
+    ],
+    [
+     "Christopher Lamb",
+     "Tobias Bergdoll",
+     1
+    ],
+    [
+     "Christoph Kuntz",
+     "Thomas Bauer",
+     0
+    ]
+   ]
   },
   {
    "id": "m2",
@@ -182,7 +204,29 @@
    "sb": 7,
    "la": 23,
    "lb": 27,
-   "sp": 2
+   "sp": 2,
+   "dbl": [
+    [
+     "Dominic Hanke",
+     "Marcel Schulz",
+     0
+    ],
+    [
+     "Thomas Bauer",
+     "Etienne Völlinger",
+     0
+    ],
+    [
+     "Marcel Schulz",
+     "Christopher Lamb",
+     0
+    ],
+    [
+     "Dominic Hanke",
+     "Thomas Bauer",
+     1
+    ]
+   ]
   },
   {
    "id": "m3",
@@ -196,7 +240,29 @@
    "sb": 4,
    "la": 29,
    "lb": 20,
-   "sp": 3
+   "sp": 3,
+   "dbl": [
+    [
+     "Tobias Bergdoll",
+     "Marcel Schulz",
+     0
+    ],
+    [
+     "Thomas Bauer",
+     "Etienne Völlinger",
+     1
+    ],
+    [
+     "Dominic Hanke",
+     "Tobias Bergdoll",
+     0
+    ],
+    [
+     "Thomas Bauer",
+     "Christopher Lamb",
+     1
+    ]
+   ]
   },
   {
    "id": "sp4",
@@ -210,7 +276,29 @@
    "sa": 6,
    "sb": 6,
    "la": 27,
-   "lb": 24
+   "lb": 24,
+   "dbl": [
+    [
+     "Thomas Bauer",
+     "Dominic Hanke",
+     1
+    ],
+    [
+     "Etienne Völlinger",
+     "Marco Naujoks",
+     1
+    ],
+    [
+     "Dominic Hanke",
+     "Etienne Völlinger",
+     0
+    ],
+    [
+     "Marcel Schulz",
+     "Thomas Bauer",
+     1
+    ]
+   ]
   },
   {
    "id": "sp5",
@@ -365,7 +453,29 @@
    "sa": 11,
    "sb": 1,
    "la": 35,
-   "lb": 12
+   "lb": 12,
+   "dbl": [
+    [
+     "Christopher Lamb",
+     "Jannes Rogge",
+     1
+    ],
+    [
+     "Marcel Schulz",
+     "Etienne Völlinger",
+     1
+    ],
+    [
+     "Etienne Völlinger",
+     "Jannes Rogge",
+     1
+    ],
+    [
+     "Marcel Schulz",
+     "Christopher Lamb",
+     1
+    ]
+   ]
   },
   {
    "id": "pk2",

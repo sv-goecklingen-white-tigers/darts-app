@@ -1,0 +1,466 @@
+{
+ "stand": "24.10.2026",
+ "players": [
+  {
+   "name": "Marcel Schulz",
+   "str": 3,
+   "s": {
+    "ew": 7,
+    "el": 1,
+    "dw": 1,
+    "dl": 4,
+    "a180": 1,
+    "hf": 1,
+    "sl": 1
+   },
+   "sp": {
+    "ew": 1,
+    "el": 1,
+    "dw": 2,
+    "dl": 0,
+    "a180": 2,
+    "hf": 0,
+    "sl": 0
+   }
+  },
+  {
+   "name": "Dominic Hanke",
+   "str": 3,
+   "s": {
+    "ew": 3,
+    "el": 5,
+    "dw": 2,
+    "dl": 4,
+    "a180": 3,
+    "hf": 0,
+    "sl": 3
+   }
+  },
+  {
+   "name": "Thomas Bauer",
+   "str": 3,
+   "s": {
+    "ew": 4,
+    "el": 2,
+    "dw": 5,
+    "dl": 3,
+    "a180": 1,
+    "hf": 0,
+    "sl": 2
+   }
+  },
+  {
+   "name": "Tobias Bergdoll",
+   "str": 3,
+   "s": {
+    "ew": 1,
+    "el": 3,
+    "dw": 1,
+    "dl": 2,
+    "a180": 0,
+    "hf": 0,
+    "sl": 1
+   }
+  },
+  {
+   "name": "Christopher Lamb",
+   "str": 3,
+   "s": {
+    "ew": 0,
+    "el": 2,
+    "dw": 2,
+    "dl": 2,
+    "a180": 0,
+    "hf": 0,
+    "sl": 0
+   },
+   "sp": {
+    "ew": 2,
+    "el": 0,
+    "dw": 2,
+    "dl": 0,
+    "a180": 0,
+    "hf": 0,
+    "sl": 0
+   }
+  },
+  {
+   "name": "Christoph Kuntz",
+   "str": 3,
+   "s": {
+    "ew": 0,
+    "el": 1,
+    "dw": 0,
+    "dl": 1,
+    "a180": 0,
+    "hf": 0,
+    "sl": 0
+   }
+  },
+  {
+   "name": "Etienne Völlinger",
+   "str": 3,
+   "s": {
+    "ew": 1,
+    "el": 0,
+    "dw": 2,
+    "dl": 2,
+    "a180": 0,
+    "hf": 0,
+    "sl": 0
+   },
+   "sp": {
+    "ew": 2,
+    "el": 0,
+    "dw": 2,
+    "dl": 0,
+    "a180": 0,
+    "hf": 1,
+    "sl": 0
+   }
+  },
+  {
+   "name": "Jannes Rogge",
+   "str": 3,
+   "s": {
+    "ew": 0,
+    "el": 2,
+    "dw": 0,
+    "dl": 0,
+    "a180": 0,
+    "hf": 0,
+    "sl": 0
+   },
+   "sp": {
+    "ew": 2,
+    "el": 0,
+    "dw": 2,
+    "dl": 0,
+    "a180": 1,
+    "hf": 0,
+    "sl": 0
+   }
+  },
+  {
+   "name": "Marco Naujoks",
+   "str": 3,
+   "s": {
+    "ew": 0,
+    "el": 0,
+    "dw": 1,
+    "dl": 0,
+    "a180": 0,
+    "hf": 0,
+    "sl": 0
+   }
+  }
+ ],
+ "matches": [
+  {
+   "id": "m1",
+   "type": "Liga",
+   "date": "2026-09-11",
+   "time": "20:00",
+   "opp": "PSK Darts Team Blue",
+   "home": true,
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen",
+   "sa": 4,
+   "sb": 8,
+   "la": 22,
+   "lb": 31,
+   "sp": 1
+  },
+  {
+   "id": "m2",
+   "type": "Liga",
+   "date": "2026-09-25",
+   "time": "20:00",
+   "opp": "DC Moskitos 1",
+   "home": false,
+   "loc": "Schützenhaus Haueneberstein - Waldstr. 30, 76532 Baden-Baden",
+   "sa": 5,
+   "sb": 7,
+   "la": 23,
+   "lb": 27,
+   "sp": 2
+  },
+  {
+   "id": "m3",
+   "type": "Liga",
+   "date": "2026-10-09",
+   "time": "20:00",
+   "opp": "D.T.C.",
+   "home": false,
+   "loc": "Clubhaus - Am Sportplatz, 75334 Straubenhardt",
+   "sa": 8,
+   "sb": 4,
+   "la": 29,
+   "lb": 20,
+   "sp": 3
+  },
+  {
+   "id": "sp4",
+   "type": "Liga",
+   "sp": 4,
+   "date": "2026-10-23",
+   "time": "20:00",
+   "opp": "Taraxacuma 26er",
+   "home": true,
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen",
+   "sa": 6,
+   "sb": 6,
+   "la": 27,
+   "lb": 24
+  },
+  {
+   "id": "sp5",
+   "type": "Liga",
+   "sp": 5,
+   "date": "2026-11-06",
+   "time": "20:00",
+   "bye": true,
+   "opp": "SPIELFREI",
+   "home": true
+  },
+  {
+   "id": "sp6",
+   "type": "Liga",
+   "sp": 6,
+   "date": "2026-11-20",
+   "time": "20:00",
+   "opp": "Teamplayers 1",
+   "home": true,
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen"
+  },
+  {
+   "id": "sp7",
+   "type": "Liga",
+   "sp": 7,
+   "date": "2026-12-04",
+   "time": "20:00",
+   "opp": "501 Jacky Darts I",
+   "home": false,
+   "loc": "501 Jacky Dart´s e.V. - Kirchstr. 58, 76771 Hördt"
+  },
+  {
+   "id": "sp8",
+   "type": "Liga",
+   "sp": 8,
+   "date": "2026-12-18",
+   "time": "20:00",
+   "opp": "TSV Etzenrot",
+   "home": true,
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen"
+  },
+  {
+   "id": "sp9",
+   "type": "Liga",
+   "sp": 9,
+   "date": "2027-01-22",
+   "time": "20:00",
+   "opp": "DC Irish 26 e. V. 1",
+   "home": true,
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen"
+  },
+  {
+   "id": "sp10",
+   "type": "Liga",
+   "sp": 10,
+   "date": "2027-02-05",
+   "time": "20:00",
+   "opp": "PSK Darts Team Blue",
+   "home": false,
+   "loc": "Eventhaus Karlsruhe UG - Ettlinger Allee 3, 76199 Karlsruhe"
+  },
+  {
+   "id": "sp11",
+   "type": "Liga",
+   "sp": 11,
+   "date": "2027-02-19",
+   "time": "20:00",
+   "opp": "DC Moskitos 1",
+   "home": true,
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen"
+  },
+  {
+   "id": "sp12",
+   "type": "Liga",
+   "sp": 12,
+   "date": "2027-03-19",
+   "time": "20:00",
+   "opp": "D.T.C.",
+   "home": true,
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen"
+  },
+  {
+   "id": "sp13",
+   "type": "Liga",
+   "sp": 13,
+   "date": "2027-04-02",
+   "time": "20:00",
+   "opp": "Taraxacuma 26er",
+   "home": false,
+   "loc": "Holzwurm - Rheinstr. 60, 76661 Philippsburg"
+  },
+  {
+   "id": "sp14",
+   "type": "Liga",
+   "sp": 14,
+   "date": "2027-04-16",
+   "time": "20:00",
+   "bye": true,
+   "opp": "SPIELFREI",
+   "home": true
+  },
+  {
+   "id": "sp15",
+   "type": "Liga",
+   "sp": 15,
+   "date": "2027-04-30",
+   "time": "20:00",
+   "opp": "Teamplayers 1",
+   "home": false,
+   "loc": "Meeting Point Rheinstetten"
+  },
+  {
+   "id": "sp16",
+   "type": "Liga",
+   "sp": 16,
+   "date": "2027-05-28",
+   "time": "20:00",
+   "opp": "501 Jacky Darts I",
+   "home": true,
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen"
+  },
+  {
+   "id": "sp17",
+   "type": "Liga",
+   "sp": 17,
+   "date": "2027-06-11",
+   "time": "20:00",
+   "opp": "TSV Etzenrot",
+   "home": false,
+   "loc": "Vereinsheim - Jahnstr. 32, 76337 Waldbronn"
+  },
+  {
+   "id": "sp18",
+   "type": "Liga",
+   "sp": 18,
+   "date": "2027-06-25",
+   "time": "20:00",
+   "opp": "DC Irish 26 e. V. 1",
+   "home": false,
+   "loc": "Schützenhaus Königsbach - Allmendäckerle 1, 75203 Königsbach-Stein",
+   "chk": true
+  },
+  {
+   "id": "pk1",
+   "type": "Pokal",
+   "rd": "1. Runde",
+   "date": "2026-10-16",
+   "time": "",
+   "opp": "DJK Dossenheim",
+   "home": false,
+   "loc": "",
+   "sa": 11,
+   "sb": 1,
+   "la": 35,
+   "lb": 12
+  },
+  {
+   "id": "pk2",
+   "type": "Pokal",
+   "rd": "2. Runde",
+   "date": "2027-01-08",
+   "time": "",
+   "opp": "Connect Pälzer Klobber",
+   "home": false,
+   "loc": ""
+  }
+ ],
+ "logos": {
+  "dc moskitos 1": "logos/dc_moskitos_1.png",
+  "psk darts team blue": "logos/psk_darts_team_blue.png",
+  "taraxacuma 26er": "logos/taraxacuma_26er.png"
+ },
+ "imgs": {
+  "1": [
+   [
+    "Spielankündigung",
+    "bilder/insta-1-1.jpg"
+   ]
+  ],
+  "2": [
+   [
+    "Ergebnis",
+    "bilder/insta-2-1.jpg"
+   ],
+   [
+    "Spielankündigung",
+    "bilder/insta-2-2.jpg"
+   ]
+  ],
+  "3": [
+   [
+    "Ergebnis",
+    "bilder/insta-3-1.jpg"
+   ]
+  ],
+  "4": [
+   [
+    "Ergebnis",
+    "bilder/insta-4-1.jpg"
+   ]
+  ],
+  "pk1": [
+   [
+    "Ergebnis",
+    "bilder/insta-pk1-1.jpg"
+   ]
+  ]
+ },
+ "reps": {
+  "1": [
+   [
+    "BDL-Spielbericht",
+    "bilder/bericht-1-1.jpg"
+   ],
+   [
+    "Original-Spielbogen",
+    "bilder/bericht-1-2.jpg"
+   ]
+  ],
+  "2": [
+   [
+    "BDL-Spielbericht",
+    "bilder/bericht-2-1.jpg"
+   ],
+   [
+    "Original-Spielbogen",
+    "bilder/bericht-2-2.jpg"
+   ]
+  ],
+  "3": [
+   [
+    "BDL-Spielbericht",
+    "bilder/bericht-3-1.jpg"
+   ],
+   [
+    "Original-Spielbogen",
+    "bilder/bericht-3-2.jpg"
+   ]
+  ],
+  "4": [
+   [
+    "Original-Spielbogen",
+    "bilder/bericht-4-1.jpg"
+   ]
+  ],
+  "pk1": [
+   [
+    "Original-Spielbogen",
+    "bilder/bericht-pk1-1.jpg"
+   ]
+  ]
+ }
+}

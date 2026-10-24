@@ -1,0 +1,3 @@
+White Tigers Göcklingen - Webseite
+Dateien: index.html (Seite), daten.json (Spiele, Spieler, Statistik), Ordner bilder und logos.
+Updates: nur daten.json (und neue Bilder in bilder/ bzw. logos/) austauschen bzw. hochladen.

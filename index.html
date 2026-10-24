@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>White Tigers Göcklingen</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f2ed;--card:#fff;--tx:#1b1b1b;--mu:#6b6b6b;--ac:#e8730c;--bd:#e0dcd2;--ok:#1f8a4c;--no:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121212;--card:#1d1d1d;--tx:#f1efe9;--mu:#9a9a9a;--bd:#333;--ok:#3fbf75;--no:#ef6a5b}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.ban{display:block;width:100%;max-height:150px;object-fit:cover;object-position:center}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;max-width:900px;margin:auto}
+nav button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:20px;font:inherit;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{max-width:900px;margin:auto;padding:0 14px 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:10px 0}
+h2{font-size:18px;margin:4px 0 10px}
+input,select,button.b{font:inherit;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);max-width:100%}
+input[type=number]{width:72px}
+button.b{background:var(--ac);color:#fff;border:0;cursor:pointer}button.g{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.tag{font-size:12px;padding:2px 8px;border-radius:10px;background:var(--ac);color:#fff}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--bd)}
+.scroll{overflow-x:auto}.ok{color:var(--ok)}.no{color:var(--no)}.mu{color:var(--mu)}.big{font-size:34px;font-weight:800}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.tile{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px 8px;text-align:center;cursor:pointer;font-size:15px}.tile b{display:block;font-size:26px}
+*{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+input,select,button.b{min-height:44px}
+input[type=checkbox]{width:28px;height:28px;min-height:0;accent-color:var(--ac)}
+.row>input:not([type=checkbox]):not([type=number]):not([type=file]),.row>select{flex:1 1 150px;min-width:0}
+.pr{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--bd)}.pr .nm{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:600}
+.pc{border-top:1px solid var(--bd);padding:10px 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin-top:6px}
+.g2 label{font-size:12px;color:var(--mu);display:flex;flex-direction:column;gap:3px}.g2 input{width:100%}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav button{min-height:44px}
+.tile{min-height:92px;display:flex;flex-direction:column;justify-content:center}.tile:active{background:var(--bd)}
+@media(max-width:480px){main{padding:0 10px 40px}.card{padding:12px}.big{font-size:30px}.row>button.b{flex:1 1 140px}}
+.hero{position:relative;overflow:hidden;background:#111;color:#fff;border-radius:14px;padding:18px 16px;margin:10px 0}
+.hero h2{color:#fff;margin:0;font-size:22px}.hero .mu{color:#bbb}
+.hero{min-height:120px}.hero svg{position:absolute;right:-50px;top:-50px;width:210px;height:210px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:10px 0}
+.k{border-radius:12px;padding:12px 6px;text-align:center;color:#fff}.k b{display:block;font-size:30px;line-height:1.1}.k span{font-size:12px;opacity:.9}
+.kn{background:#2563a8}.kt{background:#0e8a8a}.kv{background:#7a3fb0}.ki{background:#4b4fb8}.ks{background:#6b7a8c}.kg{background:#1f8a4c}.kr{background:#c8102e}.kb{background:#111}.ky{background:#d9a400;color:#111}.ko{background:#e8730c}
+.bar{display:flex;height:22px;border-radius:11px;overflow:hidden;background:var(--bd);font-size:12px;font-weight:700;color:#fff}
+.bar i{font-style:normal;display:flex;align-items:center;justify-content:center;min-width:0}.bar .w{background:#1f8a4c}.bar .l{background:#c8102e}
+.pl{display:flex;gap:12px;align-items:center;border-top:1px solid var(--bd);padding:12px 0}.pl:first-of-type{border-top:0}
+.rk{width:30px;text-align:center;font-size:22px;font-weight:800}
+.ring{flex:none;position:relative;width:64px;height:64px}.ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.pb{flex:1;min-width:0}.pb .nm{font-weight:700;margin-bottom:4px}.sm{font-size:11px;color:var(--mu);margin:4px 0 2px}
+.chip{display:inline-block;font-size:12px;padding:2px 8px;border-radius:10px;margin:4px 4px 0 0;background:var(--bg);border:1px solid var(--bd)}
+.pod{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.pod div{border-radius:12px;padding:12px;background:var(--bg);border:1px solid var(--bd)}.pod small{color:var(--mu);display:block}.pod b{font-size:16px}
+.gm{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--bd);border-radius:12px;padding:10px 12px;margin:8px 0}
+.gm.w{border-left-color:var(--ok)}.gm.l{border-left-color:var(--no)}.gm.d{border-left-color:#6b7a8c}.gm.n{border-left-color:var(--ac);background:linear-gradient(90deg,rgba(232,115,12,.12),transparent)}.gm.f{opacity:.55;border-style:dashed}
+.ha{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.4px;padding:3px 9px;border-radius:12px;color:#fff;vertical-align:middle;margin-left:4px;white-space:nowrap}.ha.h{background:#1f8a4c}.ha.a{background:#2563a8}
+.gn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--bg);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.gi{flex:1;min-width:0}.gi b{overflow-wrap:anywhere}.gi small{display:block;color:var(--mu);font-size:12px;line-height:1.35}
+.gr{flex:none;text-align:right}.res{font-size:22px;font-weight:800}.gr small{display:block;font-size:11px;color:var(--mu)}
+.gm .ib{flex:none;min-height:40px;min-width:40px;padding:0;font-size:18px}.gx{flex-basis:100%;display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:14px}
+.ov{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.88);overflow:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 24px}
+.ov .in{max-width:520px;margin:auto}.ov img{width:100%;max-width:none;border-radius:10px;display:block}.ov h3{color:#fff;margin:14px 0 6px;font-size:16px}
+.ov .top{display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:0;padding:4px 0 8px;z-index:2}
+.scg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+.sc{background:var(--card);border:2px solid var(--bd);border-radius:12px;padding:8px 10px;text-align:center}.sc.on{border-color:var(--ac);background:linear-gradient(180deg,rgba(232,115,12,.14),transparent)}
+.sc .nm{font-weight:700;overflow-wrap:anywhere}.sc .rem{font-size:46px;font-weight:900;line-height:1.1}.sc small{color:var(--mu);font-size:12px}
+.kd{font-size:38px;font-weight:800;text-align:center;border:1px solid var(--bd);border-radius:10px;padding:4px;margin:8px 0;background:var(--bg);min-height:58px}
+.kq{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px}.kp2{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.kq button,.kp2 button{min-height:54px;font-size:20px;font-weight:700;padding:0}
+.crr{display:grid;grid-template-columns:52px 1fr 1fr 1fr;gap:6px;align-items:center;margin:5px 0}.crr button{min-height:46px;padding:0}
+.ct td,.ct th{text-align:center}.ct th.cur,.ct td.cur{background:rgba(232,115,12,.16)}
+.opt{display:block;width:100%;margin:8px 0;text-align:left;font-size:18px;min-height:52px}
+canvas{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--bd)}.hide{display:none}
+</style></head><body>
+<img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg">
+<nav id="nav"></nav><main id="m"></main>
+<div class="mu" id="st" style="text-align:center;font-size:12px;padding-bottom:20px">Lade Daten…</div>
+<script>
+const TABS=["Start","Spiele","Statistik","Aufstellung","Instagram","Minispiele","Team","Verwaltung"];const IC={Start:"🏠",Spiele:"🎯",Statistik:"📊",Aufstellung:"🧩",Instagram:"📸",Minispiele:"🎲",Team:"🐯",Verwaltung:"⚙️"};let usr=null;const canEd=()=>false;
+let S={players:[],matches:[]},tab="Start",sel=null,db=null,dl=null,AV={};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
+const setStatus=t=>$("#st").textContent=t;
+let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
+async function init(){
+ dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
+ try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus(j.stand?"Stand: "+j.stand:"")}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
+ draw()}
+function nav(){$("#nav").innerHTML=TABS.filter(t=>t!="Verwaltung"||canEd()).map(t=>`<button class="${t==tab?"on":""}" onclick="go('${t}')">${IC[t]} ${t}</button>`).join("")}
+function go(t){tab=t;draw();scrollTo(0,0)}
+function draw(){nav();$("#m").innerHTML=({Start,Spiele,Statistik,Aufstellung,Instagram,Minispiele,Team,Verwaltung})[tab]()}
+const played=m=>m.sa!=null&&m.sa!==""&&m.sb!=null&&m.sb!=="";
+const sorted=()=>[...S.matches].sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+/* Start */
+function Start(){
+ const today=new Date().toISOString().slice(0,10),ms=sorted();
+ const nx=ms.find(m=>m.date>=today&&!played(m)&&!m.bye),last=[...ms].reverse().find(played);
+  const open=ms.filter(m=>m.date<today&&!played(m)&&!m.bye).length;
+ return `<div class="card"><h2>Nächstes Spiel</h2>${nx?`<span class="tag">${nx.type}</span> <b>${esc(nx.opp)}</b><div class="mu">${nx.home?"Heim":"Auswärts"} · ${fd(nx.date)} ${esc(nx.time||"")}<br>${esc(nx.loc||"")}</div>`:`<span class="mu">Kein anstehendes Spiel eingetragen.</span>`}</div>
+ ${last?`<div class="card"><h2>Letztes Ergebnis</h2><span class="big ${+last.sa>+last.sb?"ok":+last.sa<+last.sb?"no":""}">${last.sa}:${last.sb}</span> <span class="mu">gegen ${esc(last.opp)}</span></div>`:""}
+ ${open?`<div class="card">⚠️ Bei <b>${open}</b> vergangenen Spielen fehlt noch das Ergebnis. <a href="#" onclick="go('Spiele');return false">Jetzt eintragen</a></div>`:""}
+ <div class="card"><h2>Bilanz</h2>${[["Liga","🏁"],["Pokal","🏆"]].map(([ty,ic])=>{const g=ms.filter(m=>played(m)&&m.type==ty),W=g.filter(m=>+m.sa>+m.sb).length,D=g.filter(m=>+m.sa==+m.sb).length,L=g.length-W-D;return `<div class="row" style="margin:4px 0"><b style="min-width:84px">${ic} ${ty}</b><span><span class="ok"><b>${W}</b> Siege</span> · <b>${D}</b> Unentschieden · <span class="no"><b>${L}</b> Niederlagen</span></span></div>`}).join("")}</div>`}
+/* Spiele */
+function Spiele(){
+ const today=new Date().toISOString().slice(0,10),ms=sorted(),nx=ms.find(m=>!m.bye&&!played(m)&&m.date>=today);
+ const row=m=>{
+  if(m.bye)return `<div class="gm f"><div class="gn">${m.sp||""}</div><div class="gi"><b>Spielfrei 🌴</b><small>${fd(m.date)}</small></div></div>`;
+  const p=played(m),r=p?(+m.sa>+m.sb?"w":+m.sa<+m.sb?"l":"d"):(nx&&nx.id==m.id?"n":"");
+  const inp=!p&&m.date<=today&&canEd();
+  return `<div class="gm ${r}"><div class="gn">${m.sp||(m.type=="Pokal"?"🏆":"–")}</div>
+ <div class="gi"><b>${esc(m.opp)}</b>${r=="n"?` <span class="tag">nächstes Spiel</span>`:""}${m.type!="Liga"?` <span class="tag">${m.type}${m.rd?" · "+m.rd:""}</span>`:""}<span class="ha ${m.home?"h":"a"}">${m.home?"🏠 HEIM":"🚗 AUSWÄRTS"}</span><small>${fd(m.date)} · ${esc(m.time||"")}</small>${!p&&m.loc?`<small>${esc(m.loc)}</small>`:""}${m.chk?`<small>⚠️ aus der Hinrunde abgeleitet – bitte prüfen</small>`:""}</div>
+ ${p?`<div class="gr"><span class="res ${r=="w"?"ok":r=="l"?"no":""}">${m.sa}:${m.sb}</span>${m.la!=null&&m.lb!=null?`<small>Legs ${m.la}:${m.lb}</small>`:""}</div>`:""}
+ ${REPS[m.sp||m.id]?`<button class="b g ib" title="Spielbericht" onclick="rep('${m.id}')">📋</button>`:""}<button class="b g ib" title="Instagram-Bild" onclick="pic('${m.id}')">📸</button>
+ ${inp?`<div class="gx">Ergebnis: <input type="number" inputmode="numeric" min="0" max="12" onchange="setR('${m.id}','sa',this.value)"> : <input type="number" inputmode="numeric" min="0" max="12" onchange="setR('${m.id}','sb',this.value)"> Legs: <input type="number" inputmode="numeric" min="0" onchange="setR('${m.id}','la',this.value)"> : <input type="number" inputmode="numeric" min="0" onchange="setR('${m.id}','lb',this.value)"></div>`:""}</div>`};
+ return `<div class="card" style="padding:10px 12px"><div class="mu" style="font-size:13px">Spieltag 1 bis ${Math.max(0,...ms.map(m=>m.sp||0))} · <span class="ok">■</span> Sieg · <span class="no">■</span> Niederlage · <span style="color:var(--ac)">■</span> nächstes Spiel · 📸 = Instagram-Bild</div></div>`+(ms.length?ms.map(row).join(""):`<div class="card mu">Noch keine Spiele angelegt.</div>`)}
+function addM(){const o=$("#no").value.trim();if(!o)return;S.matches.push({id:"m"+Date.now(),type:$("#nt").value,date:$("#nd").value,time:$("#nz").value,opp:o,home:$("#nh").value=="1",loc:$("#nl").value});save();draw()}
+function setR(id,f,v){const m=S.matches.find(x=>x.id==id);m[f]=v===""?null:+v;save();setTimeout(draw,50)}
+function delM(id){if(confirm("Spiel wirklich löschen?")){S.matches=S.matches.filter(m=>m.id!=id);save();draw()}}
+async function impICS(files){for(const f of files){const t=(await f.text()).replace(/\r?\n[ \t]/g,"");const g=k=>{const r=t.match(new RegExp("^"+k+"[^:\\n]*:(.*)$","m"));return r?r[1].replace(/\\,/g,",").trim():""};
+ const sm=g("SUMMARY"),ds=g("DTSTART"),parts=sm.split(" - ");let home=/white tigers/i.test(parts[0]||""),opp=(home?parts[1]:parts[0])||sm;
+ const date=ds.slice(0,4)+"-"+ds.slice(4,6)+"-"+ds.slice(6,8),time=ds.slice(9,11)+":"+ds.slice(11,13);
+ if(S.matches.some(m=>m.date==date&&m.opp==opp))continue;S.matches.push({id:"m"+Date.now()+Math.random().toString(36).slice(2,5),type:"Liga",date,time,opp,home,loc:g("LOCATION")})}
+ save();draw()}
+/* Team */
+function Team(){return `<div class="card"><h2>Spieler</h2><div class="row"><input id="pn" placeholder="Name"><button class="b" onclick="addP()">Hinzufügen</button></div>
+ ${S.players.length?S.players.map((p,i)=>`<div class="pr"><span class="nm">${esc(p.name)}</span><button class="b g" aria-label="Entfernen" onclick="delP(${i})">✕</button></div>`).join("")+`<p class="mu" style="font-size:13px">Die Aufstellung richtet sich nach den Statistiken (Liga + Pokal).</p>`:`<span class="mu">Noch keine Spieler.</span>`}</div>`}
+function addP(){const n=$("#pn").value.trim();if(!n||S.players.find(p=>p.name==n))return;S.players.push({name:n,str:3,s:{}});save();draw()}
+function delP(i){if(confirm("Spieler entfernen?")){S.players.splice(i,1);save();draw()}}
+/* Statistik */
+const SK=[["ew","Einzel S"],["el","Einzel N"],["dw","Doppel S"],["dl","Doppel N"],["a180","High Score"],["hf","High Finish"],["sl","Shortleg"]];
+const q=(w,l)=>w+l?Math.round(100*w/(w+l))+"%":"–";
+function boardSVG(){const O=[20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5],k=50/225,f=n=>n.toFixed(2);
+ const pt=(r,a)=>{const q=(a-90)*Math.PI/180;return[50+r*k*Math.cos(q),50+r*k*Math.sin(q)]};
+ const seg=(r1,r2,a0,a1,fill)=>{const A=pt(r2,a0),B=pt(r2,a1),C=pt(r1,a1),D=pt(r1,a0);return `<path d="M${f(A[0])} ${f(A[1])}A${f(r2*k)} ${f(r2*k)} 0 0 1 ${f(B[0])} ${f(B[1])}L${f(C[0])} ${f(C[1])}A${f(r1*k)} ${f(r1*k)} 0 0 0 ${f(D[0])} ${f(D[1])}Z" fill="${fill}"/>`};
+ let s=`<svg viewBox="0 0 100 100"><defs><radialGradient id="bsh" cx="42%" cy="38%" r="70%"><stop offset="0" stop-color="#fff" stop-opacity=".12"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></radialGradient></defs><circle cx="50" cy="50" r="49.6" fill="#0d0d0d" stroke="#3a3a3a" stroke-width=".6"/>`;
+ O.forEach((n,i)=>{const a0=i*18-9,a1=i*18+9,ev=i%2==0,sg=ev?"#141414":"#e9dcb8",mu=ev?"#b3202a":"#1c7a43";
+  s+=seg(15.9,99,a0,a1,sg)+seg(99,107,a0,a1,mu)+seg(107,162,a0,a1,sg)+seg(162,170,a0,a1,mu);
+  const p=pt(198,i*18);s+=`<text x="${f(p[0])}" y="${f(p[1])}" font-size="6.4" font-weight="700" font-family="Arial,sans-serif" fill="#f2f2f2" text-anchor="middle" dominant-baseline="central">${n}</text>`});
+ s+=`<circle cx="50" cy="50" r="${f(15.9*k)}" fill="#1c7a43"/><circle cx="50" cy="50" r="${f(6.35*k)}" fill="#b3202a"/>`;
+ [170,162,107,99,15.9,6.35].forEach(r=>s+=`<circle cx="50" cy="50" r="${f(r*k)}" fill="none" stroke="#c9ccd1" stroke-width=".25"/>`);
+ for(let i=0;i<20;i++){const a=pt(6.35,i*18-9),b=pt(170,i*18-9);s+=`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" stroke="#c9ccd1" stroke-width=".25"/>`}
+ return s+`<circle cx="50" cy="50" r="49.6" fill="url(#bsh)"/></svg>`}
+function Statistik(){
+ const ms=sorted().filter(m=>played(m)&&(SM=="Gesamt"||m.type==SM)),w=ms.filter(m=>+m.sa>+m.sb).length,d=ms.filter(m=>+m.sa==+m.sb).length,l=ms.length-w-d,sf=ms.reduce((a,m)=>a+ +m.sa,0),sa=ms.reduce((a,m)=>a+ +m.sb,0);
+ const LG2={a:0,b:0,n:0};ms.forEach(m=>{if(m.la!=null&&m.lb!=null){LG2.a+=+m.la;LG2.b+=+m.lb;LG2.n++}});
+ const gv=p=>{const a=p.s||{},b=p.sp||{};if(SM=="Liga")return a;if(SM=="Pokal")return b;const r={};SK.forEach(k=>r[k[0]]=(a[k[0]]||0)+(b[k[0]]||0));return r};
+ const P=S.players.map(p=>{const s=gv(p),ew=s.ew||0,el=s.el||0,dw=s.dw||0,dl=s.dl||0,g=ew+el+dw+dl;return{n:p.name,ew,el,dw,dl,g,win:ew+dw,a:s.a180||0,hf:s.hf||0,sl:s.sl||0,pc:g?Math.round(100*(ew+dw)/g):0}}).filter(p=>p.g||p.a||p.hf||p.sl).sort((a,b)=>b.win-a.win||b.pc-a.pc);
+ const sum=k=>P.reduce((a,p)=>a+p[k],0);
+ const top=(f,min)=>{const c=P.filter(min).sort((a,b)=>f(b)-f(a));return c.length&&f(c[0])>0?c[0]:null};
+ const bar=(a,b)=>a+b?`<div class="bar"><i class="w" style="flex:${a}">${a||""}</i><i class="l" style="flex:${b}">${b||""}</i></div>`:`<div class="bar"></div>`;
+ const hon=[["🎯 Wurfkönig","Highscores",top(p=>p.a,p=>p.a>0),p=>p.a],["🏆 Meiste Siege","Siege",top(p=>p.win,p=>p.win>0),p=>p.win],["🔥 Einzel-Ass","Einzelquote (ab 3 Einzel)",top(p=>p.ew/(p.ew+p.el),p=>p.ew+p.el>=3),p=>Math.round(100*p.ew/(p.ew+p.el))+"%"],["🤝 Doppel-Spezialist","Doppelquote (ab 3 Doppel)",top(p=>p.dw/(p.dw+p.dl),p=>p.dw+p.dl>=3),p=>Math.round(100*p.dw/(p.dw+p.dl))+"%"],["⚡ Shortleg-Jäger","Shortlegs",top(p=>p.sl,p=>p.sl>0),p=>p.sl]].filter(h=>h[2]);
+ const medal=["🥇","🥈","🥉"];
+ return `<div class="hero">${boardSVG()}
+ <h2>${SM=="Pokal"?"Pokal-Statistik":SM=="Gesamt"?"Gesamt-Statistik":"Saison-Statistik"}</h2><div class="mu">White Tigers · ${SM=="Liga"?"Bezirksoberliga 1":SM=="Pokal"?"BDL-Pokal":"Liga + Pokal"}</div></div>
+ <div class="row">${["Liga","Pokal","Gesamt"].map(k=>`<button class="b ${SM==k?"":"g"}" onclick="SM='${k}';draw()">${k=="Liga"?"🏁 Liga":k=="Pokal"?"🏆 Pokal":"➕ Gesamt"}</button>`).join("")}</div>
+ <div class="kp"><div class="k kn"><b>${ms.length}</b><span>Spiele</span></div><div class="k kg"><b>${w}</b><span>Siege</span></div><div class="k ks"><b>${d}</b><span>Remis</span></div><div class="k kr"><b>${l}</b><span>Niederlagen</span></div></div>
+ <div class="kp"><div class="k ko"><b>${sf}:${sa}</b><span>Partien</span></div>${LG2.n?`<div class="k ki"><b>${LG2.a}:${LG2.b}</b><span>Legs</span></div>`:""}<div class="k ky"><b>${sum("a")}</b><span>High Scores 🎯</span></div><div class="k kt"><b>${sum("sl")}</b><span>Shortlegs</span></div><div class="k kv"><b>${sum("hf")}</b><span>High Finish</span></div></div>
+ <div class="card"><h2>📅 Spielverlauf</h2>${ms.length?ms.map(m=>`<div style="margin:10px 0"><div class="row" style="margin:0 0 4px"><b>${m.type=="Pokal"?"🏆 ":""}${esc(m.opp)}</b><span class="mu" style="font-size:13px">${fd(m.date)} · ${m.home?"Heim":"Auswärts"}</span><span style="margin-left:auto;font-weight:800" class="${+m.sa>+m.sb?"ok":+m.sa<+m.sb?"no":""}">${m.sa}:${m.sb}</span></div>${bar(+m.sa,+m.sb)}${m.la!=null&&m.lb!=null?`<div class="mu" style="font-size:12px;margin-top:2px">Legs ${m.la}:${m.lb}</div>`:""}</div>`).join(""):`<span class="mu">Noch keine Ergebnisse.</span>`}<div class="mu" style="font-size:12px;margin-bottom:6px">High Score = 171, 174, 177 oder 180 · High Finish = Checkout über 100</div><div class="mu" style="font-size:12px">Grün = gewonnene Partien der Tigers · Rot = Partien des Gegners (12 Partien pro Spiel)</div></div>
+ ${hon.length?`<div class="card"><h2>🏅 Bestenliste</h2><div class="pod">${hon.map(h=>`<div><small>${h[0]}</small><b>${esc(h[2].n)}</b><small>${h[3](h[2])} ${h[1].split(" ")[0]}</small></div>`).join("")}</div></div>`:""}
+ <div class="card"><h2>🎯 Spieler-Rangliste</h2>${P.length?P.map((p,i)=>{const C=2*Math.PI*26;return `<div class="pl"><div class="rk">${medal[i]||i+1}</div>
+ <div class="ring"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="${p.g?"#c8102e":"var(--bd)"}" stroke-width="8"/><circle cx="32" cy="32" r="26" fill="none" stroke="#1f8a4c" stroke-width="8" stroke-dasharray="${C*p.pc/100} ${C}" transform="rotate(-90 32 32)"/></svg><b>${p.g?p.pc+"%":"–"}</b></div>
+ <div class="pb"><div class="nm">${esc(p.n)} <span class="mu" style="font-weight:400;font-size:13px">${p.win}:${p.g-p.win}</span></div>
+ <div class="sm">Einzel</div>${bar(p.ew,p.el)}<div class="sm">Doppel</div>${bar(p.dw,p.dl)}
+ <span class="chip">🎯 ${p.a}× High Score</span><span class="chip">⚡ ${p.sl} Shortleg</span><span class="chip">🏆 ${p.hf} HF</span></div></div>`}).join(""):`<span class="mu">Noch keine Spieler angelegt.</span>`}</div>
+ ${canEd()?`<div class="card" style="text-align:center"><button class="b" onclick="go('Verwaltung')">⚙️ Daten aktualisieren</button></div>`:""}`}
+function Verwaltung(){
+ if(!canEd())return `<div class="card no">Dieser Bereich ist nur für die Hauptverantwortlichen.</div>`;
+ return `<div class="card"><h2>⚙️ Verwaltung</h2><p class="mu" style="font-size:13px;margin:0">Spiele, Spielerwerte, Logos und Sicherung.</p></div>
+ <div class="card"><h2>Spiel hinzufügen</h2><div class="row">
+ <select id="nt"><option>Liga</option><option>Pokal</option></select><input id="nd" type="date"><input id="nz" type="time" value="20:00"><input id="no" placeholder="Gegner" style="flex-basis:100%">
+ <select id="nh"><option value="1">Heim</option><option value="0">Auswärts</option></select><input id="nl" placeholder="Ort (optional)"><button class="b" onclick="addM()">Anlegen</button></div>
+ <div class="row"><span class="mu">Oder .ics aus der BDL importieren:</span><input type="file" accept=".ics" multiple onchange="impICS(this.files)"></div></div>
+ <div class="card"><h2>Spielerwerte</h2><div class="row"><button class="b ${VM=="s"?"":"g"}" onclick="VM='s';draw()">🏁 Liga</button><button class="b ${VM=="sp"?"":"g"}" onclick="VM='sp';draw()">🏆 Pokal</button></div><p class="mu" style="font-size:13px">Gesamtwerte pro Spieler für ${VM=="s"?"die Liga":"den Pokal"} (S = Siege, N = Niederlagen). Änderungen sind sofort in der Statistik sichtbar.</p>
+ ${S.players.length?S.players.map((p,i)=>{const s=p[VM]=p[VM]||{};return `<div class="pc"><b>${esc(p.name)}</b><div class="g2">${SK.map(k=>`<label>${k[1]}<input type="number" inputmode="numeric" min="0" value="${s[k[0]]||0}" onchange="S.players[${i}][VM]['${k[0]}']=+this.value;save()"></label>`).join("")}</div></div>`}).join(""):`<span class="mu">Lege zuerst im Tab „Team“ Spieler an.</span>`}</div>
+ <div class="card"><h2>🛡️ Gegner-Logos</h2><p class="mu" style="font-size:13px">Das Logo wird bei Instagram-Bildern automatisch für den Gegner verwendet. Neues Logo hochladen ersetzt das alte.</p>
+ ${[...new Set(S.matches.filter(m=>!m.bye).map(m=>m.opp))].sort().map(o=>`<div class="pr">${LOGOS[lk(o)]?`<img src="${LOGOS[lk(o)]}" alt="" style="width:44px;height:44px;border-radius:50%;object-fit:cover">`:`<span style="width:44px;height:44px;border-radius:50%;background:var(--bd);display:flex;align-items:center;justify-content:center">?</span>`}<span class="nm">${esc(o)}</span><label class="b g" style="display:inline-flex;align-items:center;cursor:pointer;border-radius:8px;padding:0 12px">${LOGOS[lk(o)]?"Ersetzen":"Hochladen"}<input type="file" accept="image/*" style="display:none" onchange="upLogo('${esc(o).replace(/'/g,"&#39;")}',this.files[0])"></label>${LOGOS[lk(o)]?`<button class="b g" aria-label="Logo entfernen" onclick="delLogo('${esc(o).replace(/'/g,"&#39;")}')">✕</button>`:""}</div>`).join("")}</div>
+ <div class="card"><h2>💾 Sicherung</h2><div class="row"><button class="b" onclick="backup()">Sicherung herunterladen</button></div>
+ <div class="row"><span class="mu">Sicherung einspielen:</span><input type="file" accept=".json,application/json" onchange="restore(this.files[0])"></div><p class="mu" style="font-size:13px">Die Sicherung enthält Spiele, Spieler, Statistikwerte und Logos. Einspielen ersetzt alle aktuellen Daten.</p></div>`}
+/* Aufstellung */
+function Aufstellung(){
+ if(!S.players.length)return `<div class="card mu">Lege erst im Tab „Team“ Spieler an.</div>`;
+ return `<div class="card"><h2>Wer ist heute da?</h2><p class="mu" style="font-size:13px;margin:0 0 6px">Haken setzen = Spieler ist da.</p>${S.players.map((p,i)=>{const a=AV[p.name]||(AV[p.name]={here:false,form:2});return `<div class="pr"><label style="display:flex;align-items:center;gap:10px;flex:1;min-width:0"><input type="checkbox" ${a.here?"checked":""} onchange="AV[S.players[${i}].name].here=this.checked"><span class="nm">${esc(p.name)}<small class="mu" style="display:block;font-weight:400;font-size:12px">${(()=>{const x=qs(p);return x.g?`Quote ${Math.round(100*x.w/x.g)}% · ${x.g} Partien`:"noch keine Partien"})()}</small></span></label>
+ <select aria-label="Form" onchange="AV[S.players[${i}].name].form=+this.value"><option value="1" ${a.form==1?"selected":""}>😕 schlecht</option><option value="2" ${a.form==2?"selected":""}>🙂 normal</option><option value="3" ${a.form==3?"selected":""}>🔥 top</option></select></div>`}).join("")}
+ <div class="row"><select id="zf"><option value="0.05">Streng nach Leistung</option><option value="0.4" selected>Ausgewogen</option><option value="1.2">Mehr Zufall</option></select><button class="b" onclick="lineup()">Aufstellung vorschlagen</button></div></div><div id="lu"></div>`}
+function qs(p){const a=p.s||{},b=p.sp||{},v=k=>(a[k]||0)+(b[k]||0),w=v('ew')+v('dw'),g=w+v('el')+v('dl');return{g,w,q:(w+2)/(g+4)}}
+function lineup(){
+ const zf=+$("#zf").value;
+ const sc=p=>qs(p).q*[0,.85,1,1.15][AV[p.name].form]+Math.random()*zf/5;
+ const here=S.players.filter(p=>AV[p.name]&&AV[p.name].here).map(p=>({n:p.name,s:sc(p)})).sort((a,b)=>b.s-a.s);
+ if(here.length<2){$("#lu").innerHTML=`<div class="card no">Mindestens 2 Spieler auswählen.</div>`;return}
+ const r=i=>here[i%here.length];const b1=[0,3,4,7].map(r),b2=[1,2,5,6].map(r);
+ const duos=b=>[[[0,1],[2,3]],[[0,2],[1,3]],[[0,3],[1,2]]].map(o=>({o,v:Math.abs(b[o[0][0]].s+b[o[0][1]].s-b[o[1][0]].s-b[o[1][1]].s)+Math.random()*.6})).sort((a,b)=>a.v-b.v)[0].o.map(([x,y])=>b[x].n+" & "+b[y].n);
+ const blk=[["Einzel (Block 1)",b1.map(x=>x.n)],["Doppel (Block 1)",duos(b1)],["Einzel (Block 2)",b2.map(x=>x.n)],["Doppel (Block 2)",duos(b2)]];
+ $("#lu").innerHTML=`<div class="card"><h2>Vorschlag</h2>${blk.map(([t,a])=>`<b>${t}</b><ol style="margin:4px 0 12px">${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`).join("")}${here.length<8?`<p class="mu">Nur ${here.length} Spieler: ${b1.filter(x=>b2.includes(x)).map(x=>esc(x.n)).join(" & ")} spielen in beiden Einzel-Blöcken.</p>`:""}${here.length>8?`<p class="mu">Nicht eingesetzt: ${here.slice(8).map(x=>esc(x.n)).join(", ")}</p>`:""}<p class="mu" style="font-size:13px">Basis: Siegquote aus Liga und Pokal (Spieler mit wenigen Spielen werden zum Durchschnitt hin gezogen) und Tagesform. Doppel werden möglichst ausgewogen gepaart.</p></div>`}
+/* Instagram */
+const TPL=new Image();TPL.src="bilder/vorlage.jpg";
+const LG=new Image();LG.src="bilder/logo.jpg";
+function Instagram(){
+ if(!S.matches.length)return `<div class="card mu">Lege zuerst ein Spiel an.</div>`;
+ const today=new Date().toISOString().slice(0,10),IM=sorted().filter(m=>!m.bye);if(!IM.length)return `<div class="card mu">Noch keine Spiele.</div>`;
+ if(!sel||!IM.find(m=>m.id==sel))sel=(IM.find(m=>m.date>=today&&!played(m))||IM[IM.length-1]).id;
+ return `<div class="card"><div class="row"><select id="im" onchange="sel=this.value;draw()">${IM.map(q=>`<option value="${q.id}" ${q.id==sel?"selected":""}>${q.type=="Pokal"?"🏆 ":""}${fd(q.date)} · ${q.home?"Heim":"Ausw."} · ${esc(q.opp)}</option>`).join("")}</select>
+ <select id="ik" onchange="IK=this.value"><option value="a" ${IK=="a"?"selected":""}>Spielankündigung</option><option value="r" ${IK=="r"?"selected":""}>Ergebnis</option></select></div>
+ <div class="row">${(()=>{const o=IM.find(q=>q.id==sel).opp;return LOGOS[lk(o)]?`<img src="${LOGOS[lk(o)]}" alt="" style="width:44px;height:44px;border-radius:50%;object-fit:cover"><span class="mu">Logo von ${esc(o)} gespeichert</span>`:`<span class="mu">Kein Logo für ${esc(o)} gespeichert – es steht der Vereinsname im Bild.</span>`})()}${canEd()?'<label class="b g" style="display:inline-flex;align-items:center;cursor:pointer;border-radius:8px;padding:0 12px">Logo hochladen<input type="file" accept="image/*" style="display:none" onchange="upLogo(IM_OPP(),this.files[0])"></label>':""}</div>
+ <div class="row"><button class="b" onclick="ig()">Bild erzeugen</button></div>
+ <canvas id="cv" width="1148" height="1370" class="hide"></canvas><div class="row"><button id="dlb" class="b hide" onclick="dlImg()">Als PNG speichern</button></div>
+ <p class="mu" style="font-size:13px">Vorlage 1148×1370 (Hochformat). Hochgeladene Logos werden für den Gegner gespeichert. Ohne Logo steht der Vereinsname in der Box. Das Ergebnis-Bild braucht ein eingetragenes Ergebnis.</p></div>`}
+let LOGOS={},IK="a";const LIMG={},lk=o=>String(o||"").trim().toLowerCase();
+const IM_OPP=()=>{const m=S.matches.find(x=>x.id==sel);return m?m.opp:""};
+const loadImg=s=>new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=s});
+const lslug=o=>lk(o).replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"")||"x";
+async function putLogo(o,img){try{if(db){const r=db.doc("logos/"+lslug(o));if(img)await r.set({opp:o,img});else await r.delete();setStatus("Gespeichert ✓")}}catch(e){setStatus("Logo speichern nicht möglich")}}
+function fileToLogo(f){return new Promise(res=>{const i=new Image();i.onload=()=>{const s=Math.min(1,160/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=Math.round(i.width*s);c.height=Math.round(i.height*s);c.getContext("2d").drawImage(i,0,0,c.width,c.height);res(c.toDataURL("image/png"))};i.src=URL.createObjectURL(f)})}
+async function upLogo(o,f){if(!f||!o)return;const d=await fileToLogo(f);LOGOS[lk(o)]=d;delete LIMG[lk(o)];draw();await putLogo(o,d)}
+async function delLogo(o){if(!confirm("Logo für "+o+" entfernen?"))return;delete LOGOS[lk(o)];delete LIMG[lk(o)];draw();await putLogo(o,null)}
+async function backup(){const o={version:1,date:new Date().toISOString(),state:S,logos:LOGOS},b=new Blob([JSON.stringify(o)],{type:"application/json"});try{if(dl)await dl.save({filename:`white-tigers-sicherung-${o.date.slice(0,10)}.json`,data:b});else alert("Download ist hier nicht verfügbar.")}catch(e){}}
+async function restore(f){if(!f)return;try{const o=JSON.parse(await f.text());if(!o.state||!Array.isArray(o.state.matches))throw 0;if(!confirm("Alle aktuellen Daten durch diese Sicherung ersetzen?"))return;S=o.state;LOGOS=o.logos||{};for(const k in LIMG)delete LIMG[k];save();for(const k in LOGOS)await putLogo(k,LOGOS[k]);draw()}catch(e){alert("Die Datei konnte nicht gelesen werden.")}}
+async function ig(){const m=S.matches.find(x=>x.id==$("#im").value),k=$("#ik").value;IK=k;if(k=="r"&&!played(m)){alert("Bitte erst das Ergebnis im Tab „Spiele“ eintragen.");return}
+ try{await document.fonts.load('60px "Permanent Marker"')}catch(e){}
+ const c=$("#cv"),x=c.getContext("2d"),F='"Permanent Marker",Impact,"Arial Black",sans-serif';c.classList.remove("hide");$("#dlb").classList.remove("hide");
+ let LGI=null;try{if(LOGOS[lk(m.opp)])LGI=LIMG[lk(m.opp)]||(LIMG[lk(m.opp)]=await loadImg(LOGOS[lk(m.opp)]))}catch(e){}
+ x.drawImage(TPL,0,0,c.width,c.height);x.fillStyle="#111";x.textAlign="center";x.textBaseline="middle";
+ const wrap=(t,mw,s)=>{x.font=`${s}px ${F}`;const w=t.split(" "),L=[];let l="";w.forEach(q=>{const n=l?l+" "+q:q;if(x.measureText(n).width>mw&&l){L.push(l);l=q}else l=n});L.push(l);return L};
+ const team=(cx,cy,isT,bw,bh)=>{if(isT){x.drawImage(LG,cx-bw/2+10,cy-bh/2+4,bw-20,(bw-20)*255/270);x.font=`34px ${F}`;x.fillStyle="#111";x.fillText("WHITE TIGERS",cx,cy+bh/2-26)}
+  else if(LGI){const r=Math.min((bw-20)/LGI.width,(bh-20)/LGI.height);x.drawImage(LGI,cx-LGI.width*r/2,cy-LGI.height*r/2,LGI.width*r,LGI.height*r)}
+  else{let s=70,L;do{L=wrap(m.opp.toUpperCase(),bw-24,s);s-=4}while((L.length*s*1.15>bh-30||L.some(z=>x.measureText(z).width>bw-24))&&s>24);x.fillStyle="#111";L.forEach((z,i)=>x.fillText(z,cx,cy-(L.length-1)*s*0.6+i*s*1.2))}};
+ team(282,665,m.home,310,320);team(870,675,!m.home,300,300);
+ const a=k=="r"?(m.home?m.sa:m.sb):"–",b=k=="r"?(m.home?m.sb:m.sa):"–";
+ x.fillStyle="#111";x.font=`130px ${F}`;x.fillText(a,418,1062);x.fillText(b,727,1062);
+ const dt=m.date.split("-").reverse().join(".");
+ const fitT=(s,y,z)=>{x.font=`${z}px ${F}`;while(x.measureText(s).width>270&&z>18){z-=2;x.font=`${z}px ${F}`}x.fillText(s,571,y)};
+ fitT(m.type=="Pokal"?"POKAL":("LIGA"+(m.sp?" · "+m.sp:"")),1274,36);fitT(dt,1313,38)}
+async function dlImg(){const b=await new Promise(r=>$("#cv").toBlob(r,"image/png"));try{if(dl)await dl.save({filename:"white-tigers.png",data:b});else alert("Bild lang drücken bzw. Rechtsklick → Bild speichern")}catch(e){}}
+let SM="Liga",VM="s";
+let IMGS={},REPS={};let ZR=0;
+function rep(id){const m=S.matches.find(x=>x.id==id),L=m&&REPS[m.sp||m.id];if(!L)return;ZR=0;
+ const o=document.createElement("div");o.className="ov";o.id="ov";
+ o.innerHTML=`<div class="in" style="max-width:980px"><div class="top"><button class="b" onclick="document.getElementById('ov').remove()">✕ Schließen</button><button class="b g" onclick="zoomR()">🔍 Vergrößern</button></div>
+ <div style="color:#fff;font-weight:700">${m.sp?m.sp+". Spieltag":"Pokal"} · ${esc(m.opp)} · ${m.sa}:${m.sb}</div>`+L.map(x=>`<h3>${x[0]}</h3><div style="overflow:auto;border-radius:10px"><img class="rimg" alt="${x[0]}" src="${x[1]}"></div>`).join("")+`</div>`;
+ document.body.appendChild(o)}
+function zoomR(){ZR=!ZR;document.querySelectorAll(".rimg").forEach(i=>i.style.width=ZR?"220%":"100%")}
+function pic(id){const m=S.matches.find(x=>x.id==id),K=m&&(m.sp||m.id),L=m?IMGS[K]:null;if(!L){sel=id;go('Instagram');return}
+ const o=document.createElement("div");o.className="ov";o.id="ov";
+ o.innerHTML=`<div class="in"><div class="top"><button class="b" onclick="document.getElementById('ov').remove()">✕ Schließen</button><button class="b g" onclick="document.getElementById('ov').remove();sel='${id}';go('Instagram')">Neu erzeugen</button></div>
+ <div style="color:#fff;font-weight:700">${m.sp?m.sp+". Spieltag":"Pokal"} · ${esc(m.opp)}</div>`+L.map((x,i)=>`<h3>${x[0]}</h3><img alt="${x[0]}" src="${x[1]}"><div class="row"><button class="b" onclick="saveI('${K}',${i})">Bild speichern</button></div>`).join("")+`</div>`;
+ document.body.appendChild(o)}
+async function saveI(sp,i){const x=IMGS[sp][i],b=await (await fetch(x[1])).blob();try{if(dl)await dl.save({filename:`white-tigers-${sp}-${x[0].toLowerCase().replace("ä","ae")}.jpg`,data:b});else alert("Bild lang drücken bzw. Rechtsklick → Bild speichern")}catch(e){}}
+/* Minispiele */
+const DV={},DL=[];for(let i=1;i<=20;i++)[["S",1,0],["D",2,1],["T",3,0]].forEach(([p,m,d])=>{DV[p+i]=[m*i,d];DL.push(p+i)});DV["25"]=[25,0];DV["Bull"]=[50,1];DL.push("25","Bull");
+const OUT=[];(()=>{for(const a of [null,...DL])for(const b of [null,...DL])for(const c of DL){if(!DV[c][1])continue;const va=a?DV[a][0]:0,vb=b?DV[b][0]:0,t=va+vb+DV[c][0];if(t<2||t>170)continue;const r=[a,b,c].filter(Boolean),s=va+vb;if(!OUT[t]||r.length<OUT[t].length||(r.length==OUT[t].length&&s>OUT[t].s)){OUT[t]=r;OUT[t].s=s}}})();
+const OKS=OUT.map((v,i)=>v?i:0).filter(x=>x>=21);
+const rnd=a=>a[Math.floor(Math.random()*a.length)],shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]),sumR=r=>r.reduce((s,d)=>s+DV[d][0],0);
+const QZ=[["Was ist das höchste Checkout mit drei Darts?","170","180","160","167"],["Wie viele Punkte sind mit einer Aufnahme maximal möglich?","180","170","201","150"],["Wie viele Darts braucht man mindestens für ein Leg 501?","9","10","12","7"],["Welche Zahl liegt direkt gegenüber der 20?","3","1","11","19"],["Welche Zahlen liegen links und rechts neben der 20?","5 und 1","12 und 18","1 und 18","5 und 12"],["Wie viele Punkte ist das Bullseye (innerer Ring) wert?","50","25","100","60"],["Wie viele nummerierte Felder hat ein Dartboard?","20","18","25","21"],["Welche Zahlen liegen neben der 11?","8 und 14","6 und 15","14 und 9","13 und 16"],["Wie viel zählt ein Triple 20?","60","40","80","120"],["Wie weit steht man offiziell vom Board (Abstand Oche)?","2,37 m","1,73 m","3,05 m","2,00 m"],["In welcher Höhe hängt das Bullseye?","1,73 m","1,50 m","2,00 m","1,60 m"],["Wie nennt man ein Leg, das in nur 9 Darts gewonnen wird?","Nine-Darter","Shortleg","Highfinish","Whitewash"],["Mit welchen drei Darts wirft man 170?","T20 T20 Bull","T20 T19 Bull","T19 T20 D25","T20 T20 D20"]];
+let MG="sc",MQ=null,MS={qz:{s:0,b:0}},lastQ=-1;
+function genQz(){let i;do{i=Math.floor(Math.random()*QZ.length)}while(i==lastQ);lastQ=i;const z=QZ[i],o=shuf(z.slice(1));return{q:z[0],opts:o,a:o.indexOf(z[1]),good:z[1],why:()=>""}}
+/* Dartscorer */
+let G=null,BT=null,SETUP={mode:"501",n:2,dbl:true,legs:1,p121:{darts:9,inc:1,safe:"3",rounds:10},p170:{rounds:10},pl:[{name:"",bot:0},{name:"",bot:0},{name:"",bot:0},{name:"",bot:0}]};
+const BOTS=[40,50,60,70,80,90],CN=[20,19,18,17,16,15,25],QK=[26,41,45,60,81,85,100,140,180];
+const gauss=()=>{let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
+const avg3=p=>p.dr?(p.sc/p.dr*3).toFixed(1):"0.0";
+function snap(){const c={...G};delete c.hist;G.hist.push(JSON.stringify(c))}
+function undo(){if(!G||!G.hist.length)return;clearTimeout(BT);BT=null;let h=G.hist,o;do{o=JSON.parse(h.pop())}while(o.pl[o.cur].bot&&h.length&&!o.over);G=Object.assign(o,{hist:h});draw()}
+const MN={"301":"301","501":"501","cricket":"Cricket","121":"121 Checkout","170":"170 Bull-Finish"};
+const MD={"301":"Von 301 auf genau 0 herunterspielen. Der letzte Dart muss ein Double sein (abschaltbar).","501":"Von 501 auf genau 0 herunterspielen. Der letzte Dart muss ein Double sein (abschaltbar).","cricket":"Felder 20 bis 15 und Bull je dreimal treffen. Punkte gibt es, solange ein Gegner das Feld noch offen hat. Wer alles schließt und gleich viele oder mehr Punkte hat, gewinnt.","121":"Checke die Zahl mit einem Double innerhalb der Darts pro Versuch (Standard: 9 Darts = 3 Aufnahmen). Geschafft: Das Ziel steigt. Gescheitert: Du fällst auf den zuletzt gesicherten Wert (Safehouse) zurück, sonst auf 121.","170":"Das höchste Finish: Triple 20, Triple 20, Bull mit drei Darts. Nur wenn alle drei treffen, zählt der Versuch."};
+function scSetup(){const s=SETUP,m=s.mode;
+ return `<div class="card"><h2>🎯 Dartscorer</h2><div class="mu">Spielart</div>
+ <div class="row">${["301","501","cricket","121","170"].map(k=>`<button class="b ${m==k?"":"g"}" onclick="SETUP.mode='${k}';draw()">${MN[k]}</button>`).join("")}</div>
+ <p class="mu" style="font-size:13px;margin:4px 0 10px">${MD[m]}</p>
+ <div class="mu">Anzahl Spieler</div><div class="row">${[1,2,3,4].map(n=>`<button class="b ${s.n==n?"":"g"}" onclick="SETUP.n=${n};draw()">${n}</button>`).join("")}</div>
+ <datalist id="pl">${S.players.map(p=>`<option value="${esc(p.name)}">`).join("")}</datalist>
+ ${s.pl.slice(0,s.n).map((p,i)=>`<div class="pr"><input list="pl" placeholder="${p.bot?"Bot Ø"+p.bot:"Spieler "+(i+1)}" value="${esc(p.name)}" ${p.bot?"disabled":""} oninput="SETUP.pl[${i}].name=this.value" style="flex:1 1 130px;min-width:0"><select onchange="SETUP.pl[${i}].bot=+this.value;draw()"><option value="0">👤 Mensch</option>${BOTS.map(b=>`<option value="${b}" ${p.bot==b?"selected":""}>🤖 Bot Ø${b}</option>`).join("")}</select></div>`).join("")}
+ ${m=="301"||m=="501"?`<div class="row"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" ${s.dbl?"checked":""} onchange="SETUP.dbl=this.checked"> Double-Out</label><label>Legs zum Sieg: <select onchange="SETUP.legs=+this.value">${[1,2,3,4,5].map(n=>`<option ${s.legs==n?"selected":""}>${n}</option>`).join("")}</select></label></div>`:""}
+ ${m=="121"?`<div class="row"><label>Darts pro Versuch <select onchange="SETUP.p121.darts=+this.value">${[3,6,9].map(n=>`<option ${s.p121.darts==n?"selected":""}>${n}</option>`).join("")}</select></label>
+  <label>Ziel steigt um <select onchange="SETUP.p121.inc=+this.value">${[1,10,20,30].map(n=>`<option value="${n}" ${s.p121.inc==n?"selected":""}>+${n}</option>`).join("")}</select></label></div>
+  <div class="row"><label>Safehouse <select onchange="SETUP.p121.safe=this.value"><option value="3" ${s.p121.safe=="3"?"selected":""}>nach Checkout mit 3 Darts</option><option value="all" ${s.p121.safe=="all"?"selected":""}>nach jedem Checkout</option><option value="off" ${s.p121.safe=="off"?"selected":""}>aus (zurück auf 121)</option></select></label>
+  <label>Versuche <select onchange="SETUP.p121.rounds=+this.value">${[10,20,30,0].map(n=>`<option value="${n}" ${s.p121.rounds==n?"selected":""}>${n||"unbegrenzt"}</option>`).join("")}</select></label></div>`:""}
+ ${m=="170"?`<div class="row"><label>Versuche pro Spieler <select onchange="SETUP.p170.rounds=+this.value">${[5,10,20,0].map(n=>`<option value="${n}" ${s.p170.rounds==n?"selected":""}>${n||"unbegrenzt"}</option>`).join("")}</select></label></div>`:""}
+ <p class="mu" style="font-size:13px">Ein Bot spielt mit dem gewählten Average (Ø Punkte pro 3 Darts) als Richtwert. Das ist eine Simulation, kein echter Spieler.</p>
+ <div class="row"><button class="b" onclick="scStart()">▶ Spiel starten</button></div></div>`}
+function scStart(){const s=SETUP,m=s.mode,cr=m=="cricket",pl=s.pl.slice(0,s.n).map((p,i)=>({name:(p.bot?"Bot Ø"+p.bot:(p.name.trim()||"Spieler "+(i+1))),bot:p.bot,legs:0,sc:0,dr:0,hi:0,n180:0,n100:0,last:null,rem:(m=="301"||m=="501")?+m:0,pts:0,m:{20:0,19:0,18:0,17:0,16:0,15:0,25:0},t:121,safe:null,ok:0,att:0,streak:0,mstreak:0,best:0,comp:0,t20h:0,t20n:0,bh:0,bn:0,two:0}));
+ if(cr&&pl.length<2){alert("Cricket braucht mindestens 2 Spieler (ein Bot zählt mit).");return}
+ G={mode:m,start:(m=="301"||m=="501")?+m:0,dbl:m=="121"?true:s.dbl,legsTo:s.legs,pl,cur:0,starter:0,leg:1,hist:[],msg:"",inp:"",ask:0,d:0,over:false,win:-1,vmax:s.p121.darts/3,inc:s.p121.inc,sfr:s.p121.safe,rounds:m=="121"?s.p121.rounds:m=="170"?s.p170.rounds:0,vis:0,k:0,hits:[]};
+ if(m=="121")pl[0].rem=pl[0].t;draw()}
+function finSc(){if(!G)return;clearTimeout(BT);G.over=true;G.win=G.mode=="121"?win121():win170();draw()}
+function scPlay(){const g=G,cr=g.mode=="cricket",x=g.mode=="301"||g.mode=="501";
+ if(g.over)return scEnd();
+ const p=g.pl[g.cur];
+ const head=`<div class="card" style="padding:10px 12px"><div class="row" style="margin:0"><b>${MN[g.mode]}</b><span class="mu">${x?(g.dbl?"Double-Out":"Straight-Out")+" · Leg "+g.leg+" · erster mit "+g.legsTo+" Leg"+(g.legsTo>1?"s":""):""}</span><button class="b g" style="margin-left:auto;flex:0 0 auto" onclick="undo()">↶ Zurück</button><button class="b g" style="flex:0 0 auto;min-width:46px" aria-label="Spiel beenden" onclick="if(confirm('Spiel beenden?')){clearTimeout(BT);G=null;draw()}">✖</button></div>${x||cr?"":`<div class="row" style="margin:6px 0 0"><button class="b g" style="flex:0 0 auto" onclick="if(confirm('Auswertung anzeigen und Spiel beenden?'))finSc()">🏁 Auswertung</button></div>`}</div>`;
+ if(cr)return head+crView();
+ if(g.mode=="170")return head+v170();
+ const is121=g.mode=="121";
+ const cards=`<div class="scg">${g.pl.map((q,i)=>is121?`<div class="sc ${i==g.cur?"on":""}"><div class="nm">${esc(q.name)}${q.bot?" 🤖":""}</div><div class="rem">${q.t}</div><small>Ziel · ✔ ${q.ok}/${q.att} · Serie ${q.streak}${q.safe!=null?" · 🛡 "+q.safe:""}</small></div>`:`<div class="sc ${i==g.cur?"on":""}"><div class="nm">${esc(q.name)}${q.bot?" 🤖":""}</div><div class="rem">${q.rem}</div><small>Ø ${avg3(q)} · Legs ${q.legs}${q.last!=null?" · zuletzt "+q.last:""}</small></div>`).join("")}</div>`;
+ const info=is121?`<div class="card" style="padding:8px 12px"><b>${esc(p.name)}</b>: Versuch ${p.att+1}${g.rounds?" von "+g.rounds:""} · Aufnahme ${g.vis+1} von ${g.vmax} · Rest <b>${p.rem}</b></div>`:"";
+ let inp;
+ if(p.bot){inp=`<div class="card"><b>🤖 ${esc(p.name)} wirft …</b></div>`;botSched()}
+ else if(g.ask)inp=`<div class="card"><h2>Checkout ${g.ask}! 🎯</h2><div class="mu">Mit wie vielen Darts in dieser Aufnahme?</div><div class="row"><button class="b" onclick="${is121?"f121":"x01Fin"}(1)">1 Dart</button><button class="b" onclick="${is121?"f121":"x01Fin"}(2)">2 Darts</button><button class="b" onclick="${is121?"f121":"x01Fin"}(3)">3 Darts</button></div></div>`;
+ else{const co=p.rem<=170&&OUT[p.rem]?`<div class="mu">Checkout: <b>${OUT[p.rem].join(" ")}</b></div>`:"";
+  inp=`<div class="card"><div class="row" style="margin:0"><b>${esc(p.name)}</b><span class="mu">wirft …</span></div>${co}
+  <div class="kd">${esc(g.inp)||"–"}</div>
+  <div class="kq">${QK.map(v=>`<button class="b g" onclick="kp('q${v}')">${v}</button>`).join("")}</div>
+  <div class="kp2">${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="b g" onclick="kp('${n}')">${n}</button>`).join("")}<button class="b g" onclick="kp('del')">⌫</button><button class="b g" onclick="kp('0')">0</button><button class="b" onclick="kp('ok')">OK</button></div>
+  <div class="mu" style="font-size:12px;margin-top:6px">Gesamtpunkte der Aufnahme eintippen (0–180) oder Schnellwahl. Überworfen = 0 eintragen.</div></div>`}
+ return head+cards+info+(g.msg?`<div class="card" style="padding:8px 12px">${esc(g.msg)}</div>`:"")+inp}
+/* 121 Checkout */
+const win121=()=>{let w=0;G.pl.forEach((q,i)=>{const b=G.pl[w];if(q.best>b.best||(q.best==b.best&&q.ok>b.ok))w=i});return w};
+function e121(v){const p=G.pl[G.cur],r=p.rem-v,bust=r<0||r==1||(r==0&&!OUT[p.rem]);G.inp="";
+ if(r==0&&!bust){G.ask=v;draw();return}
+ snap();c121(v,3,false,bust)}
+function f121(d){const v=G.ask;G.ask=0;snap();c121(v,d,true,false)}
+function c121(v,d,fin,bust){const p=G.pl[G.cur];G.inp="";
+ if(fin){const darts=G.vis*3+d;p.ok++;p.att++;p.streak++;p.mstreak=Math.max(p.mstreak,p.streak);p.best=Math.max(p.best,p.t);
+  if(G.sfr=="all"||(G.sfr=="3"&&darts<=3))p.safe=p.t;
+  G.msg=`✅ ${p.name} checkt ${p.t} mit ${darts} Darts!`;p.t+=G.inc;end121();return}
+ G.vis++;if(!bust)p.rem-=v;G.msg=bust?`${p.name}: überworfen`:`${p.name}: ${v}`;
+ if(G.vis>=G.vmax){p.att++;p.streak=0;const old=p.t;p.t=p.safe!=null?p.safe:121;G.msg=`❌ ${p.name} scheitert an ${old} → weiter mit ${p.t}`;end121();return}
+ draw()}
+function end121(){if(G.rounds&&G.pl.every(q=>q.att>=G.rounds)){G.over=true;G.win=win121();draw();return}
+ G.cur=(G.cur+1)%G.pl.length;const q=G.pl[G.cur];q.rem=q.t;G.vis=0;draw()}
+function bot121(){const p=G.pl[G.cur],a=p.bot;snap();
+ for(let i=0;i<G.vmax;i++){const r=p.rem,L=OUT[r]?OUT[r].length:3;
+  if(OUT[r]&&Math.random()<Math.min(.85,Math.min(.55,Math.max(.08,a/150))*[0,1.15,.8,.45][L])){c121(r,Math.min(3,L+(Math.random()<.4?Math.floor(Math.random()*(4-L)):0)),true,false);return}
+  let v=Math.max(0,Math.min(180,Math.round(a+gauss()*a*.45)));v=Math.max(0,Math.min(v,r-2));
+  c121(v,3,false,false);if(G.vis==0||G.over)return}}
+/* 170 Bull-Finish */
+const win170=()=>{let w=0;G.pl.forEach((q,i)=>{const b=G.pl[w];if(q.comp>b.comp||(q.comp==b.comp&&q.two>b.two))w=i});return w};
+function h170(hit){const p=G.pl[G.cur],k=G.k;G.hits[k]=hit;if(k<2){p.t20n++;if(hit)p.t20h++}else{p.bn++;if(hit)p.bh++}G.k++;
+ if(G.k>=3){const n=G.hits.filter(Boolean).length;p.att++;if(n==3)p.comp++;if(n>=2)p.two++;G.msg=n==3?`✅ ${p.name}: 170 geschafft!`:`${p.name}: ${n} von 3 Treffern`;G.k=0;G.hits=[];
+  if(G.rounds&&G.pl.every(q=>q.att>=G.rounds)){G.over=true;G.win=win170();draw();return}G.cur=(G.cur+1)%G.pl.length}
+ draw()}
+function c170(hit){snap();h170(hit)}
+function bot170(){const p=G.pl[G.cur],a=p.bot,pt=.08+(a-40)/50*.25,pb=.05+(a-40)/50*.2;snap();for(let i=0;i<3&&!G.over;i++)h170(Math.random()<(i<2?pt:pb))}
+function v170(){const g=G,p=g.pl[g.cur],T=["Triple 20","Triple 20","Bull"];
+ const cards=`<div class="scg">${g.pl.map((q,i)=>`<div class="sc ${i==g.cur?"on":""}"><div class="nm">${esc(q.name)}${q.bot?" 🤖":""}</div><div class="rem">${q.comp}</div><small>geschafft · Versuche ${q.att}${g.rounds?"/"+g.rounds:""} · 2 von 3: ${q.two}</small></div>`).join("")}</div>`;
+ let inp;
+ if(p.bot){inp=`<div class="card"><b>🤖 ${esc(p.name)} wirft …</b></div>`;botSched()}
+ else inp=`<div class="card"><div class="row" style="margin:0"><b>${esc(p.name)}</b><span class="mu">Dart ${g.k+1} von 3</span></div>
+  <div style="text-align:center;font-size:20px;margin:8px 0">${[0,1,2].map(i=>i<g.k?(g.hits[i]?"🟢":"🔴"):"⚪").join(" ")}</div>
+  <div style="text-align:center;font-size:30px;font-weight:800;margin:6px 0">🎯 ${T[g.k]}</div>
+  <div class="row"><button class="b" style="min-height:64px;font-size:20px;flex:1 1 140px;background:var(--ok)" onclick="c170(true)">✅ Treffer</button><button class="b g" style="min-height:64px;font-size:20px;flex:1 1 140px" onclick="c170(false)">❌ Daneben</button></div></div>`;
+ return cards+(g.msg?`<div class="card" style="padding:8px 12px">${esc(g.msg)}</div>`:"")+inp}
+function kp(k){if(!G||G.over)return;let v=null;if(k[0]=="q")v=+k.slice(1);else if(k=="del")G.inp=G.inp.slice(0,-1);else if(k=="ok"){if(G.inp===""){draw();return}v=+G.inp;if(v>180){G.msg="Maximal 180 pro Aufnahme.";G.inp="";draw();return}}else if(G.inp.length<3)G.inp+=k;
+ if(v!==null){G.mode=="121"?e121(v):x01Enter(v);return}draw()}
+function x01Enter(v){const p=G.pl[G.cur],r=p.rem-v,bust=r<0||(G.dbl&&r==1)||(r==0&&G.dbl&&!OUT[p.rem]);G.inp="";
+ if(r==0&&!bust){G.ask=v;draw();return}
+ snap();x01Commit(v,3,false,bust)}
+function x01Fin(d){const v=G.ask;G.ask=0;snap();x01Commit(v,d,true,false)}
+function x01Commit(v,d,fin,bust){const p=G.pl[G.cur];G.inp="";
+ if(bust){p.dr+=3;p.last=0;G.msg=`${p.name}: Überworfen`;G.cur=(G.cur+1)%G.pl.length;draw();return}
+ p.sc+=v;p.dr+=fin?d:3;p.rem-=v;p.last=v;p.hi=Math.max(p.hi,v);if(v==180)p.n180++;if(v>=100)p.n100++;
+ if(fin){p.legs++;G.msg=`🎯 ${p.name} gewinnt das Leg mit ${v}!`;
+  if(p.legs>=G.legsTo){G.over=true;G.win=G.cur;draw();return}
+  G.leg++;G.starter=(G.starter+1)%G.pl.length;G.cur=G.starter;G.pl.forEach(q=>q.rem=G.start);draw();return}
+ G.msg=`${p.name}: ${v}`;G.cur=(G.cur+1)%G.pl.length;draw()}
+function botSched(){clearTimeout(BT);BT=setTimeout(botTurn,1100)}
+function botTurn(){BT=null;if(!G||G.over||tab!="Minispiele"||MG!="sc")return;const p=G.pl[G.cur];if(!p.bot)return;
+if(G.mode=="cricket"){crBot();return}
+ if(G.mode=="121"){bot121();return}
+ if(G.mode=="170"){bot170();return}
+ const a=p.bot,r=p.rem,L=OUT[r]?OUT[r].length:(r<=60?1:r<=120?2:3),can=G.dbl?!!OUT[r]:r<=180;
+ snap();
+ if(can&&Math.random()<Math.min(.85,Math.min(.55,Math.max(.08,a/150))*[0,1.15,.8,.45][L])){const d=Math.min(3,L+(Math.random()<.4?Math.floor(Math.random()*(4-L)):0));x01Commit(r,d,true,false);return}
+ let v=Math.max(0,Math.min(180,Math.round(a+gauss()*a*.45)));v=Math.max(0,Math.min(v,r-(G.dbl?2:1)));
+ x01Commit(v,3,false,false)}
+function scEnd(){const g=G,w=g.pl[g.win],m=g.mode,cr=m=="cricket",x=m=="301"||m=="501";
+ const th=cr?"<th>Punkte</th>":m=="121"?"<th>Höchste Zahl</th><th>Checks</th><th>Quote</th><th>Beste Serie</th>":m=="170"?"<th>Geschafft</th><th>Quote</th><th>T20</th><th>Bull</th><th>2 von 3</th>":"<th>Legs</th><th>Ø</th><th>180</th><th>100+</th><th>Höchste</th>";
+ const pc=(a,b)=>b?Math.round(100*a/b)+"%":"–";
+ const row=q=>cr?`<td>${q.pts}</td>`:m=="121"?`<td>${q.best||"–"}</td><td>${q.ok}/${q.att}</td><td>${pc(q.ok,q.att)}</td><td>${q.mstreak}</td>`:m=="170"?`<td>${q.comp}/${q.att}</td><td>${pc(q.comp,q.att)}</td><td>${pc(q.t20h,q.t20n)}</td><td>${pc(q.bh,q.bn)}</td><td>${q.two}</td>`:`<td>${q.legs}</td><td>${avg3(q)}</td><td>${q.n180}</td><td>${q.n100}</td><td>${q.hi}</td>`;
+ const none=(m=="121"&&!w.ok)||(m=="170"&&!w.comp);
+ return `<div class="card" style="text-align:center"><div class="big">${none?"🎯":"🏆"}</div><h2>${none?"Auswertung":esc(w.name)+" gewinnt!"}</h2></div>
+ <div class="card scroll"><table><tr><th>Spieler</th>${th}</tr>${g.pl.map(q=>`<tr><td>${esc(q.name)}</td>${row(q)}</tr>`).join("")}</table></div>
+ <div class="row"><button class="b" onclick="scStart()">🔁 Nochmal</button><button class="b g" onclick="G=null;draw()">Neues Spiel</button><button class="b g" onclick="undo()">↶ Letzten Wurf zurück</button></div>`}
+/* Cricket */
+function crWin(){for(let i=0;i<G.pl.length;i++){const p=G.pl[i];if(CN.every(n=>p.m[n]>=3)&&G.pl.every(o=>o===p||o.pts<=p.pts))return i}return -1}
+function crMarks(p,n,k){for(let i=0;i<k;i++){if(p.m[n]<3)p.m[n]++;else if(G.pl.some(o=>o!==p&&o.m[n]<3))p.pts+=n}}
+function crAfter(){const w=crWin();if(w>=0){G.over=true;G.win=w;draw();return true}if(G.d>=3){G.d=0;G.cur=(G.cur+1)%G.pl.length}draw();return false}
+function crHit(n,k){const p=G.pl[G.cur];snap();crMarks(p,n,k);G.d++;G.msg=`${p.name}: ${n==25?"Bull":n} ×${k}`;crAfter()}
+function crMiss(){const p=G.pl[G.cur];snap();G.d++;G.msg=`${p.name}: daneben`;crAfter()}
+function crEnd(){snap();G.d=0;G.cur=(G.cur+1)%G.pl.length;draw()}
+function crBot(){const p=G.pl[G.cur],a=p.bot,acc=.28+(a-40)/50*.37,log=[];snap();
+ for(let i=0;i<3&&!G.over;i++){let tg=CN.find(n=>p.m[n]<3);if(!tg)tg=CN.filter(n=>G.pl.some(o=>o!==p&&o.m[n]<3)).sort((x,y)=>y-x)[0];if(!tg)break;
+  if(Math.random()<acc){const r=Math.random(),pt=(a-30)/400;let k=r<pt?3:r<pt+.08?2:1;if(tg==25&&k==3)k=2;crMarks(p,tg,k);log.push((tg==25?"Bull":tg)+"×"+k)}else log.push("daneben");
+  if(crWin()>=0)break}
+ G.msg=`${p.name}: ${log.join(", ")||"–"}`;G.d=3;crAfter()}
+function crView(){const g=G,p=g.pl[g.cur],sym=["","⁄","✕","⊗"];
+ const tbl=`<div class="card scroll"><table class="ct"><tr><th></th>${g.pl.map((q,i)=>`<th class="${i==g.cur?"cur":""}">${esc(q.name)}${q.bot?" 🤖":""}</th>`).join("")}</tr>
+ ${CN.map(n=>`<tr><td><b>${n==25?"Bull":n}</b></td>${g.pl.map((q,i)=>`<td class="${i==g.cur?"cur":""}"><span style="font-size:22px">${sym[q.m[n]]||"·"}</span></td>`).join("")}</tr>`).join("")}
+ <tr><td><b>Punkte</b></td>${g.pl.map((q,i)=>`<td class="${i==g.cur?"cur":""}"><b>${q.pts}</b></td>`).join("")}</tr></table></div>`;
+ let inp;
+ if(p.bot){inp=`<div class="card"><b>🤖 ${esc(p.name)} wirft …</b></div>`;botSched()}
+ else inp=`<div class="card"><div class="row" style="margin:0"><b>${esc(p.name)}</b><span class="mu">Dart ${g.d+1} von 3</span></div>
+  ${CN.map(n=>`<div class="crr"><b>${n==25?"Bull":n}</b><button class="b g" onclick="crHit(${n},1)">1×</button><button class="b g" ${n==25?'style="grid-column:span 2"':""} onclick="crHit(${n},2)">Double</button>${n==25?"":`<button class="b g" onclick="crHit(${n},3)">Triple</button>`}</div>`).join("")}
+  <div class="row"><button class="b g" onclick="crMiss()">Daneben</button><button class="b" onclick="crEnd()">Zug beenden ▶</button></div></div>`;
+ return tbl+(g.msg?`<div class="card" style="padding:8px 12px">${esc(g.msg)}</div>`:"")+inp}
+function Minispiele(){
+ const nv=`<div class="row">${[["sc","🎯 Dartscorer"],["qz","❓ Dart-Quiz"]].map(([k,l])=>`<button class="b ${MG==k?"":"g"}" onclick="MG='${k}';MQ=null;draw()">${l}</button>`).join("")}</div>`;
+ if(MG=="sc")return nv+(G?scPlay():scSetup());
+ if(!MQ)MQ=genQz();const st=MS.qz;
+ return nv+`<div class="card"><div class="mu">Serie ${st.s} · Rekord ${st.b}</div><div style="font-size:20px;font-weight:700;margin:8px 0">${MQ.q}</div>
+ ${MQ.opts.map((o,i)=>`<button class="b g opt" id="o${i}" onclick="ans(${i})">${esc(o)}</button>`).join("")}<div id="fb" style="margin:8px 0"></div><button class="b hide" id="nx" onclick="MQ=null;draw()">Weiter ▶</button></div>`}
+function ans(i){if(MQ.done)return;MQ.done=1;const st=MS.qz,ok=i==MQ.a,g=$("#o"+MQ.a);
+ if(ok){st.s++;st.b=Math.max(st.b,st.s)}else{st.s=0;const w=$("#o"+i);w.style.background="var(--no)";w.style.color="#fff"}
+ g.style.background="var(--ok)";g.style.color="#fff";
+ $("#fb").innerHTML=ok?`<b class="ok">Richtig! 🎯</b>`:`<b class="no">Leider nein.</b> ${esc(MQ.why(MQ.opts[i]))} Richtig: <b>${esc(MQ.good)}</b>`;
+ if(ok)setTimeout(()=>{if(tab=="Minispiele"&&MQ&&MQ.done){MQ=null;draw()}},1000);else $("#nx").classList.remove("hide")}
+nav();init();
+</script></body></html>

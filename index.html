@@ -2,6 +2,11 @@
 <html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>White Tigers Göcklingen</title>
+<link rel="icon" type="image/png" sizes="32x32" href="bilder/icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="bilder/icon-192.png">
+<link rel="apple-touch-icon" href="bilder/icon-180.png">
+<meta name="apple-mobile-web-app-title" content="White Tigers">
+<meta name="theme-color" content="#101215">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 :root{--disp:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--ink:#14161a;--bg:#eef0f3;--card:#fff;--tx:#1b1d21;--mu:#656b75;--ac:#f08a24;--bd:#dde1e7;--ok:#1f8a4c;--no:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -104,6 +109,20 @@ nav{background:var(--bg)}nav button{font-weight:600}
 @media(max-width:760px){.nd{display:none}.nm{display:flex}.hd{height:92px}.hd .tt b{font-size:30px}}
 @media(prefers-reduced-motion:reduce){.dp,.dbk{transition:none}}
 canvas{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--bd)}.hide{display:none}
+/* Einheitlicher Stil: gleiche Ecken, Abstände, Überschriften und Schatten */
+:root{--r:14px;--r2:10px;--gap:12px;--sh:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--card:#181b20;--bd:#2a2e35;--sh:0 1px 2px rgba(0,0,0,.45)}}
+.card,.gm,.hero,.mh,.stt,.tile,.sc{border-radius:var(--r)}
+.card,.mh,.hero{margin:var(--gap) 0}
+.card{padding:16px;box-shadow:var(--sh)}.gm{box-shadow:var(--sh);margin:10px 0}
+h2{font:700 22px/1.15 var(--disp);letter-spacing:.3px;margin:0 0 12px}.hero h2{margin:0;font-size:24px}
+.sec{font:700 13px/1.2 var(--disp);letter-spacing:1px;margin:16px 2px 6px}
+input,select,button.b,.pod div,.kd,.k{border-radius:var(--r2)}
+button.b{font-weight:600}nav button,.tag,.chip,.ha,.mh-cd{border-radius:999px}
+button{transition:background-color .15s,border-color .15s,opacity .15s}
+nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g):hover{opacity:.9}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+@media(max-width:480px){.card{padding:14px}}
 </style></head><body>
 <header class="hd"><img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg"><div class="tt"><b>White Tigers</b><span>SV Göcklingen · Bezirksoberliga 1</span></div></header>
 <div id="dr" class="dr"><div class="dbk" onclick="menu(0)"></div><aside class="dp" id="dp" aria-label="Menü"></aside></div><nav id="nav"></nav><main id="m"></main>
@@ -120,7 +139,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="24.10.2026, 15:48 Uhr";
+const SEITE="24.10.2026, 16:38 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Daten: "+(j.stand||"–")+" · Seite: "+SEITE)}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}

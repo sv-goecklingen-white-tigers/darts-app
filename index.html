@@ -13,8 +13,8 @@ nav{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;max-width:900px;margi
 nav button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:20px;font:inherit;cursor:pointer}
 nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 main{max-width:900px;margin:auto;padding:0 14px 40px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:10px 0}
-h2{font-size:18px;margin:4px 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+h2{font-size:17px;margin:2px 0 10px;font-weight:700}
 input,select,button.b{font:inherit;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);max-width:100%}
 input[type=number]{width:72px}
 button.b{background:var(--ac);color:#fff;border:0;cursor:pointer}button.g{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
@@ -38,7 +38,7 @@ nav button{min-height:44px}
 @media(max-width:480px){main{padding:0 10px 40px}.card{padding:12px}.big{font-size:30px}.row>button.b{flex:1 1 140px}}
 .hero{position:relative;overflow:hidden;background:#111;color:#fff;border-radius:14px;padding:18px 16px;margin:10px 0}
 .hero h2{color:#fff;margin:0;font-size:22px}.hero .mu{color:#bbb}
-.hero{min-height:120px}.hero svg{position:absolute;right:-50px;top:-50px;width:210px;height:210px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
+.hero{min-height:96px;padding-right:110px}.hero svg{position:absolute;right:-34px;top:-30px;width:160px;height:160px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
 .kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:10px 0}
 .k{border-radius:12px;padding:12px 6px;text-align:center;color:#fff}.k b{display:block;font-size:30px;line-height:1.1}.k span{font-size:12px;opacity:.9}
 .kn{background:#2563a8}.kt{background:#0e8a8a}.kv{background:#7a3fb0}.ki{background:#4b4fb8}.ks{background:#6b7a8c}.kg{background:#1f8a4c}.kr{background:#c8102e}.kb{background:#111}.ky{background:#d9a400;color:#111}.ko{background:#e8730c}
@@ -69,6 +69,12 @@ nav button{min-height:44px}
 .crr{display:grid;grid-template-columns:52px 1fr 1fr 1fr;gap:6px;align-items:center;margin:5px 0}.crr button{min-height:46px;padding:0}
 .ct td,.ct th{text-align:center}.ct th.cur,.ct td.cur{background:rgba(232,115,12,.16)}
 .opt{display:block;width:100%;margin:8px 0;text-align:left;font-size:18px;min-height:52px}
+.stt{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin:12px 0}.stt.c3{grid-template-columns:repeat(3,1fr)}
+.stt div{background:var(--card);padding:11px 4px;text-align:center}.stt b{display:block;font-size:24px;line-height:1.15}.stt span{display:block;font-size:11px;color:var(--mu);letter-spacing:.3px;margin-top:2px}
+.sec{font-size:12px;font-weight:700;color:var(--mu);letter-spacing:.5px;text-transform:uppercase;margin:14px 2px 0}
+.tg{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 2px}.tg .tag,.tg .ha{margin:0;font-size:11px;padding:2px 8px;letter-spacing:.2px}
+.gm{padding:12px;gap:10px}.gm .gr{min-width:58px}.gm .ib{min-height:38px;min-width:38px;font-size:16px;border-radius:10px}
+.gb{display:flex;flex-direction:column;gap:6px}
 canvas{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--bd)}.hide{display:none}
 </style></head><body>
 <img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg">
@@ -82,9 +88,10 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
+const SEITE="24.10.2026, 14:22 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
- try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus(j.stand?"Stand: "+j.stand:"")}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
+ try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Daten: "+(j.stand||"–")+" · Seite: "+SEITE)}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
  draw()}
 function nav(){$("#nav").innerHTML=TABS.filter(t=>t!="Verwaltung"||canEd()).map(t=>`<button class="${t==tab?"on":""}" onclick="go('${t}')">${IC[t]} ${t}</button>`).join("")}
 function go(t){tab=t;draw();scrollTo(0,0)}
@@ -96,10 +103,10 @@ function Start(){
  const today=new Date().toISOString().slice(0,10),ms=sorted();
  const nx=ms.find(m=>m.date>=today&&!played(m)&&!m.bye),last=[...ms].reverse().find(played);
   const open=ms.filter(m=>m.date<today&&!played(m)&&!m.bye).length;
- return `<div class="card"><h2>Nächstes Spiel</h2>${nx?`<span class="tag">${nx.type}</span> <b>${esc(nx.opp)}</b><div class="mu">${nx.home?"Heim":"Auswärts"} · ${fd(nx.date)} ${esc(nx.time||"")}<br>${esc(nx.loc||"")}</div>`:`<span class="mu">Kein anstehendes Spiel eingetragen.</span>`}</div>
+ return `<div class="card"><h2>Nächstes Spiel</h2>${nx?`<b style="font-size:18px">${esc(nx.opp)}</b><div class="tg"><span class="ha ${nx.home?"h":"a"}">${nx.home?"🏠 Heim":"🚗 Auswärts"}</span><span class="tag">${nx.type=="Pokal"?"🏆 Pokal":"🏁 Liga"}</span></div><div class="mu" style="margin-top:4px">${fd(nx.date)}${nx.time?" · "+esc(nx.time):""}<br>${esc(nx.loc||"")}</div>`:`<span class="mu">Kein anstehendes Spiel eingetragen.</span>`}</div>
  ${last?`<div class="card"><h2>Letztes Ergebnis</h2><span class="big ${+last.sa>+last.sb?"ok":+last.sa<+last.sb?"no":""}">${last.sa}:${last.sb}</span> <span class="mu">gegen ${esc(last.opp)}</span></div>`:""}
  ${open?`<div class="card">⚠️ Bei <b>${open}</b> vergangenen Spielen fehlt noch das Ergebnis. <a href="#" onclick="go('Spiele');return false">Jetzt eintragen</a></div>`:""}
- <div class="card"><h2>Bilanz</h2>${[["Liga","🏁"],["Pokal","🏆"]].map(([ty,ic])=>{const g=ms.filter(m=>played(m)&&m.type==ty),W=g.filter(m=>+m.sa>+m.sb).length,D=g.filter(m=>+m.sa==+m.sb).length,L=g.length-W-D;return `<div class="row" style="margin:4px 0"><b style="min-width:84px">${ic} ${ty}</b><span><span class="ok"><b>${W}</b> Siege</span> · <b>${D}</b> Unentschieden · <span class="no"><b>${L}</b> Niederlagen</span></span></div>`}).join("")}</div>`}
+ <div class="card"><h2>Bilanz</h2>${[["Liga","🏁"],["Pokal","🏆"]].map(([ty,ic])=>{const g=ms.filter(m=>played(m)&&m.type==ty),W=g.filter(m=>+m.sa>+m.sb).length,D=g.filter(m=>+m.sa==+m.sb).length,L=g.length-W-D;return `<div class="sec" style="margin-top:${ty=="Liga"?0:14}px">${ic} ${ty}</div><div class="stt c3" style="margin:6px 0 0"><div><b class="ok">${W}</b><span>Siege</span></div><div><b>${D}</b><span>Unentschieden</span></div><div><b class="no">${L}</b><span>Niederlagen</span></div></div>`}).join("")}</div>`}
 /* Spiele */
 function Spiele(){
  const today=new Date().toISOString().slice(0,10),ms=sorted(),nx=ms.find(m=>!m.bye&&!played(m)&&m.date>=today);
@@ -108,9 +115,9 @@ function Spiele(){
   const p=played(m),r=p?(+m.sa>+m.sb?"w":+m.sa<+m.sb?"l":"d"):(nx&&nx.id==m.id?"n":"");
   const inp=!p&&m.date<=today&&canEd();
   return `<div class="gm ${r}"><div class="gn">${m.sp||(m.type=="Pokal"?"🏆":"–")}</div>
- <div class="gi"><b>${esc(m.opp)}</b>${r=="n"?` <span class="tag">nächstes Spiel</span>`:""}${m.type!="Liga"?` <span class="tag">${m.type}${m.rd?" · "+m.rd:""}</span>`:""}<span class="ha ${m.home?"h":"a"}">${m.home?"🏠 HEIM":"🚗 AUSWÄRTS"}</span><small>${fd(m.date)} · ${esc(m.time||"")}</small>${!p&&m.loc?`<small>${esc(m.loc)}</small>`:""}${m.chk?`<small>⚠️ aus der Hinrunde abgeleitet – bitte prüfen</small>`:""}</div>
+ <div class="gi"><b>${esc(m.opp)}</b><div class="tg"><span class="ha ${m.home?"h":"a"}">${m.home?"🏠 Heim":"🚗 Auswärts"}</span>${m.type!="Liga"?`<span class="tag">🏆 ${m.type}${m.rd?" · "+m.rd:""}</span>`:""}${r=="n"?`<span class="tag">Nächstes Spiel</span>`:""}</div><small>${fd(m.date)}${m.time?" · "+esc(m.time):""}</small>${!p&&m.loc?`<small>${esc(m.loc)}</small>`:""}${m.chk?`<small>⚠️ aus der Hinrunde abgeleitet – bitte prüfen</small>`:""}</div>
  ${p?`<div class="gr"><span class="res ${r=="w"?"ok":r=="l"?"no":""}">${m.sa}:${m.sb}</span>${m.la!=null&&m.lb!=null?`<small>Legs ${m.la}:${m.lb}</small>`:""}</div>`:""}
- ${REPS[m.sp||m.id]?`<button class="b g ib" title="Spielbericht" onclick="rep('${m.id}')">📋</button>`:""}<button class="b g ib" title="Instagram-Bild" onclick="pic('${m.id}')">📸</button>
+ <div class="gb">${REPS[m.sp||m.id]?`<button class="b g ib" title="Spielbericht" onclick="rep('${m.id}')">📋</button>`:""}<button class="b g ib" title="Instagram-Bild" onclick="pic('${m.id}')">📸</button></div>
  ${inp?`<div class="gx">Ergebnis: <input type="number" inputmode="numeric" min="0" max="12" onchange="setR('${m.id}','sa',this.value)"> : <input type="number" inputmode="numeric" min="0" max="12" onchange="setR('${m.id}','sb',this.value)"> Legs: <input type="number" inputmode="numeric" min="0" onchange="setR('${m.id}','la',this.value)"> : <input type="number" inputmode="numeric" min="0" onchange="setR('${m.id}','lb',this.value)"></div>`:""}</div>`};
  return `<div class="card" style="padding:10px 12px"><div class="mu" style="font-size:13px">Spieltag 1 bis ${Math.max(0,...ms.map(m=>m.sp||0))} · <span class="ok">■</span> Sieg · <span class="no">■</span> Niederlage · <span style="color:var(--ac)">■</span> nächstes Spiel · 📸 = Instagram-Bild</div></div>`+(ms.length?ms.map(row).join(""):`<div class="card mu">Noch keine Spiele angelegt.</div>`)}
 function addM(){const o=$("#no").value.trim();if(!o)return;S.matches.push({id:"m"+Date.now(),type:$("#nt").value,date:$("#nd").value,time:$("#nz").value,opp:o,home:$("#nh").value=="1",loc:$("#nl").value});save();draw()}
@@ -146,17 +153,27 @@ function Statistik(){
  const gv=p=>{const a=p.s||{},b=p.sp||{};if(SM=="Liga")return a;if(SM=="Pokal")return b;const r={};SK.forEach(k=>r[k[0]]=(a[k[0]]||0)+(b[k[0]]||0));return r};
  const P=S.players.map(p=>{const s=gv(p),ew=s.ew||0,el=s.el||0,dw=s.dw||0,dl=s.dl||0,g=ew+el+dw+dl;return{n:p.name,ew,el,dw,dl,g,win:ew+dw,a:s.a180||0,hf:s.hf||0,sl:s.sl||0,pc:g?Math.round(100*(ew+dw)/g):0}}).filter(p=>p.g||p.a||p.hf||p.sl).sort((a,b)=>b.win-a.win||b.pc-a.pc);
  const sum=k=>P.reduce((a,p)=>a+p[k],0);
- const top=(f,min)=>{const c=P.filter(min).sort((a,b)=>f(b)-f(a));return c.length&&f(c[0])>0?c[0]:null};
  const bar=(a,b)=>a+b?`<div class="bar"><i class="w" style="flex:${a}">${a||""}</i><i class="l" style="flex:${b}">${b||""}</i></div>`:`<div class="bar"></div>`;
- const hon=[["🎯 Wurfkönig","Highscores",top(p=>p.a,p=>p.a>0),p=>p.a],["🏆 Meiste Siege","Siege",top(p=>p.win,p=>p.win>0),p=>p.win],["🔥 Einzel-Ass","Einzelquote (ab 3 Einzel)",top(p=>p.ew/(p.ew+p.el),p=>p.ew+p.el>=3),p=>Math.round(100*p.ew/(p.ew+p.el))+"%"],["🤝 Doppel-Spezialist","Doppelquote (ab 3 Doppel)",top(p=>p.dw/(p.dw+p.dl),p=>p.dw+p.dl>=3),p=>Math.round(100*p.dw/(p.dw+p.dl))+"%"],["⚡ Shortleg-Jäger","Shortlegs",top(p=>p.sl,p=>p.sl>0),p=>p.sl]].filter(h=>h[2]);
+ const rk=(f,ok,fmt)=>{const c=P.filter(ok).map(p=>({p,v:f(p)})).sort((a,b)=>b.v-a.v||b.p.g-a.p.g);const out=[];let r=0,pv=null;c.forEach((x,i)=>{if(pv===null||Math.abs(x.v-pv)>1e-9){r=i+1;pv=x.v}if(r<=3)out.push({r,n:x.p.n,t:fmt(x.p)})});return out};
+ const qt=(w,l)=>Math.round(100*w/(w+l))+"% ("+w+" von "+(w+l)+")";
+ const BL=[["🎯 High Scores","171 / 174 / 177 / 180",rk(p=>p.a,p=>p.a>0,p=>p.a+"×")],
+ ["🏁 High Finishes","Checkout über 100",rk(p=>p.hf,p=>p.hf>0,p=>p.hf+"×")],
+ ["⚡ Shortlegs","",rk(p=>p.sl,p=>p.sl>0,p=>p.sl+"×")],
+ ["🏆 Meiste Siege","Einzel + Doppel",rk(p=>p.win,p=>p.win>0,p=>p.win)],
+ ["🎯 Einzel gewonnen","",rk(p=>p.ew,p=>p.ew>0,p=>p.ew)],
+ ["🤝 Doppel gewonnen","",rk(p=>p.dw,p=>p.dw>0,p=>p.dw)],
+ ["🔥 Einzelquote","mind. 3 Einzel gespielt",rk(p=>p.ew/(p.ew+p.el),p=>p.ew+p.el>=3,p=>qt(p.ew,p.el))],
+ ["🤜🤛 Doppelquote","mind. 3 Doppel gespielt",rk(p=>p.dw/(p.dw+p.dl),p=>p.dw+p.dl>=3,p=>qt(p.dw,p.dl))],
+ ["📋 Einzel gespielt","Einsätze",rk(p=>p.ew+p.el,p=>p.ew+p.el>0,p=>p.ew+p.el)],
+ ["📋 Doppel gespielt","Einsätze",rk(p=>p.dw+p.dl,p=>p.dw+p.dl>0,p=>p.dw+p.dl)]].filter(x=>x[2].length);
  const medal=["🥇","🥈","🥉"];
  return `<div class="hero">${boardSVG()}
  <h2>${SM=="Pokal"?"Pokal-Statistik":SM=="Gesamt"?"Gesamt-Statistik":"Saison-Statistik"}</h2><div class="mu">White Tigers · ${SM=="Liga"?"Bezirksoberliga 1":SM=="Pokal"?"BDL-Pokal":"Liga + Pokal"}</div></div>
  <div class="row">${["Liga","Pokal","Gesamt"].map(k=>`<button class="b ${SM==k?"":"g"}" onclick="SM='${k}';draw()">${k=="Liga"?"🏁 Liga":k=="Pokal"?"🏆 Pokal":"➕ Gesamt"}</button>`).join("")}</div>
- <div class="kp"><div class="k kn"><b>${ms.length}</b><span>Spiele</span></div><div class="k kg"><b>${w}</b><span>Siege</span></div><div class="k ks"><b>${d}</b><span>Remis</span></div><div class="k kr"><b>${l}</b><span>Niederlagen</span></div></div>
- <div class="kp"><div class="k ko"><b>${sf}:${sa}</b><span>Partien</span></div>${LG2.n?`<div class="k ki"><b>${LG2.a}:${LG2.b}</b><span>Legs</span></div>`:""}<div class="k ky"><b>${sum("a")}</b><span>High Scores 🎯</span></div><div class="k kt"><b>${sum("sl")}</b><span>Shortlegs</span></div><div class="k kv"><b>${sum("hf")}</b><span>High Finish</span></div></div>
+ <div class="stt"><div><b>${ms.length}</b><span>Spiele</span></div><div><b class="ok">${w}</b><span>Siege</span></div><div><b>${d}</b><span>Remis</span></div><div><b class="no">${l}</b><span>Niederlagen</span></div></div>
+ <div class="stt c3"><div><b>${sf}:${sa}</b><span>Partien</span></div><div><b>${LG2.n?LG2.a+":"+LG2.b:"–"}</b><span>Legs</span></div><div><b>${P.filter(p=>p.g).length}</b><span>Spieler im Einsatz</span></div><div><b>${sum("a")}</b><span>High Scores</span></div><div><b>${sum("hf")}</b><span>High Finishes</span></div><div><b>${sum("sl")}</b><span>Shortlegs</span></div></div>
  <div class="card"><h2>📅 Spielverlauf</h2>${ms.length?ms.map(m=>`<div style="margin:10px 0"><div class="row" style="margin:0 0 4px"><b>${m.type=="Pokal"?"🏆 ":""}${esc(m.opp)}</b><span class="mu" style="font-size:13px">${fd(m.date)} · ${m.home?"Heim":"Auswärts"}</span><span style="margin-left:auto;font-weight:800" class="${+m.sa>+m.sb?"ok":+m.sa<+m.sb?"no":""}">${m.sa}:${m.sb}</span></div>${bar(+m.sa,+m.sb)}${m.la!=null&&m.lb!=null?`<div class="mu" style="font-size:12px;margin-top:2px">Legs ${m.la}:${m.lb}</div>`:""}</div>`).join(""):`<span class="mu">Noch keine Ergebnisse.</span>`}<div class="mu" style="font-size:12px;margin-bottom:6px">High Score = 171, 174, 177 oder 180 · High Finish = Checkout über 100</div><div class="mu" style="font-size:12px">Grün = gewonnene Partien der Tigers · Rot = Partien des Gegners (12 Partien pro Spiel)</div></div>
- ${hon.length?`<div class="card"><h2>🏅 Bestenliste</h2><div class="pod">${hon.map(h=>`<div><small>${h[0]}</small><b>${esc(h[2].n)}</b><small>${h[3](h[2])} ${h[1].split(" ")[0]}</small></div>`).join("")}</div></div>`:""}
+ ${BL.length?`<div class="card"><h2>🏅 Bestenliste</h2><p class="mu" style="font-size:13px;margin:0 0 8px">Bei Gleichstand stehen alle Spieler mit demselben Wert auf demselben Platz.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px">${BL.map(c=>`<div style="border:1px solid var(--bd);border-radius:12px;padding:10px 12px"><b>${c[0]}</b>${c[1]?`<div class="mu" style="font-size:12px">${c[1]}</div>`:""}${c[2].map(x=>`<div style="display:flex;gap:8px;align-items:center;padding:5px 0;border-top:1px solid var(--bd);margin-top:5px"><span>${medal[x.r-1]}</span><span style="flex:1;min-width:0">${esc(x.n)}</span><b style="white-space:nowrap">${x.t}</b></div>`).join("")}</div>`).join("")}</div></div>`:""}
  <div class="card"><h2>🎯 Spieler-Rangliste</h2>${P.length?P.map((p,i)=>{const C=2*Math.PI*26;return `<div class="pl"><div class="rk">${medal[i]||i+1}</div>
  <div class="ring"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="${p.g?"#c8102e":"var(--bd)"}" stroke-width="8"/><circle cx="32" cy="32" r="26" fill="none" stroke="#1f8a4c" stroke-width="8" stroke-dasharray="${C*p.pc/100} ${C}" transform="rotate(-90 32 32)"/></svg><b>${p.g?p.pc+"%":"–"}</b></div>
  <div class="pb"><div class="nm">${esc(p.n)} <span class="mu" style="font-weight:400;font-size:13px">${p.win}:${p.g-p.win}</span></div>

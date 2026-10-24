@@ -92,10 +92,21 @@ nav{background:var(--bg)}nav button{font-weight:600}
 .mh-vs{text-align:center}.mh-vs i{display:block;font:800 30px/1 var(--disp);font-style:normal;color:var(--ac)}.mh-vs .ha{margin:0 0 4px}
 .mh-d{text-align:center;font-weight:600}.mh-cd{display:block;width:max-content;max-width:100%;margin:10px auto 0;background:var(--ac);color:#14161a;font:800 16px var(--disp);padding:4px 14px;border-radius:14px}
 .lr{display:flex;align-items:center;gap:12px}.lr .res{font-size:40px!important}
+.nd{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.nd::-webkit-scrollbar{display:none}.nm{display:none;align-items:center;gap:12px;width:100%}
+.nm button{background:var(--ac);color:#14161a;border:0;border-radius:12px;font:700 16px var(--disp);min-height:44px;padding:0 16px}.nm span{font:700 22px var(--disp)}
+.dr{position:fixed;inset:0;z-index:60;visibility:hidden;transition:visibility 0s .22s}.dr.open{visibility:visible;transition:none}
+.dbk{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .2s}.dr.open .dbk{opacity:1}
+.dp{position:absolute;left:0;top:0;bottom:0;width:min(82vw,310px);background:var(--card);transform:translateX(-102%);transition:transform .22s;padding:calc(14px + env(safe-area-inset-top,0px)) 12px 20px;overflow:auto;box-shadow:4px 0 24px rgba(0,0,0,.35)}
+.dr.open .dp{transform:none}
+.dh{display:flex;align-items:center;gap:12px;padding:4px 6px 14px;margin-bottom:6px;border-bottom:1px solid var(--bd)}.dh b{display:block;font:800 22px/1 var(--disp);text-transform:uppercase}.dh small{color:var(--mu);font-size:12px}
+.dpi{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:0;border-left:4px solid transparent;border-radius:10px;color:var(--tx);font:600 18px var(--disp);letter-spacing:.2px;padding:0 12px;min-height:52px;cursor:pointer}.dpi span{width:28px;text-align:center;font-size:20px}
+.dpi.on{background:rgba(240,138,36,.14);border-left-color:var(--ac)}.dpi:active{background:var(--bd)}
+@media(max-width:760px){.nd{display:none}.nm{display:flex}.hd{height:92px}.hd .tt b{font-size:30px}}
+@media(prefers-reduced-motion:reduce){.dp,.dbk{transition:none}}
 canvas{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--bd)}.hide{display:none}
 </style></head><body>
 <header class="hd"><img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg"><div class="tt"><b>White Tigers</b><span>SV Göcklingen · Bezirksoberliga 1</span></div></header>
-<nav id="nav"></nav><main id="m"></main>
+<div id="dr" class="dr"><div class="dbk" onclick="menu(0)"></div><aside class="dp" id="dp" aria-label="Menü"></aside></div><nav id="nav"></nav><main id="m"></main>
 <div class="mu" id="st" style="text-align:center;font-size:12px;padding-bottom:20px">Lade Daten…</div>
 <script>
 const TABS=["Start","Spiele","Statistik","Aufstellung","Instagram","Minispiele","Team","Verwaltung"];const IC={Start:"🏠",Spiele:"🎯",Statistik:"📊",Aufstellung:"🧩",Instagram:"📸",Minispiele:"🎲",Team:"🐯",Verwaltung:"⚙️"};let usr=null;const canEd=()=>false;
@@ -103,17 +114,20 @@ let S={players:[],matches:[]},tab="Start",sel=null,db=null,dl=null,AV={};
 const av=(o,s)=>{const u=LOGOS[lk(o)];s=s||44;return u?`<img class="av" alt="" src="${u}" style="width:${s}px;height:${s}px">`:`<span class="av" style="width:${s}px;height:${s}px">${esc(String(o).split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase())}</span>`};
 const tig=s=>`<img class="av" alt="White Tigers" src="${LG.src}" style="width:${s}px;height:${s}px">`;
 function cloneBan(){const h=document.querySelector(".hd");if(h&&!h.querySelector(".ban2")){const c=h.querySelector(".ban").cloneNode();c.className="ban2";c.alt="";h.insertBefore(c,h.querySelector(".tt"))}}
+function menu(o){const d=document.getElementById("dr");if(d)d.classList.toggle("open",!!o)}
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="24.10.2026, 14:50 Uhr";
+const SEITE="24.10.2026, 15:48 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Daten: "+(j.stand||"–")+" · Seite: "+SEITE)}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
  draw()}
-function nav(){cloneBan();$("#nav").innerHTML=TABS.filter(t=>t!="Verwaltung"||canEd()).map(t=>`<button class="${t==tab?"on":""}" onclick="go('${t}')">${IC[t]} ${t}</button>`).join("")}
+function nav(){cloneBan();const L=TABS.filter(t=>t!="Verwaltung"||canEd());
+ $("#nav").innerHTML=`<div class="nd">${L.map(t=>`<button class="${t==tab?"on":""}" onclick="go('${t}')">${IC[t]} ${t}</button>`).join("")}</div><div class="nm"><button onclick="menu(1)" aria-label="Menü öffnen">☰ Menü</button><span>${IC[tab]} ${tab}</span></div>`;
+ $("#dp").innerHTML=`<div class="dh">${tig(46)}<div><b>White Tigers</b><small>Göcklingen · Bezirksoberliga 1</small></div></div>${L.map(t=>`<button class="dpi ${t==tab?"on":""}" onclick="go('${t}');menu(0)"><span>${IC[t]}</span>${t}</button>`).join("")}<button class="dpi" style="margin-top:8px;color:var(--mu)" onclick="menu(0)"><span>✕</span>Schließen</button>`}
 function go(t){tab=t;draw();scrollTo(0,0)}
 function draw(){nav();$("#m").innerHTML=({Start,Spiele,Statistik,Aufstellung,Instagram,Minispiele,Team,Verwaltung})[tab]()}
 const played=m=>m.sa!=null&&m.sa!==""&&m.sb!=null&&m.sb!=="";

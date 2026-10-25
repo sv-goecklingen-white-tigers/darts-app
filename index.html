@@ -139,6 +139,8 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 @keyframes grow{from{clip-path:inset(0 100% 0 0)}}
 @keyframes ring{from{stroke-dasharray:0 200}}
 #m.in>*:not(.st2),#m.in .st2>div>*{animation:up .4s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*60ms)}
+@keyframes pop{from{opacity:0;transform:scale(.4)}}
+#m.in .pvc i{animation:pop .3s cubic-bezier(.2,.7,.3,1.3) both;animation-delay:calc(.25s + var(--i,0)*40ms)}
 #m.in .bar{animation:grow .8s cubic-bezier(.2,.7,.3,1) .25s both}
 #m.in .ring circle+circle{animation:ring .9s cubic-bezier(.2,.7,.3,1) .3s both}
 #lu.in b{display:block}#lu.in b,#lu.in li{animation:up .35s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*70ms)}
@@ -148,6 +150,10 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 .lt tr.me td{background:rgba(240,138,36,.14);font-weight:700}.lt tr.me td:first-child{box-shadow:inset 3px 0 var(--ac)}
 .lt tr.auf td:first-child{color:var(--ok)}.lt tr.ab td:first-child{color:var(--no)}
 @media(max-width:480px){.lt .lg{display:none}.lt td,.lt th{padding:7px 3px;font-size:13px}}
+/* Spielverlauf: 12 Partien in Blöcken 4 Einzel, 2 Doppel, 4 Einzel, 2 Doppel */
+.pv{display:flex;gap:8px}.pvg{flex:4;min-width:0}.pvg.d{flex:2}.pvc{display:flex;gap:3px}
+.pvc i{flex:1;height:22px;border-radius:5px}.pvc .w{background:#1f8a4c}.pvc .l{background:#c8102e}
+.pvg span{display:block;font-size:11px;color:var(--mu);text-align:center;margin-top:2px}
 /* Nächstes Spiel: Buttons, Startseite zweispaltig am PC, Fußzeile */
 .mh-bt{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
 .mh-bt a{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;text-decoration:none;font-size:14px;font-weight:600;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:999px}
@@ -194,7 +200,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="25.10.2026, 17:23 Uhr";
+const SEITE="25.10.2026, 17:40 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
@@ -290,6 +296,7 @@ function Statistik(){
  const gv=p=>{const a=p.s||{},b=p.sp||{};if(SM=="Liga")return a;if(SM=="Pokal")return b;const r={};SK.forEach(k=>r[k[0]]=(a[k[0]]||0)+(b[k[0]]||0));return r};
  const P=S.players.map(p=>{const s=gv(p),ew=s.ew||0,el=s.el||0,dw=s.dw||0,dl=s.dl||0,g=ew+el+dw+dl;return{n:p.name,ew,el,dw,dl,g,win:ew+dw,a:s.a180||0,hf:s.hf||0,sl:s.sl||0,pc:g?Math.round(100*(ew+dw)/g):0}}).filter(p=>p.g||p.a||p.hf||p.sl).sort((a,b)=>b.win-a.win||b.pc-a.pc);
  const sum=k=>P.reduce((a,p)=>a+p[k],0);
+ const blk=g=>`<div class="pv">${[[0,4,"Einzel"],[4,6,"Doppel"],[6,10,"Einzel"],[10,12,"Doppel"]].map(([a,b,t])=>`<div class="pvg${b-a==2?" d":""}"><div class="pvc">${[...g.slice(a,b)].map((x,k)=>`<i class="${x=="1"?"w":"l"}" style="--i:${a+k}"></i>`).join("")}</div><span>${t}</span></div>`).join("")}</div>`;
  const bar=(a,b)=>a+b?`<div class="bar"><i class="w" style="flex:${a}">${a||""}</i><i class="l" style="flex:${b}">${b||""}</i></div>`:`<div class="bar"></div>`;
  const rk=(f,ok,fmt)=>{const c=P.filter(ok).map(p=>({p,v:f(p)})).sort((a,b)=>b.v-a.v||b.p.g-a.p.g);const out=[];let r=0,pv=null;c.forEach((x,i)=>{if(pv===null||Math.abs(x.v-pv)>1e-9){r=i+1;pv=x.v}if(r<=3)out.push({r,n:x.p.n,t:fmt(x.p)})});return out};
  const qt=(w,l)=>Math.round(100*w/(w+l))+"% ("+w+" von "+(w+l)+")";
@@ -318,7 +325,7 @@ function Statistik(){
  <div class="row">${["Liga","Pokal","Gesamt"].map(k=>`<button class="b ${SM==k?"":"g"}" onclick="SM='${k}';draw()">${k=="Liga"?"🏁 Liga":k=="Pokal"?"🏆 Pokal":"➕ Gesamt"}</button>`).join("")}</div>
  <div class="stt"><div><b>${ms.length}</b><span>Spiele</span></div><div><b class="ok">${w}</b><span>Siege</span></div><div><b>${d}</b><span>Remis</span></div><div><b class="no">${l}</b><span>Niederlagen</span></div></div>
  <div class="stt c3"><div><b>${sf}:${sa}</b><span>Partien</span></div><div><b>${LG2.n?LG2.a+":"+LG2.b:"–"}</b><span>Legs</span></div><div><b>${P.filter(p=>p.g).length}</b><span>Spieler im Einsatz</span></div><div><b>${sum("a")}</b><span>High Scores</span></div><div><b>${sum("hf")}</b><span>High Finishes</span></div><div><b>${sum("sl")}</b><span>Shortlegs</span></div></div>
- <div class="card"><h2>📅 Spielverlauf</h2>${ms.length?ms.map(m=>`<div style="margin:10px 0"><div class="row" style="margin:0 0 4px"><b>${m.type=="Pokal"?"🏆 ":""}${esc(m.opp)}</b><span class="mu" style="font-size:13px">${fd(m.date)} · ${m.home?"Heim":"Auswärts"}</span><span style="margin-left:auto;font-weight:800" class="${+m.sa>+m.sb?"ok":+m.sa<+m.sb?"no":""}">${m.sa}:${m.sb}</span></div>${bar(+m.sa,+m.sb)}${m.la!=null&&m.lb!=null?`<div class="mu" style="font-size:12px;margin-top:2px">Legs ${m.la}:${m.lb}</div>`:""}</div>`).join(""):`<span class="mu">Noch keine Ergebnisse.</span>`}<div class="mu" style="font-size:12px;margin-bottom:6px">High Score = 171, 174, 177 oder 180 · High Finish = Checkout über 100</div><div class="mu" style="font-size:12px">Grün = gewonnene Partien der Tigers · Rot = Partien des Gegners (12 Partien pro Spiel)</div></div>
+ <div class="card"><h2>📅 Spielverlauf</h2>${ms.length?ms.map(m=>`<div style="margin:10px 0"><div class="row" style="margin:0 0 4px"><b>${m.type=="Pokal"?"🏆 ":""}${esc(m.opp)}</b><span class="mu" style="font-size:13px">${fd(m.date)} · ${m.home?"Heim":"Auswärts"}</span><span style="margin-left:auto;font-weight:800" class="${+m.sa>+m.sb?"ok":+m.sa<+m.sb?"no":""}">${m.sa}:${m.sb}</span></div>${m.g&&m.g.length==12?blk(m.g):bar(+m.sa,+m.sb)}${m.la!=null&&m.lb!=null?`<div class="mu" style="font-size:12px;margin-top:2px">Legs ${m.la}:${m.lb}</div>`:""}</div>`).join(""):`<span class="mu">Noch keine Ergebnisse.</span>`}<div class="mu" style="font-size:12px;margin-bottom:6px">High Score = 171, 174, 177 oder 180 · High Finish = Checkout über 100</div><div class="mu" style="font-size:12px">Jedes Feld = eine Partie (4 Einzel, 2 Doppel, 4 Einzel, 2 Doppel) · Grün = gewonnen · Rot = verloren</div></div>
  <div class="card"><h2>🏅 Bestenliste</h2><p class="mu" style="font-size:13px;margin:0">Bei Gleichstand stehen alle Spieler mit demselben Wert auf demselben Platz.</p>${GR.map(([h,ix,k])=>`<div class="sec">${h}</div><div style="display:grid;grid-template-columns:repeat(${k},minmax(0,1fr));gap:8px;margin-top:6px">${ix.map(i=>cell(BL[i],k)).join("")}</div>`).join("")}</div>
  ${DT}
  <div class="card"><h2>🎯 Spieler-Rangliste</h2>${P.length?P.map((p,i)=>{const C=2*Math.PI*26;return `<div class="pl"><div class="rk">${medal[i]||i+1}</div>

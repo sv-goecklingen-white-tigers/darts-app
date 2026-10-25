@@ -123,7 +123,44 @@ button{transition:background-color .15s,border-color .15s,opacity .15s}
 nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g):hover{opacity:.9}
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 @media(max-width:480px){.card{padding:14px}}
+/* Animationen: kurz, nur beim Öffnen eines Bereichs, aus bei „Bewegung reduzieren“ */
+.stt b,.res{font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:no-preference){
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+@keyframes grow{from{clip-path:inset(0 100% 0 0)}}
+@keyframes ring{from{stroke-dasharray:0 200}}
+#m.in>*{animation:up .4s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*60ms)}
+#m.in .bar{animation:grow .8s cubic-bezier(.2,.7,.3,1) .25s both}
+#m.in .ring circle+circle{animation:ring .9s cubic-bezier(.2,.7,.3,1) .3s both}
+#lu.in b{display:block}#lu.in b,#lu.in li{animation:up .35s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*70ms)}
+}
+.lt td,.lt th{padding:7px 4px}.lt th{font-size:12px;color:var(--mu);font-weight:600}.lt td:nth-child(n+3),.lt th:nth-child(n+3){text-align:center;white-space:nowrap}
+.lt td:first-child{width:24px;font-weight:700}.ltn{display:flex;align-items:center;gap:8px;min-width:0;overflow-wrap:anywhere}.ltn .av{flex:none}
+.lt tr.me td{background:rgba(240,138,36,.14);font-weight:700}.lt tr.me td:first-child{box-shadow:inset 3px 0 var(--ac)}
+.lt tr.auf td:first-child{color:var(--ok)}.lt tr.ab td:first-child{color:var(--no)}
+@media(max-width:480px){.lt .lg{display:none}.lt td,.lt th{padding:7px 3px;font-size:13px}}
+/* Intro beim Öffnen: Logo erscheint, Dart trifft das Bull, Schriftzug kommt */
+.sp{position:fixed;inset:0;z-index:100;background:#101215;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:pointer;transition:opacity .4s}
+.sp.out{opacity:0;pointer-events:none}
+.sp-lg{position:relative;width:min(56vw,220px);animation:sp-in .5s cubic-bezier(.2,.8,.3,1.2) both}
+.sp-lg img{display:block;width:100%;border-radius:22px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+.sp-lg.hit{animation:sp-in .5s cubic-bezier(.2,.8,.3,1.2) both,sp-hit .25s .85s ease-out}
+.sp-rg{position:absolute;left:50%;top:58%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:3px solid var(--ac);opacity:0;animation:sp-rg .6s .85s ease-out both}
+.sp-dt{position:absolute;left:50%;top:58%;width:0;height:0;animation:sp-fly .38s .5s cubic-bezier(.5,0,.9,.6) both}
+.sp-dt svg{position:absolute;left:0;top:-9px;width:86px;height:18px;transform-origin:0 50%;transform:rotate(-32deg)}
+.sp-tt{text-align:center;color:#fff;animation:up .45s 1s cubic-bezier(.2,.7,.3,1) both}
+.sp-tt b{display:block;font:800 38px/1 var(--disp);letter-spacing:1px;text-transform:uppercase}.sp-tt span{display:block;font-size:13px;color:#c9ced6;margin-top:6px}
+@keyframes sp-in{from{opacity:0;transform:scale(.6)}}
+@keyframes sp-fly{from{transform:translate(70vw,-44vw);opacity:0}15%{opacity:1}}
+@keyframes sp-hit{40%{transform:scale(.96) rotate(-1.5deg)}}
+@keyframes sp-rg{from{opacity:1;transform:scale(.4)}to{opacity:0;transform:scale(5)}}
 </style></head><body>
+<div class="sp" id="sp" hidden><div class="sp-lg hit"><img src="bilder/logo.jpg" alt="White Tigers"><i class="sp-rg"></i><div class="sp-dt"><svg viewBox="0 0 86 18"><path d="M0 9L10 7.6V10.4Z" fill="#d7dbe0"/><rect x="10" y="6" width="26" height="6" rx="2" fill="#9aa3ae"/><path d="M14 6v6M18 6v6M22 6v6M26 6v6" stroke="#5f6670" stroke-width="1"/><rect x="36" y="7.6" width="20" height="2.8" fill="#2a2e35"/><path d="M54 9L86 0L78 9L86 18Z" fill="#f08a24"/><path d="M54 9L86 0L80 9Z" fill="#fff" opacity=".35"/></svg></div></div><div class="sp-tt"><b>White Tigers</b><span>SV Göcklingen · Bezirksoberliga 1</span></div></div>
+<script>
+/* Intro nur einmal pro Browser-Sitzung und nicht bei „Bewegung reduzieren“ */
+let intro=false;try{intro=!matchMedia("(prefers-reduced-motion: reduce)").matches&&!sessionStorage.getItem("intro");sessionStorage.setItem("intro","1")}catch(e){}
+if(intro){const sp=document.getElementById("sp");sp.hidden=false;let done=false;const end=()=>{if(done)return;done=true;sp.classList.add("out");setTimeout(()=>{sp.remove();intro=false;if(typeof fx=="function")fx(document.getElementById("m"))},400)};sp.onclick=end;setTimeout(end,2100)}
+</script>
 <header class="hd"><img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg"><div class="tt"><b>White Tigers</b><span>SV Göcklingen · Bezirksoberliga 1</span></div></header>
 <div id="dr" class="dr"><div class="dbk" onclick="menu(0)"></div><aside class="dp" id="dp" aria-label="Menü"></aside></div><nav id="nav"></nav><main id="m"></main>
 <div class="mu" id="st" style="text-align:center;font-size:12px;padding-bottom:20px">Lade Daten…</div>
@@ -139,16 +176,23 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="25.10.2026, 10:07 Uhr";
+const SEITE="25.10.2026, 17:09 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Daten: "+(j.stand||"–")+" · Seite: "+SEITE)}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
+ try{const r=await fetch("tabelle.json?v="+Date.now());if(r.ok)TAB=await r.json()}catch(e){}
  draw()}
 function nav(){cloneBan();const L=TABS.filter(t=>t!="Verwaltung"||canEd());
  $("#nav").innerHTML=`<div class="nd">${L.map(t=>`<button class="${t==tab?"on":""}" onclick="go('${t}')">${IC[t]} ${t}</button>`).join("")}</div><div class="nm"><button onclick="menu(1)" aria-label="Menü öffnen">☰ Menü</button><span>${IC[tab]} ${tab}</span></div>`;
  $("#dp").innerHTML=`<div class="dh">${tig(46)}<div><b>White Tigers</b><small>Göcklingen · Bezirksoberliga 1</small></div></div>${L.map(t=>`<button class="dpi ${t==tab?"on":""}" onclick="go('${t}');menu(0)"><span>${IC[t]}</span>${t}</button>`).join("")}<button class="dpi" style="margin-top:8px;color:var(--mu)" onclick="menu(0)"><span>✕</span>Schließen</button>`}
-function go(t){tab=t;draw();scrollTo(0,0)}
-function draw(){nav();$("#m").innerHTML=({Start,Spiele,Statistik,Aufstellung,Instagram,Minispiele,Team,Verwaltung})[tab]()}
+function go(t){tab=t;anim=true;draw();scrollTo(0,0)}
+function draw(){nav();$("#m").innerHTML=({Start,Spiele,Statistik,Aufstellung,Instagram,Minispiele,Team,Verwaltung})[tab]();if(anim&&!intro){anim=false;fx($("#m"))}}
+/* Animationen */
+let anim=true;const RM=matchMedia("(prefers-reduced-motion: reduce)");
+const restart=(e,c)=>{e.classList.remove(c);void e.offsetWidth;e.classList.add(c)};
+function fx(m){if(RM.matches)return;[...m.children].forEach((e,i)=>e.style.setProperty("--i",Math.min(i,8)));restart(m,"in");m.querySelectorAll(".stt b,.lr .res").forEach(cnt)}
+function cnt(e){const t=e.textContent;if(!/\d/.test(t))return;const t0=performance.now(),D=700;const st=n=>{const p=Math.min(1,Math.max(0,(n-t0)/D)),k=1-Math.pow(1-p,3);e.textContent=t.replace(/\d+/g,d=>Math.round(+d*k));if(p<1)requestAnimationFrame(st)};requestAnimationFrame(st)}
+function fxL(){const l=$("#lu");if(RM.matches||!l)return;l.querySelectorAll("b,li").forEach((e,i)=>e.style.setProperty("--i",i));restart(l,"in")}
 const played=m=>m.sa!=null&&m.sa!==""&&m.sb!=null&&m.sb!=="";
 const sorted=()=>[...S.matches].sort((a,b)=>(a.date||"").localeCompare(b.date||""));
 /* Start */
@@ -164,7 +208,15 @@ function Start(){
  <span class="mh-cd">${dd<=0?"Heute":dd==1?"Morgen":"in "+dd+" Tagen"}</span></div>`:`<div class="card"><h2>Nächstes Spiel</h2><span class="mu">Kein anstehendes Spiel eingetragen.</span></div>`}
  ${last?`<div class="card"><h2>Letztes Ergebnis</h2><div class="lr">${av(last.opp,52)}<div style="flex:1;min-width:0"><b>${esc(last.opp)}</b><div class="mu" style="font-size:13px">${last.sp?"Spieltag "+last.sp:last.type} · ${fd(last.date)}</div></div><span class="res big ${+last.sa>+last.sb?"ok":+last.sa<+last.sb?"no":""}">${last.sa}:${last.sb}</span></div></div>`:""}
  ${open?`<div class="card">⚠️ Bei <b>${open}</b> vergangenen Spielen fehlt noch das Ergebnis. <a href="#" onclick="go('Spiele');return false">Jetzt eintragen</a></div>`:""}
+ ${Tabelle()}
  <div class="card"><h2>Bilanz</h2>${[["Liga","🏁"],["Pokal","🏆"]].map(([ty,ic])=>{const g=ms.filter(m=>played(m)&&m.type==ty),W=g.filter(m=>+m.sa>+m.sb).length,D=g.filter(m=>+m.sa==+m.sb).length,L=g.length-W-D;return `<div class="sec" style="margin-top:${ty=="Liga"?0:14}px">${ic} ${ty}</div><div class="stt c3" style="margin:6px 0 0"><div><b class="ok">${W}</b><span>Siege</span></div><div><b>${D}</b><span>Unentschieden</span></div><div><b class="no">${L}</b><span>Niederlagen</span></div></div>`}).join("")}</div>`}
+/* Ligatabelle (kommt aus daten.json, aktualisiert mit tabelle_holen.py) */
+function Tabelle(){
+ if(!TAB||!TAB.rows||!TAB.rows.length)return "";
+ const me=t=>/white tigers/i.test(t);
+ return `<div class="card"><h2>Tabelle</h2><table class="lt"><tr><th>#</th><th>Team</th><th>Sp.</th><th>S-U-N</th><th class="lg">Legs</th><th>Pkt.</th></tr>
+ ${TAB.rows.map(r=>`<tr class="${me(r.team)?"me ":""}${r.zone||""}"><td>${r.pl}</td><td><span class="ltn">${me(r.team)?tig(26):av(r.team,26)}<span>${esc(r.team)}</span></span></td><td>${r.sp}</td><td>${r.g}-${r.u}-${r.v}</td><td class="lg">${esc(r.legs)}</td><td><b>${r.pkt}</b></td></tr>`).join("")}</table>
+ <div class="mu" style="font-size:12px;margin-top:8px">Stand: ${esc(TAB.stand)} · Quelle: Badische Dart Liga · <span class="ok">■</span> Aufstieg · <span class="no">■</span> Abstieg</div></div>`}
 /* Spiele */
 function Spiele(){
  const today=new Date().toISOString().slice(0,10),ms=sorted(),nx=ms.find(m=>!m.bye&&!played(m)&&m.date>=today);
@@ -276,7 +328,7 @@ function lineup(){
  const r=i=>here[i%here.length];const b1=[0,3,4,7].map(r),b2=[1,2,5,6].map(r);
  const duos=b=>[[[0,1],[2,3]],[[0,2],[1,3]],[[0,3],[1,2]]].map(o=>({o,v:Math.abs(b[o[0][0]].s+b[o[0][1]].s-b[o[1][0]].s-b[o[1][1]].s)+Math.random()*.6})).sort((a,b)=>a.v-b.v)[0].o.map(([x,y])=>b[x].n+" & "+b[y].n);
  const blk=[["Einzel (Block 1)",b1.map(x=>x.n)],["Doppel (Block 1)",duos(b1)],["Einzel (Block 2)",b2.map(x=>x.n)],["Doppel (Block 2)",duos(b2)]];
- $("#lu").innerHTML=`<div class="card"><h2>Vorschlag</h2>${blk.map(([t,a])=>`<b>${t}</b><ol style="margin:4px 0 12px">${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`).join("")}${here.length<8?`<p class="mu">Nur ${here.length} Spieler: ${b1.filter(x=>b2.includes(x)).map(x=>esc(x.n)).join(" & ")} spielen in beiden Einzel-Blöcken.</p>`:""}${here.length>8?`<p class="mu">Nicht eingesetzt: ${here.slice(8).map(x=>esc(x.n)).join(", ")}</p>`:""}<p class="mu" style="font-size:13px">Basis: Siegquote aus Liga und Pokal (Spieler mit wenigen Spielen werden zum Durchschnitt hin gezogen) und Tagesform. Doppel werden möglichst ausgewogen gepaart.</p></div>`}
+ $("#lu").innerHTML=`<div class="card"><h2>Vorschlag</h2>${blk.map(([t,a])=>`<b>${t}</b><ol style="margin:4px 0 12px">${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`).join("")}${here.length<8?`<p class="mu">Nur ${here.length} Spieler: ${b1.filter(x=>b2.includes(x)).map(x=>esc(x.n)).join(" & ")} spielen in beiden Einzel-Blöcken.</p>`:""}${here.length>8?`<p class="mu">Nicht eingesetzt: ${here.slice(8).map(x=>esc(x.n)).join(", ")}</p>`:""}<p class="mu" style="font-size:13px">Basis: Siegquote aus Liga und Pokal (Spieler mit wenigen Spielen werden zum Durchschnitt hin gezogen) und Tagesform. Doppel werden möglichst ausgewogen gepaart.</p></div>`;fxL()}
 /* Instagram */
 const TPL=new Image();TPL.src="bilder/vorlage.jpg";
 const LG=new Image();LG.src="bilder/logo.jpg";
@@ -290,7 +342,7 @@ function Instagram(){
  <div class="row"><button class="b" onclick="ig()">Bild erzeugen</button></div>
  <canvas id="cv" width="1148" height="1370" class="hide"></canvas><div class="row"><button id="dlb" class="b hide" onclick="dlImg()">Als PNG speichern</button></div>
  <p class="mu" style="font-size:13px">Vorlage 1148×1370 (Hochformat). Hochgeladene Logos werden für den Gegner gespeichert. Ohne Logo steht der Vereinsname in der Box. Das Ergebnis-Bild braucht ein eingetragenes Ergebnis.</p></div>`}
-let LOGOS={},IK="a";const LIMG={},lk=o=>String(o||"").trim().toLowerCase();
+let LOGOS={},TAB=null,IK="a";const LIMG={},lk=o=>String(o||"").trim().toLowerCase();
 const IM_OPP=()=>{const m=S.matches.find(x=>x.id==sel);return m?m.opp:""};
 const loadImg=s=>new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=s});
 const lslug=o=>lk(o).replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"")||"x";

@@ -1,0 +1,30 @@
+# Holt jeden Montag früh die aktuelle Tabelle von der Badischen Dart Liga
+# und speichert sie in tabelle.json. Manuell starten: Actions → Tabelle aktualisieren → Run workflow.
+name: Tabelle aktualisieren
+
+on:
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tabelle:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Berlin
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python tabelle_holen.py
+      - name: Hochladen, falls sich etwas geändert hat
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tabelle.json
+          git diff --cached --quiet || git commit -m "Tabelle aktualisiert"
+          git push

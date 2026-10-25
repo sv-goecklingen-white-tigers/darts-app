@@ -1,0 +1,123 @@
+{
+ "stand": "25.10.2026, 17:07 Uhr",
+ "quelle": "https://www.badischedartliga.de/results/leagueTable_bzo1.html",
+ "rows": [
+  {
+   "pl": 1,
+   "team": "PSK Darts Team Blue",
+   "sp": 4,
+   "g": 4,
+   "u": 0,
+   "v": 0,
+   "sets": "32:16",
+   "legs": "112:76",
+   "pkt": 8,
+   "str": "",
+   "zone": "auf"
+  },
+  {
+   "pl": 2,
+   "team": "501 Jacky Darts I",
+   "sp": 4,
+   "g": 2,
+   "u": 1,
+   "v": 1,
+   "sets": "29:19",
+   "legs": "104:80",
+   "pkt": 5,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 3,
+   "team": "Taraxacuma 26er",
+   "sp": 3,
+   "g": 2,
+   "u": 1,
+   "v": 0,
+   "sets": "20:16",
+   "legs": "73:73",
+   "pkt": 5,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 4,
+   "team": "Teamplayers 1",
+   "sp": 4,
+   "g": 2,
+   "u": 1,
+   "v": 1,
+   "sets": "25:23",
+   "legs": "105:92",
+   "pkt": 5,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 5,
+   "team": "DC Irish 26 e. V. 1",
+   "sp": 3,
+   "g": 1,
+   "u": 1,
+   "v": 1,
+   "sets": "21:15",
+   "legs": "79:66",
+   "pkt": 3,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 6,
+   "team": "SV Göcklingen White Tigers 1",
+   "sp": 4,
+   "g": 1,
+   "u": 1,
+   "v": 2,
+   "sets": "23:25",
+   "legs": "101:102",
+   "pkt": 3,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 7,
+   "team": "DC Moskitos 1",
+   "sp": 4,
+   "g": 1,
+   "u": 0,
+   "v": 3,
+   "sets": "21:27",
+   "legs": "86:102",
+   "pkt": 2,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 8,
+   "team": "D.T.C.",
+   "sp": 3,
+   "g": 0,
+   "u": 1,
+   "v": 2,
+   "sets": "15:21",
+   "legs": "69:80",
+   "pkt": 1,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 9,
+   "team": "TSV Etzenrot",
+   "sp": 3,
+   "g": 0,
+   "u": 0,
+   "v": 3,
+   "sets": "6:30",
+   "legs": "38:96",
+   "pkt": 0,
+   "str": "",
+   "zone": "ab"
+  }
+ ]
+}

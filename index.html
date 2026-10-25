@@ -7,12 +7,21 @@
 <link rel="apple-touch-icon" href="bilder/icon-180.png">
 <meta name="apple-mobile-web-app-title" content="White Tigers">
 <meta name="theme-color" content="#101215">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+<meta name="description" content="Spiele, Tabelle, Statistik und Aufstellung der White Tigers – SV Göcklingen, Bezirksoberliga 1.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="White Tigers Göcklingen">
+<meta property="og:title" content="White Tigers Göcklingen">
+<meta property="og:description" content="Spiele, Tabelle, Statistik und Aufstellung – Bezirksoberliga 1">
+<meta property="og:url" content="https://sv-goecklingen-white-tigers.github.io/darts-app/">
+<meta property="og:image" content="https://sv-goecklingen-white-tigers.github.io/darts-app/bilder/vorschau.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 :root{--disp:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--ink:#14161a;--bg:#eef0f3;--card:#fff;--tx:#1b1d21;--mu:#656b75;--ac:#f08a24;--bd:#dde1e7;--ok:#1f8a4c;--no:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#101215;--card:#1a1d22;--tx:#f1efe9;--mu:#9a9a9a;--bd:#333;--ok:#3fbf75;--no:#ef6a5b}}
 *{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 "Barlow",system-ui,-apple-system,"Segoe UI",sans-serif}
 .ban{display:block;width:100%;max-height:150px;object-fit:cover;object-position:center}
 nav{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;max-width:900px;margin:auto}
 nav button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:20px;font:inherit;cursor:pointer}
@@ -129,7 +138,7 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 @keyframes up{from{opacity:0;transform:translateY(14px)}}
 @keyframes grow{from{clip-path:inset(0 100% 0 0)}}
 @keyframes ring{from{stroke-dasharray:0 200}}
-#m.in>*{animation:up .4s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*60ms)}
+#m.in>*:not(.st2),#m.in .st2>div>*{animation:up .4s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*60ms)}
 #m.in .bar{animation:grow .8s cubic-bezier(.2,.7,.3,1) .25s both}
 #m.in .ring circle+circle{animation:ring .9s cubic-bezier(.2,.7,.3,1) .3s both}
 #lu.in b{display:block}#lu.in b,#lu.in li{animation:up .35s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*70ms)}
@@ -139,6 +148,14 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 .lt tr.me td{background:rgba(240,138,36,.14);font-weight:700}.lt tr.me td:first-child{box-shadow:inset 3px 0 var(--ac)}
 .lt tr.auf td:first-child{color:var(--ok)}.lt tr.ab td:first-child{color:var(--no)}
 @media(max-width:480px){.lt .lg{display:none}.lt td,.lt th{padding:7px 3px;font-size:13px}}
+/* Nächstes Spiel: Buttons, Startseite zweispaltig am PC, Fußzeile */
+.mh-bt{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.mh-bt a{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;text-decoration:none;font-size:14px;font-weight:600;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:999px}
+.mh-bt a:hover{border-color:var(--ac)}
+@media(min-width:1000px){main,nav{max-width:1100px}.st2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"a t" "b t";column-gap:16px;align-items:start}.st2 .sa{grid-area:a}.st2 .st{grid-area:t}.st2 .sb{grid-area:b}}
+.ft{max-width:900px;margin:8px auto 0;padding:20px 14px calc(28px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--bd);display:flex;align-items:center;gap:12px;color:var(--mu);font-size:13px}
+.ft b{display:block;color:var(--tx);font:700 17px/1.1 var(--disp);text-transform:uppercase;letter-spacing:.4px}
+@media(min-width:1000px){.ft{max-width:1100px}}
 /* Intro beim Öffnen: Logo erscheint, Dart trifft das Bull, Schriftzug kommt */
 .sp{position:fixed;inset:0;z-index:100;background:#101215;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:pointer;transition:opacity .4s}
 .sp.out{opacity:0;pointer-events:none}
@@ -163,7 +180,7 @@ if(intro){const sp=document.getElementById("sp");sp.hidden=false;let done=false;
 </script>
 <header class="hd"><img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg"><div class="tt"><b>White Tigers</b><span>SV Göcklingen · Bezirksoberliga 1</span></div></header>
 <div id="dr" class="dr"><div class="dbk" onclick="menu(0)"></div><aside class="dp" id="dp" aria-label="Menü"></aside></div><nav id="nav"></nav><main id="m"></main>
-<div class="mu" id="st" style="text-align:center;font-size:12px;padding-bottom:20px">Lade Daten…</div>
+<footer class="ft"><img class="av" src="bilder/logo.jpg" alt="" style="width:44px;height:44px"><div><b>White Tigers Göcklingen</b><span id="st">Lade Daten…</span></div></footer>
 <script>
 const TABS=["Start","Spiele","Statistik","Aufstellung","Instagram","Minispiele","Team","Verwaltung"];const IC={Start:"🏠",Spiele:"🎯",Statistik:"📊",Aufstellung:"🧩",Instagram:"📸",Minispiele:"🎲",Team:"🐯",Verwaltung:"⚙️"};let usr=null;const canEd=()=>false;
 let S={players:[],matches:[]},tab="Start",sel=null,db=null,dl=null,AV={};
@@ -176,11 +193,12 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="25.10.2026, 17:09 Uhr";
+const SEITE="25.10.2026, 17:17 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
- try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Daten: "+(j.stand||"–")+" · Seite: "+SEITE)}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
+ try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
  try{const r=await fetch("tabelle.json?v="+Date.now());if(r.ok)TAB=await r.json()}catch(e){}
+ if(TAB&&TAB.stand)$("#st").textContent+=" · Tabelle vom "+TAB.stand;$("#st").title="Seitenversion: "+SEITE;
  draw()}
 function nav(){cloneBan();const L=TABS.filter(t=>t!="Verwaltung"||canEd());
  $("#nav").innerHTML=`<div class="nd">${L.map(t=>`<button class="${t==tab?"on":""}" onclick="go('${t}')">${IC[t]} ${t}</button>`).join("")}</div><div class="nm"><button onclick="menu(1)" aria-label="Menü öffnen">☰ Menü</button><span>${IC[tab]} ${tab}</span></div>`;
@@ -190,7 +208,7 @@ function draw(){nav();$("#m").innerHTML=({Start,Spiele,Statistik,Aufstellung,Ins
 /* Animationen */
 let anim=true;const RM=matchMedia("(prefers-reduced-motion: reduce)");
 const restart=(e,c)=>{e.classList.remove(c);void e.offsetWidth;e.classList.add(c)};
-function fx(m){if(RM.matches)return;[...m.children].forEach((e,i)=>e.style.setProperty("--i",Math.min(i,8)));restart(m,"in");m.querySelectorAll(".stt b,.lr .res").forEach(cnt)}
+function fx(m){if(RM.matches)return;const st=m.querySelector(".st2");[...(st?st.querySelectorAll(":scope>div>*"):m.children)].forEach((e,i)=>e.style.setProperty("--i",Math.min(i,8)));restart(m,"in");m.querySelectorAll(".stt b,.lr .res").forEach(cnt)}
 function cnt(e){const t=e.textContent;if(!/\d/.test(t))return;const t0=performance.now(),D=700;const st=n=>{const p=Math.min(1,Math.max(0,(n-t0)/D)),k=1-Math.pow(1-p,3);e.textContent=t.replace(/\d+/g,d=>Math.round(+d*k));if(p<1)requestAnimationFrame(st)};requestAnimationFrame(st)}
 function fxL(){const l=$("#lu");if(RM.matches||!l)return;l.querySelectorAll("b,li").forEach((e,i)=>e.style.setProperty("--i",i));restart(l,"in")}
 const played=m=>m.sa!=null&&m.sa!==""&&m.sb!=null&&m.sb!=="";
@@ -202,15 +220,23 @@ function Start(){
   const open=ms.filter(m=>m.date<today&&!played(m)&&!m.bye).length;
  const dd=nx?Math.round((new Date(nx.date+"T12:00")-new Date(today+"T12:00"))/864e5):0;
  const side=(m,i)=>{const T=`<div class="mh-tm">${tig(84)}<b>White Tigers</b></div>`,O=`<div class="mh-tm">${av(m.opp,84)}<b>${esc(m.opp)}</b></div>`;return (m.home?i==0:i==1)?T:O};
- return `${nx?`<div class="mh"><div class="l">${nx.type=="Pokal"?"🏆 Pokal":"Spieltag "+(nx.sp||"")} · nächstes Spiel</div>
+ return `<div class="st2"><div class="sa">${nx?`<div class="mh"><div class="l">${nx.type=="Pokal"?"🏆 Pokal":"Spieltag "+(nx.sp||"")} · nächstes Spiel</div>
  <div class="mh-row">${side(nx,0)}<div class="mh-vs"><span class="ha ${nx.home?"h":"a"}">${nx.home?"Heim":"Auswärts"}</span><i>VS</i></div>${side(nx,1)}</div>
  <div class="mh-d">${fd(nx.date)}${nx.time?" · "+esc(nx.time)+" Uhr":""}</div><div class="l" style="margin-top:2px">${esc(nx.loc||"")}</div>
- <span class="mh-cd">${dd<=0?"Heute":dd==1?"Morgen":"in "+dd+" Tagen"}</span></div>`:`<div class="card"><h2>Nächstes Spiel</h2><span class="mu">Kein anstehendes Spiel eingetragen.</span></div>`}
+ <span class="mh-cd">${dd<=0?"Heute":dd==1?"Morgen":"in "+dd+" Tagen"}</span>${mhBtns(nx)}</div>`:`<div class="card"><h2>Nächstes Spiel</h2><span class="mu">Kein anstehendes Spiel eingetragen.</span></div>`}
  ${last?`<div class="card"><h2>Letztes Ergebnis</h2><div class="lr">${av(last.opp,52)}<div style="flex:1;min-width:0"><b>${esc(last.opp)}</b><div class="mu" style="font-size:13px">${last.sp?"Spieltag "+last.sp:last.type} · ${fd(last.date)}</div></div><span class="res big ${+last.sa>+last.sb?"ok":+last.sa<+last.sb?"no":""}">${last.sa}:${last.sb}</span></div></div>`:""}
  ${open?`<div class="card">⚠️ Bei <b>${open}</b> vergangenen Spielen fehlt noch das Ergebnis. <a href="#" onclick="go('Spiele');return false">Jetzt eintragen</a></div>`:""}
- ${Tabelle()}
- <div class="card"><h2>Bilanz</h2>${[["Liga","🏁"],["Pokal","🏆"]].map(([ty,ic])=>{const g=ms.filter(m=>played(m)&&m.type==ty),W=g.filter(m=>+m.sa>+m.sb).length,D=g.filter(m=>+m.sa==+m.sb).length,L=g.length-W-D;return `<div class="sec" style="margin-top:${ty=="Liga"?0:14}px">${ic} ${ty}</div><div class="stt c3" style="margin:6px 0 0"><div><b class="ok">${W}</b><span>Siege</span></div><div><b>${D}</b><span>Unentschieden</span></div><div><b class="no">${L}</b><span>Niederlagen</span></div></div>`}).join("")}</div>`}
-/* Ligatabelle (kommt aus daten.json, aktualisiert mit tabelle_holen.py) */
+ </div><div class="st">${Tabelle()}</div><div class="sb">
+ <div class="card"><h2>Bilanz</h2>${[["Liga","🏁"],["Pokal","🏆"]].map(([ty,ic])=>{const g=ms.filter(m=>played(m)&&m.type==ty),W=g.filter(m=>+m.sa>+m.sb).length,D=g.filter(m=>+m.sa==+m.sb).length,L=g.length-W-D;return `<div class="sec" style="margin-top:${ty=="Liga"?0:14}px">${ic} ${ty}</div><div class="stt c3" style="margin:6px 0 0"><div><b class="ok">${W}</b><span>Siege</span></div><div><b>${D}</b><span>Unentschieden</span></div><div><b class="no">${L}</b><span>Niederlagen</span></div></div>`}).join("")}</div></div></div>`}
+/* Nächstes Spiel: Kalender-Eintrag und Route */
+function mhBtns(m){
+ const p=n=>String(n).padStart(2,"0"),[h,mi]=(m.time||"20:00").split(":").map(Number),d=m.date.replace(/-/g,"");
+ const e=new Date(2000,0,1,h+3,mi),ix=s=>String(s||"").replace(/[\\,;]/g,c=>"\\"+c);
+ const ttl=m.home?`White Tigers – ${m.opp}`:`${m.opp} – White Tigers`;
+ const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//White Tigers//Spielplan//DE","BEGIN:VEVENT","UID:"+(m.id||d)+"@white-tigers","DTSTAMP:"+new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z",
+  "DTSTART:"+d+"T"+p(h)+p(mi)+"00","DTEND:"+d+"T"+p(e.getHours())+p(e.getMinutes())+"00","SUMMARY:"+ix("🎯 "+ttl),"LOCATION:"+ix(m.loc),"END:VEVENT","END:VCALENDAR"].join("\r\n");
+ return `<div class="mh-bt"><a class="b g" href="data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}" download="spiel-${d}.ics">📅 In Kalender eintragen</a>${m.loc?`<a class="b g" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(m.loc)}" target="_blank" rel="noopener">📍 Route</a>`:""}</div>`}
+/* Ligatabelle (kommt aus tabelle.json, aktualisiert mit tabelle_holen.py) */
 function Tabelle(){
  if(!TAB||!TAB.rows||!TAB.rows.length)return "";
  const me=t=>/white tigers/i.test(t);

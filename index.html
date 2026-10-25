@@ -158,7 +158,7 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 @media(min-width:1000px){.ft{max-width:1100px}}
 /* Intro beim Öffnen: Logo erscheint, Dart trifft das Bull, Schriftzug kommt */
 .sp{position:fixed;inset:0;z-index:100;background:#101215;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:pointer;transition:opacity .4s}
-.sp.out{opacity:0;pointer-events:none}
+.sp.out{opacity:0;pointer-events:none}.sp[hidden]{display:none}
 .sp-lg{position:relative;width:min(56vw,220px);animation:sp-in .5s cubic-bezier(.2,.8,.3,1.2) both}
 .sp-lg img{display:block;width:100%;border-radius:22px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
 .sp-lg.hit{animation:sp-in .5s cubic-bezier(.2,.8,.3,1.2) both,sp-hit .25s .85s ease-out}
@@ -176,7 +176,8 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 <script>
 /* Intro nur einmal pro Browser-Sitzung und nicht bei „Bewegung reduzieren“ */
 let intro=false;try{intro=!matchMedia("(prefers-reduced-motion: reduce)").matches&&!sessionStorage.getItem("intro");sessionStorage.setItem("intro","1")}catch(e){}
-if(intro){const sp=document.getElementById("sp");sp.hidden=false;let done=false;const end=()=>{if(done)return;done=true;sp.classList.add("out");setTimeout(()=>{sp.remove();intro=false;if(typeof fx=="function")fx(document.getElementById("m"))},400)};sp.onclick=end;setTimeout(end,2100)}
+if(!intro)document.getElementById("sp").remove();
+else{const sp=document.getElementById("sp");sp.hidden=false;let done=false;const end=()=>{if(done)return;done=true;sp.classList.add("out");setTimeout(()=>{sp.remove();intro=false;if(typeof fx=="function")fx(document.getElementById("m"))},400)};sp.onclick=end;setTimeout(end,2100)}
 </script>
 <header class="hd"><img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg"><div class="tt"><b>White Tigers</b><span>SV Göcklingen · Bezirksoberliga 1</span></div></header>
 <div id="dr" class="dr"><div class="dbk" onclick="menu(0)"></div><aside class="dp" id="dp" aria-label="Menü"></aside></div><nav id="nav"></nav><main id="m"></main>
@@ -193,7 +194,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="25.10.2026, 17:17 Uhr";
+const SEITE="25.10.2026, 17:23 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}

@@ -162,6 +162,9 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 .ft{max-width:900px;margin:8px auto 0;padding:20px 14px calc(28px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--bd);display:flex;align-items:center;gap:12px;color:var(--mu);font-size:13px}
 .ft b{display:block;color:var(--tx);font:700 17px/1.1 var(--disp);text-transform:uppercase;letter-spacing:.4px}
 @media(min-width:1000px){.ft{max-width:1100px}}
+.ft{flex-wrap:wrap}.ig{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--bd);background:var(--card);color:var(--tx);text-decoration:none;font-weight:600;font-size:14px}
+.ig:hover{border-color:var(--ac)}
+@media(max-width:480px){.ig{width:100%;justify-content:center}}
 /* Intro beim Öffnen: Logo erscheint, Dart trifft das Bull, Schriftzug kommt */
 .sp{position:fixed;inset:0;z-index:100;background:#101215;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:pointer;transition:opacity .4s}
 .sp.out{opacity:0;pointer-events:none}.sp[hidden]{display:none}
@@ -187,7 +190,7 @@ else{const sp=document.getElementById("sp");sp.hidden=false;let done=false;const
 </script>
 <header class="hd"><img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg"><div class="tt"><b>White Tigers</b><span>SV Göcklingen · Bezirksoberliga 1</span></div></header>
 <div id="dr" class="dr"><div class="dbk" onclick="menu(0)"></div><aside class="dp" id="dp" aria-label="Menü"></aside></div><nav id="nav"></nav><main id="m"></main>
-<footer class="ft"><img class="av" src="bilder/logo.jpg" alt="" style="width:44px;height:44px"><div><b>White Tigers Göcklingen</b><span id="st">Lade Daten…</span></div></footer>
+<footer class="ft"><img class="av" src="bilder/logo.jpg" alt="" style="width:44px;height:44px"><div style="flex:1;min-width:0"><b>White Tigers Göcklingen</b><span id="st">Lade Daten…</span></div><a class="ig" href="https://www.instagram.com/svgwhitetigers/" target="_blank" rel="noopener">📸 @svgwhitetigers</a></footer>
 <script>
 const TABS=["Start","Spiele","Statistik","Aufstellung","Instagram","Minispiele","Team","Verwaltung"];const IC={Start:"🏠",Spiele:"🎯",Statistik:"📊",Aufstellung:"🧩",Instagram:"📸",Minispiele:"🎲",Team:"🐯",Verwaltung:"⚙️"};let usr=null;const canEd=()=>false;
 let S={players:[],matches:[]},tab="Start",sel=null,db=null,dl=null,AV={};
@@ -200,7 +203,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="25.10.2026, 17:40 Uhr";
+const SEITE="25.10.2026, 17:45 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}

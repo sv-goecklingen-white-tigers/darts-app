@@ -154,6 +154,26 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 .pv{display:flex;gap:8px}.pvg{flex:4;min-width:0}.pvg.d{flex:2}.pvc{display:flex;gap:3px}
 .pvc i{flex:1;height:22px;border-radius:5px}.pvc .w{background:#1f8a4c}.pvc .l{background:#c8102e}
 .pvg span{display:block;font-size:11px;color:var(--mu);text-align:center;margin-top:2px}
+/* Spieler-Profil */
+.psel{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.psel b{font:700 18px var(--disp)}.psel select{flex:1 1 200px}
+.psm{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;margin:-4px 0 6px}.psm select{min-height:36px;padding:4px 8px;font-size:14px;flex:0 1 220px}
+.pp{display:flex;align-items:center;gap:16px}.pp .ring{width:96px;height:96px}.pp .ring b{font-size:20px}
+.pl-a{color:inherit;text-decoration:none;border-bottom:1px dashed var(--mu)}.ptab td,.ptab th{text-align:center}.ptab td:first-child{text-align:left}
+/* Turnierplaner */
+.tumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:6px 0}
+.tumb{text-align:left;background:var(--bg);color:var(--tx);border:2px solid var(--bd);border-radius:var(--r2);padding:10px 12px;cursor:pointer;font:inherit}
+.tumb.on{border-color:var(--ac);background:rgba(240,138,36,.12)}.tumb b{display:block;font:700 17px var(--disp)}.tumb small{color:var(--mu)}
+.tupk{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin:6px 0}
+.tupk label{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--bg);font-size:14px;cursor:pointer}
+.tub{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 10px;scroll-snap-type:x proximity}
+.tuc{flex:0 0 220px;display:flex;flex-direction:column;gap:8px;justify-content:space-around;scroll-snap-align:start}
+.tuh{font:700 14px var(--disp);color:var(--mu);text-transform:uppercase;letter-spacing:.6px;text-align:center}
+.tum{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh)}
+.tup{display:flex;align-items:center;gap:6px;padding:4px 8px;min-height:42px}.tup+.tup{border-top:1px solid var(--bd)}
+.tup span{flex:1;min-width:0;overflow-wrap:anywhere;font-size:14px}.tup input{width:54px;min-height:34px;padding:4px;text-align:center}
+.tuw{background:rgba(31,138,76,.2)}.tuw span{font-weight:700}.tul span{color:var(--mu)}
+.tuch{text-align:center;border-color:var(--ac);background:linear-gradient(180deg,rgba(240,138,36,.22),var(--card))}.tuch b{display:block;font:800 30px/1.2 var(--disp)}
+.tug{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
 /* Nächstes Spiel: Buttons, Startseite zweispaltig am PC, Fußzeile */
 .mh-bt{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
 .mh-bt a{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;text-decoration:none;font-size:14px;font-weight:600;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:999px}
@@ -192,7 +212,7 @@ else{const sp=document.getElementById("sp");sp.hidden=false;let done=false;const
 <div id="dr" class="dr"><div class="dbk" onclick="menu(0)"></div><aside class="dp" id="dp" aria-label="Menü"></aside></div><nav id="nav"></nav><main id="m"></main>
 <footer class="ft"><img class="av" src="bilder/logo.jpg" alt="" style="width:44px;height:44px"><div style="flex:1;min-width:0"><b>White Tigers Göcklingen</b><span id="st">Lade Daten…</span></div><a class="ig" href="https://www.instagram.com/svgwhitetigers/" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="igg" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset=".05" stop-color="#fdf497"/><stop offset=".45" stop-color="#fd5949"/><stop offset=".6" stop-color="#d6249f"/><stop offset=".9" stop-color="#285AEB"/></radialGradient></defs><rect x="1" y="1" width="22" height="22" rx="6.5" fill="url(#igg)"/><rect x="5.5" y="5.5" width="13" height="13" rx="4" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="3.1" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="16.3" cy="7.7" r="1.05" fill="#fff"/></svg>@svgwhitetigers</a></footer>
 <script>
-const TABS=["Start","Spiele","Statistik","Aufstellung","Instagram","Minispiele","Team","Verwaltung"];const IC={Start:"🏠",Spiele:"🎯",Statistik:"📊",Aufstellung:"🧩",Instagram:"📸",Minispiele:"🎲",Team:"🐯",Verwaltung:"⚙️"};let usr=null;const canEd=()=>false;
+const TABS=["Start","Spiele","Statistik","Aufstellung","Turnier","Instagram","Minispiele","Team","Verwaltung"];const IC={Start:"🏠",Spiele:"🎯",Statistik:"📊",Aufstellung:"🧩",Turnier:"🏆",Instagram:"📸",Minispiele:"🎲",Team:"🐯",Verwaltung:"⚙️"};let usr=null;const canEd=()=>false;
 let S={players:[],matches:[]},tab="Start",sel=null,db=null,dl=null,AV={};
 const av=(o,s)=>{const u=LOGOS[lk(o)];s=s||44;return u?`<img class="av" alt="" src="${u}" style="width:${s}px;height:${s}px">`:`<span class="av" style="width:${s}px;height:${s}px">${esc(String(o).split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase())}</span>`};
 const tig=s=>`<img class="av" alt="White Tigers" src="${LG.src}" style="width:${s}px;height:${s}px">`;
@@ -203,7 +223,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="25.10.2026, 17:47 Uhr";
+const SEITE="25.10.2026, 18:11 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
@@ -213,8 +233,8 @@ async function init(){
 function nav(){cloneBan();const L=TABS.filter(t=>t!="Verwaltung"||canEd());
  $("#nav").innerHTML=`<div class="nd">${L.map(t=>`<button class="${t==tab?"on":""}" onclick="go('${t}')">${IC[t]} ${t}</button>`).join("")}</div><div class="nm"><button onclick="menu(1)" aria-label="Menü öffnen">☰ Menü</button><span>${IC[tab]} ${tab}</span></div>`;
  $("#dp").innerHTML=`<div class="dh">${tig(46)}<div><b>White Tigers</b><small>Göcklingen · Bezirksoberliga 1</small></div></div>${L.map(t=>`<button class="dpi ${t==tab?"on":""}" onclick="go('${t}');menu(0)"><span>${IC[t]}</span>${t}</button>`).join("")}<button class="dpi" style="margin-top:8px;color:var(--mu)" onclick="menu(0)"><span>✕</span>Schließen</button>`}
-function go(t){tab=t;anim=true;draw();scrollTo(0,0)}
-function draw(){nav();$("#m").innerHTML=({Start,Spiele,Statistik,Aufstellung,Instagram,Minispiele,Team,Verwaltung})[tab]();if(anim&&!intro){anim=false;fx($("#m"))}}
+function go(t){tab=t;anim=true;SPL="";draw();scrollTo(0,0)}
+function draw(){nav();$("#m").innerHTML=({Start,Spiele,Statistik,Aufstellung,Turnier,Instagram,Minispiele,Team,Verwaltung})[tab]();if(anim&&!intro){anim=false;fx($("#m"))}}
 /* Animationen */
 let anim=true;const RM=matchMedia("(prefers-reduced-motion: reduce)");
 const restart=(e,c)=>{e.classList.remove(c);void e.offsetWidth;e.classList.add(c)};
@@ -293,7 +313,29 @@ function boardSVG(){const O=[20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5]
  [170,162,107,99,15.9,6.35].forEach(r=>s+=`<circle cx="50" cy="50" r="${f(r*k)}" fill="none" stroke="#c9ccd1" stroke-width=".25"/>`);
  for(let i=0;i<20;i++){const a=pt(6.35,i*18-9),b=pt(170,i*18-9);s+=`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" stroke="#c9ccd1" stroke-width=".25"/>`}
  return s+`<circle cx="50" cy="50" r="49.6" fill="url(#bsh)"/></svg>`}
+/* Spieler-Profil: Auswahlfeld oben in der Statistik, öffnet die Einzelansicht */
+let SPL="";
+const openP=n=>{SPL=n;anim=true;draw();scrollTo(0,0)};
+function pSel(){return `<div class="card psel"><b>👤 Spieler-Profil</b><select aria-label="Spieler auswählen" onchange="openP(this.value)"><option value="">Spieler auswählen …</option>${[...S.players].sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`<option ${SPL==p.name?"selected":""}>${esc(p.name)}</option>`).join("")}</select>${SPL?`<button class="b g" onclick="openP('')">← Team-Übersicht</button>`:""}</div>`}
+function Profil(n){
+ const p=S.players.find(x=>x.name==n),z=s=>{const o={};SK.forEach(k=>o[k[0]]=(s||{})[k[0]]||0);return o};
+ const L=z(p.s),K=z(p.sp),G={};SK.forEach(k=>G[k[0]]=L[k[0]]+K[k[0]]);
+ const q=(w,l)=>w+l?Math.round(100*w/(w+l))+"%":"–",win=G.ew+G.dw,all=win+G.el+G.dl,pc=all?Math.round(100*win/all):0;
+ const W=S.players.map(x=>{const a=z(x.s),b=z(x.sp);return a.ew+a.dw+b.ew+b.dw}).sort((a,b)=>b-a),pl=W.indexOf(win)+1;
+ const PR={};S.matches.forEach(m=>(m.dbl||[]).forEach(([a,b,w])=>{if(a!=n&&b!=n)return;const o=a==n?b:a,r=PR[o]||(PR[o]={n:o,w:0,l:0});w?r.w++:r.l++}));
+ const pr=Object.values(PR).sort((a,b)=>b.w-a.w||a.l-b.l);
+ const C=2*Math.PI*26,bar=(a,b)=>a+b?`<div class="bar"><i class="w" style="flex:${a}">${a||""}</i><i class="l" style="flex:${b}">${b||""}</i></div>`:`<div class="bar"></div>`;
+ const row=(t,s)=>`<tr><td><b>${t}</b></td><td>${s.ew}:${s.el}</td><td>${s.dw}:${s.dl}</td><td>${s.a180}</td><td>${s.hf}</td><td>${s.sl}</td></tr>`;
+ return `<div class="hero" style="padding-right:16px;min-height:0"><h2>${esc(n)}</h2><div class="mu">White Tigers · ${all?`Platz ${pl} nach Siegen im Team`:"noch keine Partien"}</div></div>
+ <div class="card"><div class="pp"><div class="ring"><svg width="96" height="96" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="${all?"#c8102e":"var(--bd)"}" stroke-width="8"/><circle cx="32" cy="32" r="26" fill="none" stroke="#1f8a4c" stroke-width="8" stroke-dasharray="${C*pc/100} ${C}" transform="rotate(-90 32 32)"/></svg><b>${all?pc+"%":"–"}</b></div>
+ <div style="flex:1;min-width:0"><div class="sm">Gewonnene Partien (Liga + Pokal)</div><div class="big">${win}:${all-win}</div><div class="mu" style="font-size:13px">${all} Partien gespielt</div></div></div></div>
+ <div class="stt"><div><b>${q(G.ew,G.el)}</b><span>Einzel-Quote</span></div><div><b>${q(G.dw,G.dl)}</b><span>Doppel-Quote</span></div><div><b class="ok">${G.ew}</b><span>Einzel-Siege</span></div><div><b class="ok">${G.dw}</b><span>Doppel-Siege</span></div></div>
+ <div class="stt c3"><div><b>${G.a180}</b><span>🎯 High Scores</span></div><div><b>${G.hf}</b><span>🏁 High Finishes</span></div><div><b>${G.sl}</b><span>⚡ Shortlegs</span></div></div>
+ <div class="card"><h2>📊 Einzel und Doppel</h2><div class="sm">Einzel ${G.ew}:${G.el}</div>${bar(G.ew,G.el)}<div class="sm">Doppel ${G.dw}:${G.dl}</div>${bar(G.dw,G.dl)}</div>
+ <div class="card"><h2>🏁 Liga und Pokal</h2><div class="scroll"><table class="ptab"><tr><th></th><th>Einzel</th><th>Doppel</th><th>HS</th><th>HF</th><th>SL</th></tr>${row("Liga",L)}${row("Pokal",K)}${row("Gesamt",G)}</table></div><div class="mu" style="font-size:12px;margin-top:6px">Siege:Niederlagen · HS = High Scores · HF = High Finishes · SL = Shortlegs</div></div>
+ <div class="card"><h2>🤝 Doppelpartner</h2>${pr.length?pr.map(o=>`<div style="display:flex;gap:8px;align-items:center;padding:7px 0;border-top:1px solid var(--bd)"><span style="flex:1;min-width:0;overflow-wrap:anywhere">${esc(o.n)}</span><span><span class="ok"><b>${o.w}</b></span> : <span class="no"><b>${o.l}</b></span></span><b style="width:44px;text-align:right">${Math.round(100*o.w/(o.w+o.l))}%</b></div>`).join(""):`<span class="mu">Noch keine Doppel eingetragen.</span>`}</div>`}
 function Statistik(){
+ if(SPL&&S.players.some(p=>p.name==SPL))return pSel()+Profil(SPL);
  const ms=sorted().filter(m=>played(m)&&(SM=="Gesamt"||m.type==SM)),w=ms.filter(m=>+m.sa>+m.sb).length,d=ms.filter(m=>+m.sa==+m.sb).length,l=ms.length-w-d,sf=ms.reduce((a,m)=>a+ +m.sa,0),sa=ms.reduce((a,m)=>a+ +m.sb,0);
  const LG2={a:0,b:0,n:0};ms.forEach(m=>{if(m.la!=null&&m.lb!=null){LG2.a+=+m.la;LG2.b+=+m.lb;LG2.n++}});
  const gv=p=>{const a=p.s||{},b=p.sp||{};if(SM=="Liga")return a;if(SM=="Pokal")return b;const r={};SK.forEach(k=>r[k[0]]=(a[k[0]]||0)+(b[k[0]]||0));return r};
@@ -331,9 +373,9 @@ function Statistik(){
  <div class="card"><h2>📅 Spielverlauf</h2>${ms.length?ms.map(m=>`<div style="margin:10px 0"><div class="row" style="margin:0 0 4px"><b>${m.type=="Pokal"?"🏆 ":""}${esc(m.opp)}</b><span class="mu" style="font-size:13px">${fd(m.date)} · ${m.home?"Heim":"Auswärts"}</span><span style="margin-left:auto;font-weight:800" class="${+m.sa>+m.sb?"ok":+m.sa<+m.sb?"no":""}">${m.sa}:${m.sb}</span></div>${m.g&&m.g.length==12?blk(m.g):bar(+m.sa,+m.sb)}${m.la!=null&&m.lb!=null?`<div class="mu" style="font-size:12px;margin-top:2px">Legs ${m.la}:${m.lb}</div>`:""}</div>`).join(""):`<span class="mu">Noch keine Ergebnisse.</span>`}<div class="mu" style="font-size:12px;margin-bottom:6px">High Score = 171, 174, 177 oder 180 · High Finish = Checkout über 100</div><div class="mu" style="font-size:12px">Jedes Feld = eine Partie (4 Einzel, 2 Doppel, 4 Einzel, 2 Doppel) · Grün = gewonnen · Rot = verloren</div></div>
  <div class="card"><h2>🏅 Bestenliste</h2><p class="mu" style="font-size:13px;margin:0">Bei Gleichstand stehen alle Spieler mit demselben Wert auf demselben Platz.</p>${GR.map(([h,ix,k])=>`<div class="sec">${h}</div><div style="display:grid;grid-template-columns:repeat(${k},minmax(0,1fr));gap:8px;margin-top:6px">${ix.map(i=>cell(BL[i],k)).join("")}</div>`).join("")}</div>
  ${DT}
- <div class="card"><h2>🎯 Spieler-Rangliste</h2>${P.length?P.map((p,i)=>{const C=2*Math.PI*26;return `<div class="pl"><div class="rk">${medal[i]||i+1}</div>
+ <div class="card"><h2>🎯 Spieler-Rangliste</h2><div class="psm"><span class="mu">Einzelnen Spieler ansehen:</span><select aria-label="Spieler-Profil öffnen" onchange="openP(this.value)"><option value="">Spieler wählen …</option>${[...S.players].sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`<option>${esc(p.name)}</option>`).join("")}</select></div>${P.length?P.map((p,i)=>{const C=2*Math.PI*26;return `<div class="pl"><div class="rk">${medal[i]||i+1}</div>
  <div class="ring"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="${p.g?"#c8102e":"var(--bd)"}" stroke-width="8"/><circle cx="32" cy="32" r="26" fill="none" stroke="#1f8a4c" stroke-width="8" stroke-dasharray="${C*p.pc/100} ${C}" transform="rotate(-90 32 32)"/></svg><b>${p.g?p.pc+"%":"–"}</b></div>
- <div class="pb"><div class="nm">${esc(p.n)} <span class="mu" style="font-weight:400;font-size:13px">${p.win}:${p.g-p.win}</span></div>
+ <div class="pb"><div class="nm"><a href="#" class="pl-a" data-n="${esc(p.n)}" onclick="openP(this.dataset.n);return false">${esc(p.n)}</a> <span class="mu" style="font-weight:400;font-size:13px">${p.win}:${p.g-p.win}</span></div>
  <div class="sm">Einzel</div>${bar(p.ew,p.el)}<div class="sm">Doppel</div>${bar(p.dw,p.dl)}
  <span class="chip">🎯 ${p.a}× High Score</span><span class="chip">⚡ ${p.sl} Shortleg</span><span class="chip">🏆 ${p.hf} HF</span></div></div>`}).join(""):`<span class="mu">Noch keine Spieler angelegt.</span>`}</div>
  ${canEd()?`<div class="card" style="text-align:center"><button class="b" onclick="go('Verwaltung')">⚙️ Daten aktualisieren</button></div>`:""}`}
@@ -366,6 +408,79 @@ function lineup(){
  const duos=b=>[[[0,1],[2,3]],[[0,2],[1,3]],[[0,3],[1,2]]].map(o=>({o,v:Math.abs(b[o[0][0]].s+b[o[0][1]].s-b[o[1][0]].s-b[o[1][1]].s)+Math.random()*.6})).sort((a,b)=>a.v-b.v)[0].o.map(([x,y])=>b[x].n+" & "+b[y].n);
  const blk=[["Einzel (Block 1)",b1.map(x=>x.n)],["Doppel (Block 1)",duos(b1)],["Einzel (Block 2)",b2.map(x=>x.n)],["Doppel (Block 2)",duos(b2)]];
  $("#lu").innerHTML=`<div class="card"><h2>Vorschlag</h2>${blk.map(([t,a])=>`<b>${t}</b><ol style="margin:4px 0 12px">${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`).join("")}${here.length<8?`<p class="mu">Nur ${here.length} Spieler: ${b1.filter(x=>b2.includes(x)).map(x=>esc(x.n)).join(" & ")} spielen in beiden Einzel-Blöcken.</p>`:""}${here.length>8?`<p class="mu">Nicht eingesetzt: ${here.slice(8).map(x=>esc(x.n)).join(", ")}</p>`:""}<p class="mu" style="font-size:13px">Basis: Siegquote aus Liga und Pokal (Spieler mit wenigen Spielen werden zum Durchschnitt hin gezogen) und Tagesform. Doppel werden möglichst ausgewogen gepaart.</p></div>`;fxL()}
+/* Turnierplaner: K.O., Doppel-K.O., Gruppen + K.O. Der Stand liegt nur auf diesem Gerät (localStorage).
+   Die Paarungen werden bei jedem Zeichnen aus Setzliste + Ergebnissen neu berechnet; ein Ergebnis gilt nur,
+   solange dieselben zwei Spieler im Spiel stehen. */
+const BYE="—";let TU=null,TUM={};const TUS={mode:"ko",bo:"501 Best of 3",sel:{},gast:"",los:"los",third:true,gc:0,adv:2,name:""};
+try{TU=JSON.parse(localStorage.getItem("wt-turnier")||"null")}catch(e){}
+const tuSave=()=>{try{localStorage.setItem("wt-turnier",JSON.stringify(TU))}catch(e){}};
+const seedOrder=n=>{let a=[1];while(a.length<n){const L=a.length*2;a=a.flatMap(s=>[s,L+1-s])}return a};
+function tuRes(id,a,b){if(a==null||b==null)return null;if(a==BYE)return{w:b,l:a};if(b==BYE)return{w:a,l:b};
+ const r=TU.res[id];if(r&&r[0]==a&&r[1]==b&&r[2]!=r[3])return r[2]>r[3]?{w:a,l:b,sa:r[2],sb:r[3]}:{w:b,l:a,sa:r[2],sb:r[3]};return null}
+function tuM(id,a,b){const r=tuRes(id,a,b);return{id,a,b,r,W:r?r.w:null,L:r?r.l:null}}
+function tKO(P,px){const n=Math.max(2,2**Math.ceil(Math.log2(P.length))),o=seedOrder(n),R=[];let cur=[];
+ for(let i=0;i<n/2;i++)cur.push(tuM(px+"0-"+i,P[o[2*i]-1]??BYE,P[o[2*i+1]-1]??BYE));R.push(cur);
+ for(let r=1;cur.length>1;r++){const nx=[];for(let i=0;i<cur.length/2;i++)nx.push(tuM(px+r+"-"+i,cur[2*i].W,cur[2*i+1].W));R.push(nx);cur=nx}return R}
+function tDKO(P){const W=tKO(P,"W"),Rn=W.length,LB=[];let cur=[],k=1;
+ for(let i=0;i<W[0].length/2;i++)cur.push(tuM("L0-"+i,W[0][2*i].L,W[0][2*i+1].L));LB.push(cur);
+ for(let w=1;w<Rn;w++){const d=W[w];cur=cur.map((m,i)=>tuM("L"+k+"-"+i,m.W,(w%2?d[d.length-1-i]:d[i]).L));LB.push(cur);k++;
+  if(w<Rn-1){const c=[];for(let i=0;i<cur.length/2;i++)c.push(tuM("L"+k+"-"+i,cur[2*i].W,cur[2*i+1].W));LB.push(c);cur=c;k++}}
+ const wf=W[Rn-1][0],lf=cur[0],g1=tuM("F1",wf.W,lf.W),GF=[g1];let ch=null;
+ if(g1.r){if(g1.W==wf.W)ch=g1.W;else{const g2=tuM("F2",wf.W,lf.W);GF.push(g2);ch=g2.W}}return{W,LB,GF,ch}}
+function tRR(ps){const a=[...ps];if(a.length%2)a.push(null);const n=a.length,out=[];
+ for(let r=0;r<n-1;r++){for(let i=0;i<n/2;i++)if(a[i]&&a[n-1-i])out.push([a[i],a[n-1-i]]);a.splice(1,0,a.pop())}return out}
+function tGrp(){return TU.groups.map((g,gi)=>{const ms=tRR(g).map(([a,b],k)=>tuM("G"+gi+"-"+k,a,b)),st=g.map(n=>({n,sp:0,s:0,lp:0,lm:0}));
+ ms.forEach(m=>{if(!m.r)return;const A=st.find(x=>x.n==m.a),B=st.find(x=>x.n==m.b);A.sp++;B.sp++;A.lp+=m.r.sa;A.lm+=m.r.sb;B.lp+=m.r.sb;B.lm+=m.r.sa;(m.W==m.a?A:B).s++});
+ const dir=(x,y)=>{const m=ms.find(m=>m.r&&[m.a,m.b].includes(x)&&[m.a,m.b].includes(y));return m?(m.W==x?-1:1):0};
+ st.sort((x,y)=>y.s-x.s||(y.lp-y.lm)-(x.lp-x.lm)||y.lp-x.lp||dir(x.n,y.n));return{ms,st,done:ms.every(m=>m.r)}})}
+const tuRound=(n,last)=>n==1?(last||"Finale"):n==2?"Halbfinale":n==4?"Viertelfinale":n==8?"Achtelfinale":"Runde";
+function tuCard(m){TUM[m.id]=m;const ed=m.a&&m.b&&m.a!=BYE&&m.b!=BYE,r=TU.res[m.id],ok=r&&r[0]==m.a&&r[1]==m.b;
+ const pl=(n,k)=>{const win=m.r&&m.W==n;return `<div class="tup ${win?"tuw":m.r?"tul":""}"><span>${n==null?'<i class="mu">offen</i>':esc(n)}</span>${ed?`<input id="tu${k}_${m.id}" type="number" inputmode="numeric" min="0" max="99" aria-label="Legs ${esc(n)}" value="${ok?r[k=="a"?2:3]:""}" onchange="tuSet('${m.id}')">`:""}</div>`};
+ return `<div class="tum">${pl(m.a,"a")}${pl(m.b,"b")}</div>`}
+const tuCol=(t,ms,note)=>{const v=ms.filter(m=>m.a!==BYE&&m.b!==BYE);return v.length||note?`<div class="tuc"><div class="tuh">${t}</div>${v.map(tuCard).join("")}${note||""}</div>`:""};
+const tuFrei=R=>{const f=R[0].filter(m=>m.a==BYE||m.b==BYE).map(m=>m.a==BYE?m.b:m.a).filter(x=>x&&x!=BYE);return f.length?`<div class="mu" style="font-size:12px;text-align:center">Freilos: ${f.map(esc).join(", ")}</div>`:""};
+function tuSet(id){const m=TUM[id],x=$("#tua_"+id).value,y=$("#tub_"+id).value;
+ if(x===""||y==="")delete TU.res[id];else{if(+x==+y){alert("Unentschieden geht nicht – bitte den Sieger mit mehr Legs eintragen.");return}TU.res[id]=[m.a,m.b,+x,+y]}
+ tuSave();const sl=[...document.querySelectorAll(".tub")].map(e=>e.scrollLeft);draw();document.querySelectorAll(".tub").forEach((e,i)=>e.scrollLeft=sl[i]||0)}
+const tuList=()=>[...S.players.map(p=>p.name).filter(n=>TUS.sel[n]),...TUS.gast.split(",").map(s=>s.trim()).filter(Boolean)].filter((n,i,a)=>a.indexOf(n)==i);
+function tuPick(i,c){TUS.sel[S.players[i].name]=c;const e=$("#tucn");if(e)e.textContent=tuList().length}
+function tuStart(){const ps=tuList(),min=TUS.mode=="grp"?4:TUS.mode=="dko"?3:2;
+ if(ps.length<min){alert("Für diese Turnierform braucht ihr mindestens "+min+" Teilnehmer.");return}
+ let P=[...ps];if(TUS.los=="stat"){const sc=n=>{const p=S.players.find(x=>x.name==n);return p?qs(p).q:0};P.sort((a,b)=>sc(b)-sc(a))}
+ else for(let i=P.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[P[i],P[j]]=[P[j],P[i]]}
+ let groups=null;if(TUS.mode=="grp"){const gc=Math.min(TUS.gc||Math.max(1,Math.round(P.length/4)),Math.floor(P.length/2));groups=Array.from({length:gc},()=>[]);
+  P.forEach((n,i)=>{const row=Math.floor(i/gc),c=i%gc;groups[row%2?gc-1-c:c].push(n)})}
+ TU={name:TUS.name.trim()||"Vereinsturnier",mode:TUS.mode,bo:TUS.bo,players:P,groups,adv:TUS.adv,third:TUS.third,res:{},datum:new Date().toLocaleDateString("de-DE")};tuSave();anim=true;draw();scrollTo(0,0)}
+function tuReset(){if(confirm("Turnier wirklich beenden und ein neues planen? Alle Ergebnisse dieses Turniers werden gelöscht.")){TU=null;try{localStorage.removeItem("wt-turnier")}catch(e){}anim=true;draw()}}
+function tuSetup(){const MO=[["ko","K.O.-System","Wer verliert, ist raus"],["dko","Doppel-K.O.","Raus erst nach der 2. Niederlage"],["grp","Gruppen + K.O.","Jeder gegen jeden, die Besten ins K.O."]];
+ return `<div class="card"><h2>🏆 Turnier planen</h2><div class="row"><input placeholder="Turniername, z. B. Vereinsmeisterschaft" value="${esc(TUS.name)}" oninput="TUS.name=this.value"></div>
+ <div class="sec">Turnierform</div><div class="tumo">${MO.map(([k,t,d])=>`<button class="tumb ${TUS.mode==k?"on":""}" onclick="TUS.mode='${k}';draw()"><b>${t}</b><small>${d}</small></button>`).join("")}</div>
+ <div class="sec">Spielmodus</div><div class="row"><select aria-label="Spielmodus" onchange="TUS.bo=this.value">${["501 Best of 3","501 Best of 5","301 Best of 5","501 Double In/Double Out Best of 3","Cricket Best of 3"].map(o=>`<option ${TUS.bo==o?"selected":""}>${o}</option>`).join("")}</select></div>
+ <div class="sec">Teilnehmer (<span id="tucn">${tuList().length}</span>)</div><div class="tupk">${S.players.map((p,i)=>`<label><input type="checkbox" ${TUS.sel[p.name]?"checked":""} onchange="tuPick(${i},this.checked)">${esc(p.name)}</label>`).join("")}</div>
+ <div class="row"><input placeholder="Gäste, mit Komma getrennt" value="${esc(TUS.gast)}" oninput="TUS.gast=this.value;$('#tucn').textContent=tuList().length"></div>
+ <div class="sec">Auslosung</div><div class="row"><select aria-label="Auslosung" onchange="TUS.los=this.value"><option value="los" ${TUS.los=="los"?"selected":""}>Zufällig auslosen</option><option value="stat" ${TUS.los=="stat"?"selected":""}>Setzliste nach Statistik (Stärkste treffen sich spät)</option></select></div>
+ ${TUS.mode=="ko"?`<label class="row" style="gap:10px"><input type="checkbox" ${TUS.third?"checked":""} onchange="TUS.third=this.checked">Spiel um Platz 3</label>`:""}
+ ${TUS.mode=="grp"?`<div class="row"><select aria-label="Gruppen" onchange="TUS.gc=+this.value">${[0,1,2,3,4].map(v=>`<option value="${v}" ${TUS.gc==v?"selected":""}>${v?v+(v==1?" Gruppe":" Gruppen"):"Gruppen automatisch"}</option>`).join("")}</select><select aria-label="Weiterkommen" onchange="TUS.adv=+this.value"><option value="1" ${TUS.adv==1?"selected":""}>Gruppensieger kommen weiter</option><option value="2" ${TUS.adv==2?"selected":""}>Die Besten 2 je Gruppe kommen weiter</option></select></div>`:""}
+ <button class="b" style="width:100%;margin-top:10px" onclick="tuStart()">Turnier starten</button>
+ <p class="mu" style="font-size:12px;margin:10px 0 0">Das Turnier wird auf diesem Gerät gespeichert. Am besten trägt eine Person alle Ergebnisse ein.</p></div>`}
+function Turnier(){if(!TU)return tuSetup();TUM={};
+ const MN={ko:"K.O.-System",dko:"Doppel-K.O.",grp:"Gruppen + K.O."};let body="",ch=null;
+ if(TU.mode=="ko"){const R=tKO(TU.players,"W"),f=R[R.length-1][0];ch=f.W;
+  body=`<div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"")).join("")}${TU.third&&R.length>1?tuCol("Platz 3",[tuM("P3",R[R.length-2][0].L,R[R.length-2][1].L)].filter(m=>m.a!==BYE&&m.b!==BYE)):""}</div>`}
+ if(TU.mode=="dko"){const D=tDKO(TU.players);ch=D.ch;
+  body=`<div class="sec">Gewinnerrunde</div><div class="tub">${D.W.map((ms,i)=>tuCol(i==D.W.length-1?"Finale Gewinner":"Runde "+(i+1),ms,i==0?tuFrei(D.W):"")).join("")}</div>
+  <div class="sec">Verliererrunde</div><div class="tub">${(()=>{let c=0;return D.LB.map(ms=>ms.some(m=>m.a!==BYE&&m.b!==BYE)?tuCol("Runde "+(++c),ms):"").join("")})()}</div>
+  <div class="sec">Großes Finale</div><div class="tub">${tuCol("Finale",[D.GF[0]])}${D.GF[1]?tuCol("Entscheidungsspiel",[D.GF[1]],'<div class="mu" style="font-size:12px;text-align:center">Der Sieger der Verliererrunde hat gewonnen, jetzt haben beide eine Niederlage.</div>'):""}</div>`}
+ if(TU.mode=="grp"){const G=tGrp(),all=G.every(g=>g.done);
+  body=`<div class="tug">${G.map((g,gi)=>`<div class="card" style="margin:0"><h2>Gruppe ${String.fromCharCode(65+gi)}</h2><table class="lt"><tr><th>#</th><th>Spieler</th><th>Sp.</th><th>S</th><th>Legs</th></tr>${g.st.map((s,i)=>`<tr class="${i<TU.adv?"auf":""}"><td>${i+1}</td><td>${esc(s.n)}</td><td>${s.sp}</td><td><b>${s.s}</b></td><td>${s.lp}:${s.lm}</td></tr>`).join("")}</table>
+   <div class="sec">Spiele</div><div style="display:flex;flex-direction:column;gap:8px">${g.ms.map(tuCard).join("")}</div></div>`).join("")}</div>`;
+  if(all){const Q=[];for(let p=0;p<TU.adv;p++)G.forEach(g=>g.st[p]&&Q.push(g.st[p].n));const R=tKO(Q,"K");ch=R[R.length-1][0].W;
+   body+=`<div class="sec">K.O.-Runde</div><div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"")).join("")}</div>`}
+  else body+=`<p class="mu" style="font-size:13px">Die K.O.-Runde erscheint, sobald alle Gruppenspiele eingetragen sind. Bei Punktgleichheit zählen Leg-Differenz, mehr Legs und der direkte Vergleich.</p>`}
+ return `<div class="hero" style="padding-right:16px;min-height:0"><h2>🏆 ${esc(TU.name)}</h2><div class="mu">${MN[TU.mode]} · ${esc(TU.bo)} · ${TU.players.length} Teilnehmer · ${TU.datum}</div></div>
+ ${ch&&ch!=BYE?`<div class="card tuch"><div class="mu">Turniersieger</div><b>🏆 ${esc(ch)}</b></div>`:""}
+ <div class="card"><div class="mu" style="font-size:13px;margin-bottom:8px">Legs eintragen – der Sieger rückt automatisch weiter. Zum Korrigieren einfach die Zahl ändern.</div>${body}</div>
+ <div class="row"><button class="b g" onclick="tuReset()">Neues Turnier planen</button></div>`}
 /* Instagram */
 const TPL=new Image();TPL.src="bilder/vorlage.jpg";
 const LG=new Image();LG.src="bilder/logo.jpg";

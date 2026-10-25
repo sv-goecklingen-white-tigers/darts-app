@@ -190,7 +190,7 @@ else{const sp=document.getElementById("sp");sp.hidden=false;let done=false;const
 </script>
 <header class="hd"><img class="ban" alt="White Tigers Göcklingen" src="bilder/banner.jpg"><div class="tt"><b>White Tigers</b><span>SV Göcklingen · Bezirksoberliga 1</span></div></header>
 <div id="dr" class="dr"><div class="dbk" onclick="menu(0)"></div><aside class="dp" id="dp" aria-label="Menü"></aside></div><nav id="nav"></nav><main id="m"></main>
-<footer class="ft"><img class="av" src="bilder/logo.jpg" alt="" style="width:44px;height:44px"><div style="flex:1;min-width:0"><b>White Tigers Göcklingen</b><span id="st">Lade Daten…</span></div><a class="ig" href="https://www.instagram.com/svgwhitetigers/" target="_blank" rel="noopener">📸 @svgwhitetigers</a></footer>
+<footer class="ft"><img class="av" src="bilder/logo.jpg" alt="" style="width:44px;height:44px"><div style="flex:1;min-width:0"><b>White Tigers Göcklingen</b><span id="st">Lade Daten…</span></div><a class="ig" href="https://www.instagram.com/svgwhitetigers/" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="igg" cx="30%" cy="107%" r="150%"><stop offset="0" stop-color="#fdf497"/><stop offset=".05" stop-color="#fdf497"/><stop offset=".45" stop-color="#fd5949"/><stop offset=".6" stop-color="#d6249f"/><stop offset=".9" stop-color="#285AEB"/></radialGradient></defs><rect x="1" y="1" width="22" height="22" rx="6.5" fill="url(#igg)"/><rect x="5.5" y="5.5" width="13" height="13" rx="4" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="3.1" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="16.3" cy="7.7" r="1.05" fill="#fff"/></svg>@svgwhitetigers</a></footer>
 <script>
 const TABS=["Start","Spiele","Statistik","Aufstellung","Instagram","Minispiele","Team","Verwaltung"];const IC={Start:"🏠",Spiele:"🎯",Statistik:"📊",Aufstellung:"🧩",Instagram:"📸",Minispiele:"🎲",Team:"🐯",Verwaltung:"⚙️"};let usr=null;const canEd=()=>false;
 let S={players:[],matches:[]},tab="Start",sel=null,db=null,dl=null,AV={};
@@ -203,7 +203,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="25.10.2026, 17:45 Uhr";
+const SEITE="25.10.2026, 17:47 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}

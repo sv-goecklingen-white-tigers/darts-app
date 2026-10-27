@@ -166,13 +166,16 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 .tupk{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin:6px 0}
 .tupk label{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--bg);font-size:14px;cursor:pointer}
 .tub{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 10px;scroll-snap-type:x proximity}
-.tuc{flex:0 0 220px;display:flex;flex-direction:column;gap:8px;justify-content:space-around;scroll-snap-align:start}
+.tuc{flex:0 0 220px;display:flex;flex-direction:column;gap:8px;scroll-snap-align:start}
+.tuhd{display:flex;flex-direction:column;align-items:center;gap:4px}.tucs{flex:1;display:flex;flex-direction:column;gap:8px;justify-content:space-around}
 .tuh{font:700 14px var(--disp);color:var(--mu);text-transform:uppercase;letter-spacing:.6px;text-align:center}
 .tum{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh)}
 .tup{display:flex;align-items:center;gap:6px;padding:4px 8px;min-height:42px}.tup+.tup{border-top:1px solid var(--bd)}
 .tup span{flex:1;min-width:0;overflow-wrap:anywhere;font-size:14px}.tup input{width:54px;min-height:34px;padding:4px;text-align:center}
 .tuw{background:rgba(31,138,76,.2)}.tuw span{font-weight:700}.tul span{color:var(--mu)}
 .tuch{text-align:center;border-color:var(--ac);background:linear-gradient(180deg,rgba(240,138,36,.22),var(--card))}.tuch b{display:block;font:800 30px/1.2 var(--disp)}
+.tusel{min-height:32px;padding:2px 8px;font-size:13px;text-align:center;border-radius:999px;border-color:var(--ac);color:var(--ac);background:transparent;font-weight:600;align-self:center}
+.tuhr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}
 .tug{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
 /* Nächstes Spiel: Buttons, Startseite zweispaltig am PC, Fußzeile */
 .mh-bt{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
@@ -223,7 +226,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="25.10.2026, 18:11 Uhr";
+const SEITE="27.10.2026, 20:32 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
@@ -411,7 +414,7 @@ function lineup(){
 /* Turnierplaner: K.O., Doppel-K.O., Gruppen + K.O. Der Stand liegt nur auf diesem Gerät (localStorage).
    Die Paarungen werden bei jedem Zeichnen aus Setzliste + Ergebnissen neu berechnet; ein Ergebnis gilt nur,
    solange dieselben zwei Spieler im Spiel stehen. */
-const BYE="—";let TU=null,TUM={};const TUS={mode:"ko",bo:"501 Best of 3",sel:{},gast:"",los:"los",third:true,gc:0,adv:2,name:""};
+const BYE="—";let TU=null,TUM={};const TUS={mode:"ko",game:"501",legs:3,sel:{},gast:"",los:"los",third:true,gc:0,adv:2,name:""};
 try{TU=JSON.parse(localStorage.getItem("wt-turnier")||"null")}catch(e){}
 const tuSave=()=>{try{localStorage.setItem("wt-turnier",JSON.stringify(TU))}catch(e){}};
 const seedOrder=n=>{let a=[1];while(a.length<n){const L=a.length*2;a=a.flatMap(s=>[s,L+1-s])}return a};
@@ -437,10 +440,15 @@ const tuRound=(n,last)=>n==1?(last||"Finale"):n==2?"Halbfinale":n==4?"Viertelfin
 function tuCard(m){TUM[m.id]=m;const ed=m.a&&m.b&&m.a!=BYE&&m.b!=BYE,r=TU.res[m.id],ok=r&&r[0]==m.a&&r[1]==m.b;
  const pl=(n,k)=>{const win=m.r&&m.W==n;return `<div class="tup ${win?"tuw":m.r?"tul":""}"><span>${n==null?'<i class="mu">offen</i>':esc(n)}</span>${ed?`<input id="tu${k}_${m.id}" type="number" inputmode="numeric" min="0" max="99" aria-label="Legs ${esc(n)}" value="${ok?r[k=="a"?2:3]:""}" onchange="tuSet('${m.id}')">`:""}</div>`};
  return `<div class="tum">${pl(m.a,"a")}${pl(m.b,"b")}</div>`}
-const tuCol=(t,ms,note)=>{const v=ms.filter(m=>m.a!==BYE&&m.b!==BYE);return v.length||note?`<div class="tuc"><div class="tuh">${t}</div>${v.map(tuCard).join("")}${note||""}</div>`:""};
+/* Legs pro Runde: TU.legs ist der Standard, TU.rl[Runde] überschreibt ihn und lässt sich jederzeit ändern */
+const tuLegs=k=>TU.rl&&TU.rl[k]||TU.legs;
+const tuBoSel=k=>`<select class="tusel" aria-label="Spielmodus dieser Runde" onchange="tuBo('${k}',this.value)">${[1,3,5,7,9,11,13].map(n=>`<option value="${n}" ${tuLegs(k)==n?"selected":""}>Best of ${n}</option>`).join("")}</select>`;
+function tuBo(k,v){TU.rl=TU.rl||{};TU.rl[k]=+v;tuSave();const sl=[...document.querySelectorAll(".tub")].map(e=>e.scrollLeft);draw();document.querySelectorAll(".tub").forEach((e,i)=>e.scrollLeft=sl[i]||0)}
+const tuCol=(t,ms,note,k)=>{const v=ms.filter(m=>m.a!==BYE&&m.b!==BYE);v.forEach(m=>m.k=k);return v.length||note?`<div class="tuc"><div class="tuhd"><div class="tuh">${t}</div>${k?tuBoSel(k):""}</div><div class="tucs">${v.map(tuCard).join("")}${note||""}</div></div>`:""};
 const tuFrei=R=>{const f=R[0].filter(m=>m.a==BYE||m.b==BYE).map(m=>m.a==BYE?m.b:m.a).filter(x=>x&&x!=BYE);return f.length?`<div class="mu" style="font-size:12px;text-align:center">Freilos: ${f.map(esc).join(", ")}</div>`:""};
 function tuSet(id){const m=TUM[id],x=$("#tua_"+id).value,y=$("#tub_"+id).value;
- if(x===""||y==="")delete TU.res[id];else{if(+x==+y){alert("Unentschieden geht nicht – bitte den Sieger mit mehr Legs eintragen.");return}TU.res[id]=[m.a,m.b,+x,+y]}
+ if(x===""||y==="")delete TU.res[id];else{if(+x==+y){alert("Unentschieden geht nicht – bitte den Sieger mit mehr Legs eintragen.");return}
+  const n=tuLegs(m.k),need=(n+1)/2;if(Math.max(+x,+y)!=need&&!confirm(`Bei Best of ${n} gewinnt, wer ${need} Legs hat. Trotzdem ${x}:${y} speichern?`))return;TU.res[id]=[m.a,m.b,+x,+y]}
  tuSave();const sl=[...document.querySelectorAll(".tub")].map(e=>e.scrollLeft);draw();document.querySelectorAll(".tub").forEach((e,i)=>e.scrollLeft=sl[i]||0)}
 const tuList=()=>[...S.players.map(p=>p.name).filter(n=>TUS.sel[n]),...TUS.gast.split(",").map(s=>s.trim()).filter(Boolean)].filter((n,i,a)=>a.indexOf(n)==i);
 function tuPick(i,c){TUS.sel[S.players[i].name]=c;const e=$("#tucn");if(e)e.textContent=tuList().length}
@@ -450,34 +458,36 @@ function tuStart(){const ps=tuList(),min=TUS.mode=="grp"?4:TUS.mode=="dko"?3:2;
  else for(let i=P.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[P[i],P[j]]=[P[j],P[i]]}
  let groups=null;if(TUS.mode=="grp"){const gc=Math.min(TUS.gc||Math.max(1,Math.round(P.length/4)),Math.floor(P.length/2));groups=Array.from({length:gc},()=>[]);
   P.forEach((n,i)=>{const row=Math.floor(i/gc),c=i%gc;groups[row%2?gc-1-c:c].push(n)})}
- TU={name:TUS.name.trim()||"Vereinsturnier",mode:TUS.mode,bo:TUS.bo,players:P,groups,adv:TUS.adv,third:TUS.third,res:{},datum:new Date().toLocaleDateString("de-DE")};tuSave();anim=true;draw();scrollTo(0,0)}
+ TU={name:TUS.name.trim()||"Vereinsturnier",mode:TUS.mode,game:TUS.game,legs:TUS.legs,rl:{},players:P,groups,adv:TUS.adv,third:TUS.third,res:{},datum:new Date().toLocaleDateString("de-DE")};tuSave();anim=true;draw();scrollTo(0,0)}
 function tuReset(){if(confirm("Turnier wirklich beenden und ein neues planen? Alle Ergebnisse dieses Turniers werden gelöscht.")){TU=null;try{localStorage.removeItem("wt-turnier")}catch(e){}anim=true;draw()}}
 function tuSetup(){const MO=[["ko","K.O.-System","Wer verliert, ist raus"],["dko","Doppel-K.O.","Raus erst nach der 2. Niederlage"],["grp","Gruppen + K.O.","Jeder gegen jeden, die Besten ins K.O."]];
  return `<div class="card"><h2>🏆 Turnier planen</h2><div class="row"><input placeholder="Turniername, z. B. Vereinsmeisterschaft" value="${esc(TUS.name)}" oninput="TUS.name=this.value"></div>
  <div class="sec">Turnierform</div><div class="tumo">${MO.map(([k,t,d])=>`<button class="tumb ${TUS.mode==k?"on":""}" onclick="TUS.mode='${k}';draw()"><b>${t}</b><small>${d}</small></button>`).join("")}</div>
- <div class="sec">Spielmodus</div><div class="row"><select aria-label="Spielmodus" onchange="TUS.bo=this.value">${["501 Best of 3","501 Best of 5","301 Best of 5","501 Double In/Double Out Best of 3","Cricket Best of 3"].map(o=>`<option ${TUS.bo==o?"selected":""}>${o}</option>`).join("")}</select></div>
+ <div class="sec">Spielmodus</div><div class="row"><select aria-label="Spiel" onchange="TUS.game=this.value">${["501","301","501 Double In/Double Out","701","Cricket"].map(o=>`<option ${TUS.game==o?"selected":""}>${o}</option>`).join("")}</select><select aria-label="Legs zum Start" onchange="TUS.legs=+this.value">${[1,3,5,7,9].map(n=>`<option value="${n}" ${TUS.legs==n?"selected":""}>Best of ${n}</option>`).join("")}</select></div>
+ <p class="mu" style="font-size:12px;margin:2px 0 0">Gilt ${TUS.mode=="grp"?"für die Gruppenphase":"zum Start"}. Für spätere Runden (z. B. Halbfinale, Finale) lässt sich die Länge während des Turniers bei jeder Runde einzeln erhöhen.</p>
  <div class="sec">Teilnehmer (<span id="tucn">${tuList().length}</span>)</div><div class="tupk">${S.players.map((p,i)=>`<label><input type="checkbox" ${TUS.sel[p.name]?"checked":""} onchange="tuPick(${i},this.checked)">${esc(p.name)}</label>`).join("")}</div>
  <div class="row"><input placeholder="Gäste, mit Komma getrennt" value="${esc(TUS.gast)}" oninput="TUS.gast=this.value;$('#tucn').textContent=tuList().length"></div>
  <div class="sec">Auslosung</div><div class="row"><select aria-label="Auslosung" onchange="TUS.los=this.value"><option value="los" ${TUS.los=="los"?"selected":""}>Zufällig auslosen</option><option value="stat" ${TUS.los=="stat"?"selected":""}>Setzliste nach Statistik (Stärkste treffen sich spät)</option></select></div>
  ${TUS.mode=="ko"?`<label class="row" style="gap:10px"><input type="checkbox" ${TUS.third?"checked":""} onchange="TUS.third=this.checked">Spiel um Platz 3</label>`:""}
- ${TUS.mode=="grp"?`<div class="row"><select aria-label="Gruppen" onchange="TUS.gc=+this.value">${[0,1,2,3,4].map(v=>`<option value="${v}" ${TUS.gc==v?"selected":""}>${v?v+(v==1?" Gruppe":" Gruppen"):"Gruppen automatisch"}</option>`).join("")}</select><select aria-label="Weiterkommen" onchange="TUS.adv=+this.value"><option value="1" ${TUS.adv==1?"selected":""}>Gruppensieger kommen weiter</option><option value="2" ${TUS.adv==2?"selected":""}>Die Besten 2 je Gruppe kommen weiter</option></select></div>`:""}
+ ${TUS.mode=="grp"?`<div class="row"><select aria-label="Gruppen" style="flex-basis:100%" onchange="TUS.gc=+this.value">${[0,1,2,3,4].map(v=>`<option value="${v}" ${TUS.gc==v?"selected":""}>${v?v+(v==1?" Gruppe":" Gruppen"):"Gruppen automatisch"}</option>`).join("")}</select><select aria-label="Weiterkommen" style="flex-basis:100%" onchange="TUS.adv=+this.value"><option value="1" ${TUS.adv==1?"selected":""}>Gruppensieger kommen weiter</option><option value="2" ${TUS.adv==2?"selected":""}>Die Besten 2 je Gruppe kommen weiter</option></select></div>`:""}
  <button class="b" style="width:100%;margin-top:10px" onclick="tuStart()">Turnier starten</button>
  <p class="mu" style="font-size:12px;margin:10px 0 0">Das Turnier wird auf diesem Gerät gespeichert. Am besten trägt eine Person alle Ergebnisse ein.</p></div>`}
-function Turnier(){if(!TU)return tuSetup();TUM={};
+function Turnier(){if(!TU)return tuSetup();TUM={};if(!TU.game){TU.game=TU.bo||"501";TU.legs=TU.legs||3;TU.rl=TU.rl||{}}
  const MN={ko:"K.O.-System",dko:"Doppel-K.O.",grp:"Gruppen + K.O."};let body="",ch=null;
  if(TU.mode=="ko"){const R=tKO(TU.players,"W"),f=R[R.length-1][0];ch=f.W;
-  body=`<div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"")).join("")}${TU.third&&R.length>1?tuCol("Platz 3",[tuM("P3",R[R.length-2][0].L,R[R.length-2][1].L)].filter(m=>m.a!==BYE&&m.b!==BYE)):""}</div>`}
+  body=`<div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"","K"+ms.length)).join("")}${TU.third&&R.length>1?tuCol("Platz 3",[tuM("P3",R[R.length-2][0].L,R[R.length-2][1].L)].filter(m=>m.a!==BYE&&m.b!==BYE),"","P3"):""}</div>`}
  if(TU.mode=="dko"){const D=tDKO(TU.players);ch=D.ch;
-  body=`<div class="sec">Gewinnerrunde</div><div class="tub">${D.W.map((ms,i)=>tuCol(i==D.W.length-1?"Finale Gewinner":"Runde "+(i+1),ms,i==0?tuFrei(D.W):"")).join("")}</div>
-  <div class="sec">Verliererrunde</div><div class="tub">${(()=>{let c=0;return D.LB.map(ms=>ms.some(m=>m.a!==BYE&&m.b!==BYE)?tuCol("Runde "+(++c),ms):"").join("")})()}</div>
-  <div class="sec">Großes Finale</div><div class="tub">${tuCol("Finale",[D.GF[0]])}${D.GF[1]?tuCol("Entscheidungsspiel",[D.GF[1]],'<div class="mu" style="font-size:12px;text-align:center">Der Sieger der Verliererrunde hat gewonnen, jetzt haben beide eine Niederlage.</div>'):""}</div>`}
+  body=`<div class="sec">Gewinnerrunde</div><div class="tub">${D.W.map((ms,i)=>tuCol(i==D.W.length-1?"Finale Gewinner":"Runde "+(i+1),ms,i==0?tuFrei(D.W):"","W"+(i+1))).join("")}</div>
+  <div class="sec">Verliererrunde</div><div class="tub">${(()=>{let c=0;return D.LB.map(ms=>ms.some(m=>m.a!==BYE&&m.b!==BYE)?(c++,tuCol("Runde "+c,ms,"","L"+c)):"").join("")})()}</div>
+  <div class="sec">Großes Finale</div><div class="tub">${tuCol("Finale",[D.GF[0]],"","F")}${D.GF[1]?tuCol("Entscheidungsspiel",[D.GF[1]],'<div class="mu" style="font-size:12px;text-align:center">Der Sieger der Verliererrunde hat gewonnen, jetzt haben beide eine Niederlage.</div>',"F"):""}</div>`}
  if(TU.mode=="grp"){const G=tGrp(),all=G.every(g=>g.done);
-  body=`<div class="tug">${G.map((g,gi)=>`<div class="card" style="margin:0"><h2>Gruppe ${String.fromCharCode(65+gi)}</h2><table class="lt"><tr><th>#</th><th>Spieler</th><th>Sp.</th><th>S</th><th>Legs</th></tr>${g.st.map((s,i)=>`<tr class="${i<TU.adv?"auf":""}"><td>${i+1}</td><td>${esc(s.n)}</td><td>${s.sp}</td><td><b>${s.s}</b></td><td>${s.lp}:${s.lm}</td></tr>`).join("")}</table>
+  G.forEach(g=>g.ms.forEach(m=>m.k="G"));
+  body=`<div class="tuhr"><span class="tuh">Gruppenphase</span>${tuBoSel("G")}</div><div class="tug">${G.map((g,gi)=>`<div class="card" style="margin:0"><h2>Gruppe ${String.fromCharCode(65+gi)}</h2><table class="lt"><tr><th>#</th><th>Spieler</th><th>Sp.</th><th>S</th><th>Legs</th></tr>${g.st.map((s,i)=>`<tr class="${i<TU.adv?"auf":""}"><td>${i+1}</td><td>${esc(s.n)}</td><td>${s.sp}</td><td><b>${s.s}</b></td><td>${s.lp}:${s.lm}</td></tr>`).join("")}</table>
    <div class="sec">Spiele</div><div style="display:flex;flex-direction:column;gap:8px">${g.ms.map(tuCard).join("")}</div></div>`).join("")}</div>`;
   if(all){const Q=[];for(let p=0;p<TU.adv;p++)G.forEach(g=>g.st[p]&&Q.push(g.st[p].n));const R=tKO(Q,"K");ch=R[R.length-1][0].W;
-   body+=`<div class="sec">K.O.-Runde</div><div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"")).join("")}</div>`}
+   body+=`<div class="sec">K.O.-Runde</div><div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"","K"+ms.length)).join("")}</div>`}
   else body+=`<p class="mu" style="font-size:13px">Die K.O.-Runde erscheint, sobald alle Gruppenspiele eingetragen sind. Bei Punktgleichheit zählen Leg-Differenz, mehr Legs und der direkte Vergleich.</p>`}
- return `<div class="hero" style="padding-right:16px;min-height:0"><h2>🏆 ${esc(TU.name)}</h2><div class="mu">${MN[TU.mode]} · ${esc(TU.bo)} · ${TU.players.length} Teilnehmer · ${TU.datum}</div></div>
+ return `<div class="hero" style="padding-right:16px;min-height:0"><h2>🏆 ${esc(TU.name)}</h2><div class="mu">${MN[TU.mode]} · ${esc(TU.game)} ·${TU.players.length} Teilnehmer · ${TU.datum}</div></div>
  ${ch&&ch!=BYE?`<div class="card tuch"><div class="mu">Turniersieger</div><b>🏆 ${esc(ch)}</b></div>`:""}
  <div class="card"><div class="mu" style="font-size:13px;margin-bottom:8px">Legs eintragen – der Sieger rückt automatisch weiter. Zum Korrigieren einfach die Zahl ändern.</div>${body}</div>
  <div class="row"><button class="b g" onclick="tuReset()">Neues Turnier planen</button></div>`}

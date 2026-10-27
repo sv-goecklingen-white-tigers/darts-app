@@ -226,7 +226,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="27.10.2026, 20:32 Uhr";
+const SEITE="27.10.2026, 20:40 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
@@ -524,11 +524,24 @@ async function ig(){const m=S.matches.find(x=>x.id==$("#im").value),k=$("#ik").v
   else if(LGI){const r=Math.min((bw-20)/LGI.width,(bh-20)/LGI.height);x.drawImage(LGI,cx-LGI.width*r/2,cy-LGI.height*r/2,LGI.width*r,LGI.height*r)}
   else{let s=70,L;do{L=wrap(m.opp.toUpperCase(),bw-24,s);s-=4}while((L.length*s*1.15>bh-30||L.some(z=>x.measureText(z).width>bw-24))&&s>24);x.fillStyle="#111";L.forEach((z,i)=>x.fillText(z,cx,cy-(L.length-1)*s*0.6+i*s*1.2))}};
  team(282,665,m.home,310,320);team(870,675,!m.home,300,300);
- const a=k=="r"?(m.home?m.sa:m.sb):"–",b=k=="r"?(m.home?m.sb:m.sa):"–";
- x.fillStyle="#111";x.font=`130px ${F}`;x.fillText(a,418,1062);x.fillText(b,727,1062);
  const dt=m.date.split("-").reverse().join(".");
- const fitT=(s,y,z)=>{x.font=`${z}px ${F}`;while(x.measureText(s).width>270&&z>18){z-=2;x.font=`${z}px ${F}`}x.fillText(s,571,y)};
- fitT(m.type=="Pokal"?"POKAL":("LIGA"+(m.sp?" · "+m.sp:"")),1274,36);fitT(dt,1313,38)}
+ const fitT=(s,y,z,mw=270,cx=571)=>{x.font=`${z}px ${F}`;while(x.measureText(s).width>mw&&z>18){z-=2;x.font=`${z}px ${F}`}x.fillText(s,cx,y)};
+ if(k=="r"){const a=m.home?m.sa:m.sb,b=m.home?m.sb:m.sa;
+  x.fillStyle="#111";x.font=`130px ${F}`;x.fillText(a,418,1062);x.fillText(b,727,1062);
+  fitT(m.type=="Pokal"?"POKAL":("LIGA"+(m.sp?" · "+m.sp:"")),1274,36);fitT(dt,1313,38);return}
+ // Ankündigung: Ergebnis- und Spieltag-Feld der Vorlage mit einer großen Info-Box überdecken
+ const rr=(X,Y,W,H,R)=>{x.beginPath();x.moveTo(X+R,Y);x.arcTo(X+W,Y,X+W,Y+H,R);x.arcTo(X+W,Y+H,X,Y+H,R);x.arcTo(X,Y+H,X,Y,R);x.arcTo(X,Y,X+W,Y,R);x.closePath()};
+ // Box beginnt unter den Schriftzügen HEIM/GAST (enden bei y≈910); die dunkle Abdeckung reicht bis 922, um „ERGEBNIS“ zu verdecken
+ const X=280,Y=958,W=588,H=372,wd=new Date(m.date+"T12:00").toLocaleDateString("de-DE",{weekday:"short"}).replace(".","").toUpperCase();
+ x.fillStyle="#0b0b0b";rr(X-24,922,W+48,H+(Y-922)+20,40);x.fill();
+ x.fillStyle="#d9d9d9";x.strokeStyle="#f2f2f2";x.lineWidth=10;rr(X,Y,W,H,32);x.fill();x.stroke();
+ x.fillStyle="#111";rr(X+60,Y+24,W-120,72,16);x.fill();
+ x.fillStyle="#8dc63f";fitT(m.type=="Pokal"?"POKAL"+(m.rd?" · "+m.rd.toUpperCase():""):"SPIELTAG"+(m.sp?" "+m.sp:""),Y+62,50,W-160);
+ const ort=String(m.loc||"").split(" - ")[0],t=m.time?0:40,o=ort?0:22;
+ x.fillStyle="#111";fitT(wd+". "+dt,Y+150+o+t/2,66,W-60);
+ if(m.time)fitT(m.time+" UHR",Y+222+o,66,W-60);
+ fitT(m.home?"HEIMSPIEL":"AUSWÄRTS",Y+290+o-t,46,W-60);
+ if(ort){x.fillStyle="#444";fitT(ort,Y+336-t,30,W-60)}}
 async function dlImg(){const b=await new Promise(r=>$("#cv").toBlob(r,"image/png"));try{if(dl)await dl.save({filename:"white-tigers.png",data:b});else alert("Bild lang drücken bzw. Rechtsklick → Bild speichern")}catch(e){}}
 let SM="Liga",VM="s";
 let IMGS={},REPS={};let ZR=0;

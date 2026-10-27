@@ -176,6 +176,12 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 .tuch{text-align:center;border-color:var(--ac);background:linear-gradient(180deg,rgba(240,138,36,.22),var(--card))}.tuch b{display:block;font:800 30px/1.2 var(--disp)}
 .tusel{min-height:32px;padding:2px 8px;font-size:13px;text-align:center;border-radius:999px;border-color:var(--ac);color:var(--ac);background:transparent;font-weight:600;align-self:center}
 .tuhr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.igr{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:10px;margin:6px 0}
+.igr label{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}.igr small{color:var(--mu);font-size:13px;text-align:center;overflow-wrap:anywhere}
+.igr input{width:100%;max-width:120px;min-height:56px;text-align:center;font:700 30px var(--disp)}.igr>b{font:800 30px var(--disp);padding-bottom:10px}
+.tuw2{overflow-x:auto;padding:2px 2px 12px;margin:0 -2px}.tuth{position:relative;height:66px}.tuth>div{position:absolute;top:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.tut{position:absolute;width:200px}.tusvg{position:absolute;inset:0;fill:none;stroke:var(--mu);stroke-width:2;opacity:.6}
+.tubye{opacity:.55}.tupv{border-style:dashed;opacity:.85}.tupv span{font-style:italic}.tuv{gap:8px}.tuv .b{min-height:38px;padding:4px 12px}
 .tug{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
 /* Nächstes Spiel: Buttons, Startseite zweispaltig am PC, Fußzeile */
 .mh-bt{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
@@ -226,7 +232,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="27.10.2026, 20:40 Uhr";
+const SEITE="27.10.2026, 20:52 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
@@ -437,19 +443,34 @@ function tGrp(){return TU.groups.map((g,gi)=>{const ms=tRR(g).map(([a,b],k)=>tuM
  const dir=(x,y)=>{const m=ms.find(m=>m.r&&[m.a,m.b].includes(x)&&[m.a,m.b].includes(y));return m?(m.W==x?-1:1):0};
  st.sort((x,y)=>y.s-x.s||(y.lp-y.lm)-(x.lp-x.lm)||y.lp-x.lp||dir(x.n,y.n));return{ms,st,done:ms.every(m=>m.r)}})}
 const tuRound=(n,last)=>n==1?(last||"Finale"):n==2?"Halbfinale":n==4?"Viertelfinale":n==8?"Achtelfinale":"Runde";
-function tuCard(m){TUM[m.id]=m;const ed=m.a&&m.b&&m.a!=BYE&&m.b!=BYE,r=TU.res[m.id],ok=r&&r[0]==m.a&&r[1]==m.b;
- const pl=(n,k)=>{const win=m.r&&m.W==n;return `<div class="tup ${win?"tuw":m.r?"tul":""}"><span>${n==null?'<i class="mu">offen</i>':esc(n)}</span>${ed?`<input id="tu${k}_${m.id}" type="number" inputmode="numeric" min="0" max="99" aria-label="Legs ${esc(n)}" value="${ok?r[k=="a"?2:3]:""}" onchange="tuSet('${m.id}')">`:""}</div>`};
- return `<div class="tum">${pl(m.a,"a")}${pl(m.b,"b")}</div>`}
+// TUP merkt sich halb ausgefüllte Ergebnisse (erst eine Zahl eingetragen), damit sie beim Neuzeichnen nicht verschwinden
+const TUP={};
+function tuCard(m,pv){TUM[m.id]=m;const ed=!pv&&m.a&&m.b&&m.a!=BYE&&m.b!=BYE,r=TU.res[m.id],ok=r&&r[0]==m.a&&r[1]==m.b,p=TUP[m.id];
+ const pl=(n,k)=>{const win=m.r&&m.W==n&&n!=BYE,i=k=="a"?0:1;return `<div class="tup ${win?"tuw":m.r?"tul":""}"><span>${n==null?'<i class="mu">offen</i>':n==BYE?'<i class="mu">Freilos</i>':esc(n)}</span>${ed?`<input id="tu${k}_${m.id}" type="number" inputmode="numeric" min="0" max="99" aria-label="Legs ${esc(n)}" value="${ok?r[2+i]:p?p[i]:""}" onchange="tuSet('${m.id}')">`:""}</div>`};
+ return `<div class="tum${pv?" tupv":""}">${pl(m.a,"a")}${pl(m.b,"b")}</div>`}
+const tuRedraw=()=>{const S2=".tub,.tuw2",sl=[...document.querySelectorAll(S2)].map(e=>e.scrollLeft);draw();document.querySelectorAll(S2).forEach((e,i)=>e.scrollLeft=sl[i]||0)};
 /* Legs pro Runde: TU.legs ist der Standard, TU.rl[Runde] überschreibt ihn und lässt sich jederzeit ändern */
 const tuLegs=k=>TU.rl&&TU.rl[k]||TU.legs;
 const tuBoSel=k=>`<select class="tusel" aria-label="Spielmodus dieser Runde" onchange="tuBo('${k}',this.value)">${[1,3,5,7,9,11,13].map(n=>`<option value="${n}" ${tuLegs(k)==n?"selected":""}>Best of ${n}</option>`).join("")}</select>`;
-function tuBo(k,v){TU.rl=TU.rl||{};TU.rl[k]=+v;tuSave();const sl=[...document.querySelectorAll(".tub")].map(e=>e.scrollLeft);draw();document.querySelectorAll(".tub").forEach((e,i)=>e.scrollLeft=sl[i]||0)}
-const tuCol=(t,ms,note,k)=>{const v=ms.filter(m=>m.a!==BYE&&m.b!==BYE);v.forEach(m=>m.k=k);return v.length||note?`<div class="tuc"><div class="tuhd"><div class="tuh">${t}</div>${k?tuBoSel(k):""}</div><div class="tucs">${v.map(tuCard).join("")}${note||""}</div></div>`:""};
+function tuBo(k,v){TU.rl=TU.rl||{};TU.rl[k]=+v;tuSave();tuRedraw()}
+const tuCol=(t,ms,note,k)=>{const v=ms.filter(m=>m.a!==BYE&&m.b!==BYE);v.forEach(m=>m.k=k);return v.length||note?`<div class="tuc"><div class="tuhd"><div class="tuh">${t}</div>${k?tuBoSel(k):""}</div><div class="tucs">${v.map(m=>tuCard(m)).join("")}${note||""}</div></div>`:""};
 const tuFrei=R=>{const f=R[0].filter(m=>m.a==BYE||m.b==BYE).map(m=>m.a==BYE?m.b:m.a).filter(x=>x&&x!=BYE);return f.length?`<div class="mu" style="font-size:12px;text-align:center">Freilos: ${f.map(esc).join(", ")}</div>`:""};
+/* Turnierbaum: Runden als Spalten, jedes Spiel mittig zu seinen beiden Vorgängern, Verbindungslinien als SVG.
+   rounds = [{t:Titel, ms:Spiele, k:Rundenschlüssel}]; hideBye blendet Freilos-Spiele aus (Verliererrunde), pv = Vorschau ohne Eingabe */
+function tuTree(rounds,o={}){
+ const R=rounds.map(r=>({...r,vis:r.ms.map(m=>!(o.hideBye&&(m.a===BYE||m.b===BYE)))})).filter(r=>r.vis.some(Boolean));if(!R.length)return"";
+ const CW=200,GAP=40,CH=86,H=Math.max(...R.map(r=>r.ms.length))*(CH+16),W=R.length*(CW+GAP)-GAP,y=(c,i)=>(i+.5)*H/c;let cards="",lines="";
+ R.forEach((r,ri)=>{const c=r.ms.length,L=ri*(CW+GAP),n=R[ri+1];r.ms.forEach((m,i)=>{if(!r.vis[i])return;m.k=r.k;
+  cards+=`<div class="tut${m.a===BYE||m.b===BYE?" tubye":""}" style="left:${L}px;top:${y(c,i)-CH/2}px">${tuCard(m,o.pv)}</div>`;
+  if(n){const j=Math.floor(i*n.ms.length/c);if(n.vis[j]){const x1=L+CW,x2=x1+GAP,xm=x1+GAP/2;lines+=`<path d="M${x1} ${y(c,i)}H${xm}V${y(n.ms.length,j)}H${x2}"/>`}}})});
+ return `<div class="tuw2"><div style="width:${W}px"><div class="tuth" style="height:${o.pv?30:66}px">${R.map((r,ri)=>`<div style="left:${ri*(CW+GAP)}px;width:${CW}px"><div class="tuh">${r.t}</div>${r.k&&!o.pv?tuBoSel(r.k):""}</div>`).join("")}</div>
+ <div style="position:relative;height:${H}px"><svg class="tusvg" width="${W}" height="${H}" aria-hidden="true">${lines}</svg>${cards}</div></div></div>`}
 function tuSet(id){const m=TUM[id],x=$("#tua_"+id).value,y=$("#tub_"+id).value;
- if(x===""||y==="")delete TU.res[id];else{if(+x==+y){alert("Unentschieden geht nicht – bitte den Sieger mit mehr Legs eintragen.");return}
-  const n=tuLegs(m.k),need=(n+1)/2;if(Math.max(+x,+y)!=need&&!confirm(`Bei Best of ${n} gewinnt, wer ${need} Legs hat. Trotzdem ${x}:${y} speichern?`))return;TU.res[id]=[m.a,m.b,+x,+y]}
- tuSave();const sl=[...document.querySelectorAll(".tub")].map(e=>e.scrollLeft);draw();document.querySelectorAll(".tub").forEach((e,i)=>e.scrollLeft=sl[i]||0)}
+ // Nur eine Zahl eingetragen: merken und nichts neu zeichnen (außer ein bisheriges Ergebnis fällt dadurch weg)
+ if(x===""||y===""){TUP[id]=[x,y];if(TU.res[id]){delete TU.res[id];tuSave();tuRedraw()}return}
+ if(+x==+y){alert("Unentschieden geht nicht – bitte den Sieger mit mehr Legs eintragen.");return}
+ const n=tuLegs(m.k),need=(n+1)/2;if(Math.max(+x,+y)!=need&&!confirm(`Bei Best of ${n} gewinnt, wer ${need} Legs hat. Trotzdem ${x}:${y} speichern?`))return;
+ delete TUP[id];TU.res[id]=[m.a,m.b,+x,+y];tuSave();tuRedraw()}
 const tuList=()=>[...S.players.map(p=>p.name).filter(n=>TUS.sel[n]),...TUS.gast.split(",").map(s=>s.trim()).filter(Boolean)].filter((n,i,a)=>a.indexOf(n)==i);
 function tuPick(i,c){TUS.sel[S.players[i].name]=c;const e=$("#tucn");if(e)e.textContent=tuList().length}
 function tuStart(){const ps=tuList(),min=TUS.mode=="grp"?4:TUS.mode=="dko"?3:2;
@@ -474,20 +495,31 @@ function tuSetup(){const MO=[["ko","K.O.-System","Wer verliert, ist raus"],["dko
  <p class="mu" style="font-size:12px;margin:10px 0 0">Das Turnier wird auf diesem Gerät gespeichert. Am besten trägt eine Person alle Ergebnisse ein.</p></div>`}
 function Turnier(){if(!TU)return tuSetup();TUM={};if(!TU.game){TU.game=TU.bo||"501";TU.legs=TU.legs||3;TU.rl=TU.rl||{}}
  const MN={ko:"K.O.-System",dko:"Doppel-K.O.",grp:"Gruppen + K.O."};let body="",ch=null;
+ const tree=TU.view!="liste",koT=(R,px)=>R.map(ms=>({t:tuRound(ms.length),ms,k:px+ms.length})),
+  ko=(R,px,pv)=>tree?tuTree(koT(R,px),{pv}):`<div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"",px+ms.length)).join("")}</div>`;
  if(TU.mode=="ko"){const R=tKO(TU.players,"W"),f=R[R.length-1][0];ch=f.W;
-  body=`<div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"","K"+ms.length)).join("")}${TU.third&&R.length>1?tuCol("Platz 3",[tuM("P3",R[R.length-2][0].L,R[R.length-2][1].L)].filter(m=>m.a!==BYE&&m.b!==BYE),"","P3"):""}</div>`}
+  const p3=TU.third&&R.length>1?[tuM("P3",R[R.length-2][0].L,R[R.length-2][1].L)].filter(m=>m.a!==BYE&&m.b!==BYE):[];
+  body=ko(R,"K")+(p3.length?`<div class="tub">${tuCol("Platz 3",p3,"","P3")}</div>`:"")}
  if(TU.mode=="dko"){const D=tDKO(TU.players);ch=D.ch;
-  body=`<div class="sec">Gewinnerrunde</div><div class="tub">${D.W.map((ms,i)=>tuCol(i==D.W.length-1?"Finale Gewinner":"Runde "+(i+1),ms,i==0?tuFrei(D.W):"","W"+(i+1))).join("")}</div>
-  <div class="sec">Verliererrunde</div><div class="tub">${(()=>{let c=0;return D.LB.map(ms=>ms.some(m=>m.a!==BYE&&m.b!==BYE)?(c++,tuCol("Runde "+c,ms,"","L"+c)):"").join("")})()}</div>
-  <div class="sec">Großes Finale</div><div class="tub">${tuCol("Finale",[D.GF[0]],"","F")}${D.GF[1]?tuCol("Entscheidungsspiel",[D.GF[1]],'<div class="mu" style="font-size:12px;text-align:center">Der Sieger der Verliererrunde hat gewonnen, jetzt haben beide eine Niederlage.</div>',"F"):""}</div>`}
+  const LBr=(()=>{let c=0;return D.LB.filter(ms=>ms.some(m=>m.a!==BYE&&m.b!==BYE)).map(ms=>({t:"Runde "+(++c),ms,k:"L"+c}))})();
+  const fin=[{t:"Finale",ms:[D.GF[0]],k:"F"}].concat(D.GF[1]?[{t:"Entscheidung",ms:[D.GF[1]],k:"F"}]:[]);
+  body=tree?`<div class="sec">Gewinnerrunde</div>${tuTree(D.W.map((ms,i)=>({t:i==D.W.length-1?"Finale Gewinner":"Runde "+(i+1),ms,k:"W"+(i+1)})))}
+  <div class="sec">Verliererrunde</div>${tuTree(LBr,{hideBye:true})}<div class="sec">Großes Finale</div>${tuTree(fin)}`
+  :`<div class="sec">Gewinnerrunde</div><div class="tub">${D.W.map((ms,i)=>tuCol(i==D.W.length-1?"Finale Gewinner":"Runde "+(i+1),ms,i==0?tuFrei(D.W):"","W"+(i+1))).join("")}</div>
+  <div class="sec">Verliererrunde</div><div class="tub">${LBr.map(r=>tuCol(r.t,r.ms,"",r.k)).join("")}</div>
+  <div class="sec">Großes Finale</div><div class="tub">${fin.map(r=>tuCol(r.t,r.ms,"",r.k)).join("")}</div>`;
+  if(D.GF[1])body+='<p class="mu" style="font-size:12px">Der Sieger der Verliererrunde hat das Finale gewonnen – jetzt haben beide eine Niederlage, das Entscheidungsspiel bringt den Turniersieger.</p>'}
  if(TU.mode=="grp"){const G=tGrp(),all=G.every(g=>g.done);
   G.forEach(g=>g.ms.forEach(m=>m.k="G"));
   body=`<div class="tuhr"><span class="tuh">Gruppenphase</span>${tuBoSel("G")}</div><div class="tug">${G.map((g,gi)=>`<div class="card" style="margin:0"><h2>Gruppe ${String.fromCharCode(65+gi)}</h2><table class="lt"><tr><th>#</th><th>Spieler</th><th>Sp.</th><th>S</th><th>Legs</th></tr>${g.st.map((s,i)=>`<tr class="${i<TU.adv?"auf":""}"><td>${i+1}</td><td>${esc(s.n)}</td><td>${s.sp}</td><td><b>${s.s}</b></td><td>${s.lp}:${s.lm}</td></tr>`).join("")}</table>
-   <div class="sec">Spiele</div><div style="display:flex;flex-direction:column;gap:8px">${g.ms.map(tuCard).join("")}</div></div>`).join("")}</div>`;
+   <div class="sec">Spiele</div><div style="display:flex;flex-direction:column;gap:8px">${g.ms.map(m=>tuCard(m)).join("")}</div></div>`).join("")}</div>`;
   if(all){const Q=[];for(let p=0;p<TU.adv;p++)G.forEach(g=>g.st[p]&&Q.push(g.st[p].n));const R=tKO(Q,"K");ch=R[R.length-1][0].W;
-   body+=`<div class="sec">K.O.-Runde</div><div class="tub">${R.map((ms,i)=>tuCol(tuRound(ms.length),ms,i==0?tuFrei(R):"","K"+ms.length)).join("")}</div>`}
-  else body+=`<p class="mu" style="font-size:13px">Die K.O.-Runde erscheint, sobald alle Gruppenspiele eingetragen sind. Bei Punktgleichheit zählen Leg-Differenz, mehr Legs und der direkte Vergleich.</p>`}
- return `<div class="hero" style="padding-right:16px;min-height:0"><h2>🏆 ${esc(TU.name)}</h2><div class="mu">${MN[TU.mode]} · ${esc(TU.game)} ·${TU.players.length} Teilnehmer · ${TU.datum}</div></div>
+   body+=`<div class="sec">K.O.-Runde</div>${ko(R,"K")}`}
+  else{// Vorschau: wer trifft im K.O. auf wen, sobald die Gruppen fertig sind
+   const Q=[];for(let p=0;p<TU.adv;p++)G.forEach((g,gi)=>g.st[p]&&Q.push(`${p+1}. Gruppe ${String.fromCharCode(65+gi)}`));
+   body+=`<div class="sec">K.O.-Runde (Vorschau)</div><p class="mu" style="font-size:13px;margin:0 0 6px">Die Namen erscheinen, sobald alle Gruppenspiele eingetragen sind. Bei Punktgleichheit zählen Leg-Differenz, mehr Legs und der direkte Vergleich.</p>${tuTree(koT(tKO(Q,"KV"),"K"),{pv:true})}`}}
+ return `<div class="hero" style="padding-right:16px;min-height:0"><h2>🏆 ${esc(TU.name)}</h2><div class="mu">${MN[TU.mode]} · ${esc(TU.game)} · ${TU.players.length} Teilnehmer · ${TU.datum}</div></div>
+ <div class="row tuv"><span class="mu">Ansicht:</span><button class="b ${tree?"":"g"}" onclick="TU.view='baum';tuSave();tuRedraw()">🌳 Turnierbaum</button><button class="b ${tree?"g":""}" onclick="TU.view='liste';tuSave();tuRedraw()">📋 Liste</button></div>
  ${ch&&ch!=BYE?`<div class="card tuch"><div class="mu">Turniersieger</div><b>🏆 ${esc(ch)}</b></div>`:""}
  <div class="card"><div class="mu" style="font-size:13px;margin-bottom:8px">Legs eintragen – der Sieger rückt automatisch weiter. Zum Korrigieren einfach die Zahl ändern.</div>${body}</div>
  <div class="row"><button class="b g" onclick="tuReset()">Neues Turnier planen</button></div>`}
@@ -499,12 +531,14 @@ function Instagram(){
  const today=new Date().toISOString().slice(0,10),IM=sorted().filter(m=>!m.bye);if(!IM.length)return `<div class="card mu">Noch keine Spiele.</div>`;
  if(!sel||!IM.find(m=>m.id==sel))sel=(IM.find(m=>m.date>=today&&!played(m))||IM[IM.length-1]).id;
  return `<div class="card"><div class="row"><select id="im" onchange="sel=this.value;draw()">${IM.map(q=>`<option value="${q.id}" ${q.id==sel?"selected":""}>${q.type=="Pokal"?"🏆 ":""}${fd(q.date)} · ${q.home?"Heim":"Ausw."} · ${esc(q.opp)}</option>`).join("")}</select>
- <select id="ik" onchange="IK=this.value"><option value="a" ${IK=="a"?"selected":""}>Spielankündigung</option><option value="r" ${IK=="r"?"selected":""}>Ergebnis</option></select></div>
+ <select id="ik" onchange="IK=this.value;draw()"><option value="a" ${IK=="a"?"selected":""}>Spielankündigung</option><option value="r" ${IK=="r"?"selected":""}>Ergebnis</option></select></div>
+ ${IK=="r"?(()=>{const m=IM.find(q=>q.id==sel),p=played(m),v=IGR[sel]||(p?[m.sa,m.sb]:["",""]);return `<div class="sec">Ergebnis (Partien)</div><div class="igr"><label><small>White Tigers</small><input id="igA" type="number" inputmode="numeric" min="0" max="12" value="${v[0]}" oninput="IGR[sel]=[this.value,$('#igB').value]"></label><b>:</b><label><small>${esc(m.opp)}</small><input id="igB" type="number" inputmode="numeric" min="0" max="12" value="${v[1]}" oninput="IGR[sel]=[$('#igA').value,this.value]"></label></div>
+ <p class="mu" style="font-size:12px;margin:0">${p?"Aus den Spieldaten übernommen – zum Ausprobieren änderbar.":"Noch nicht in den Spieldaten – hier direkt am Spielabend eintragen. Das Ergebnis gilt nur für das Bild und wird nicht in der Statistik gespeichert."}</p>`})():""}
  <div class="row">${(()=>{const o=IM.find(q=>q.id==sel).opp;return LOGOS[lk(o)]?`<img src="${LOGOS[lk(o)]}" alt="" style="width:44px;height:44px;border-radius:50%;object-fit:cover"><span class="mu">Logo von ${esc(o)} gespeichert</span>`:`<span class="mu">Kein Logo für ${esc(o)} gespeichert – es steht der Vereinsname im Bild.</span>`})()}${canEd()?'<label class="b g" style="display:inline-flex;align-items:center;cursor:pointer;border-radius:8px;padding:0 12px">Logo hochladen<input type="file" accept="image/*" style="display:none" onchange="upLogo(IM_OPP(),this.files[0])"></label>':""}</div>
  <div class="row"><button class="b" onclick="ig()">Bild erzeugen</button></div>
  <canvas id="cv" width="1148" height="1370" class="hide"></canvas><div class="row"><button id="dlb" class="b hide" onclick="dlImg()">Als PNG speichern</button></div>
- <p class="mu" style="font-size:13px">Vorlage 1148×1370 (Hochformat). Hochgeladene Logos werden für den Gegner gespeichert. Ohne Logo steht der Vereinsname in der Box. Das Ergebnis-Bild braucht ein eingetragenes Ergebnis.</p></div>`}
-let LOGOS={},TAB=null,IK="a";const LIMG={},lk=o=>String(o||"").trim().toLowerCase();
+ <p class="mu" style="font-size:13px">Vorlage 1148×1370 (Hochformat). Hochgeladene Logos werden für den Gegner gespeichert. Ohne Logo steht der Vereinsname in der Box. Für das Ergebnis-Bild oben die Partien eintragen.</p></div>`}
+let LOGOS={},TAB=null,IK="a";const IGR={};const LIMG={},lk=o=>String(o||"").trim().toLowerCase();
 const IM_OPP=()=>{const m=S.matches.find(x=>x.id==sel);return m?m.opp:""};
 const loadImg=s=>new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=s});
 const lslug=o=>lk(o).replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"")||"x";
@@ -514,7 +548,9 @@ async function upLogo(o,f){if(!f||!o)return;const d=await fileToLogo(f);LOGOS[lk
 async function delLogo(o){if(!confirm("Logo für "+o+" entfernen?"))return;delete LOGOS[lk(o)];delete LIMG[lk(o)];draw();await putLogo(o,null)}
 async function backup(){const o={version:1,date:new Date().toISOString(),state:S,logos:LOGOS},b=new Blob([JSON.stringify(o)],{type:"application/json"});try{if(dl)await dl.save({filename:`white-tigers-sicherung-${o.date.slice(0,10)}.json`,data:b});else alert("Download ist hier nicht verfügbar.")}catch(e){}}
 async function restore(f){if(!f)return;try{const o=JSON.parse(await f.text());if(!o.state||!Array.isArray(o.state.matches))throw 0;if(!confirm("Alle aktuellen Daten durch diese Sicherung ersetzen?"))return;S=o.state;LOGOS=o.logos||{};for(const k in LIMG)delete LIMG[k];save();for(const k in LOGOS)await putLogo(k,LOGOS[k]);draw()}catch(e){alert("Die Datei konnte nicht gelesen werden.")}}
-async function ig(){const m=S.matches.find(x=>x.id==$("#im").value),k=$("#ik").value;IK=k;if(k=="r"&&!played(m)){alert("Bitte erst das Ergebnis im Tab „Spiele“ eintragen.");return}
+async function ig(){let m=S.matches.find(x=>x.id==$("#im").value);const k=$("#ik").value;IK=k;
+ if(k=="r"){const A=$("#igA").value,B=$("#igB").value;if(A===""||B===""){alert("Bitte zuerst das Ergebnis eintragen (Partien White Tigers : Gegner).");return}
+  if(+A+ +B!=12&&!confirm(`${A}:${B} ergibt nicht 12 Partien. Trotzdem so erzeugen?`))return;m={...m,sa:+A,sb:+B}}
  try{await document.fonts.load('60px "Permanent Marker"')}catch(e){}
  const c=$("#cv"),x=c.getContext("2d"),F='"Permanent Marker",Impact,"Arial Black",sans-serif';c.classList.remove("hide");$("#dlb").classList.remove("hide");
  let LGI=null;try{if(LOGOS[lk(m.opp)])LGI=LIMG[lk(m.opp)]||(LIMG[lk(m.opp)]=await loadImg(LOGOS[lk(m.opp)]))}catch(e){}

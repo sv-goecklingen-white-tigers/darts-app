@@ -190,9 +190,16 @@ nav button:not(.on):hover,button.g:hover{border-color:var(--ac)}button.b:not(.g)
 .tkh{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:#c9ced6}.tkn{display:block;font:800 30px/1.1 var(--disp);margin:10px 0 4px;color:#fff}
 .tkm{color:var(--ac);font-weight:600;font-size:14px}.tkc p{margin:10px 0 0;line-height:1.5;color:#e6e6e6}
 .tks{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.07);font-size:14px}
-.tkl summary{cursor:pointer;list-style:none;display:flex;gap:6px;align-items:center}.tkl summary::before{content:"▸";color:var(--ac)}.tkl[open] summary::before{content:"▾"}
+.tkl>summary{cursor:pointer;list-style:none;display:flex;gap:6px;align-items:center}.tkl>summary::before{content:"▸";color:var(--ac)}.tkl[open]>summary::before{content:"▾"}
+.tki summary::-webkit-details-marker{display:none}.tkl>summary::-webkit-details-marker{display:none}
 .tki{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--bd);cursor:pointer}.tki span{display:flex;flex-direction:column;min-width:0}.tki small{font-size:12px}
 @keyframes tkflip{0%{transform:perspective(900px) rotateY(90deg);opacity:0}100%{transform:none;opacity:1}}.tkc.flip{animation:tkflip .45s cubic-bezier(.2,.7,.3,1)}
+.tka{margin:12px 0 4px;font:700 15px var(--disp);letter-spacing:.4px;color:var(--ac);text-transform:uppercase}
+.tko{margin:0;padding-left:22px;line-height:1.5;color:#e6e6e6}.tko li{margin:4px 0}.tko li::marker{color:var(--ac);font-weight:700}
+.tki{flex-direction:column;align-items:stretch;gap:2px}.tki label{display:flex;gap:10px;align-items:center;cursor:pointer}
+.tki details{margin-left:38px}.tki summary{cursor:pointer;font-size:13px;color:var(--ac);list-style:none}.tki .tko{color:var(--tx);font-size:14px;margin:4px 0 6px}
+.tkp label.gu{border-style:dashed}.gux{background:none;border:0;color:var(--mu);font-size:14px;padding:0 0 0 4px;cursor:pointer;min-height:0}
+.guf input{flex:1 1 180px}
 .tug{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
 /* Nächstes Spiel: Buttons, Startseite zweispaltig am PC, Fußzeile */
 .mh-bt{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
@@ -243,7 +250,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="29.10.2026, 17:27 Uhr";
+const SEITE="29.10.2026, 17:34 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
@@ -431,7 +438,7 @@ function lineup(){
 /* Turnierplaner: K.O., Doppel-K.O., Gruppen + K.O. Der Stand liegt nur auf diesem Gerät (localStorage).
    Die Paarungen werden bei jedem Zeichnen aus Setzliste + Ergebnissen neu berechnet; ein Ergebnis gilt nur,
    solange dieselben zwei Spieler im Spiel stehen. */
-const BYE="—";let TU=null,TUM={};const TUS={mode:"ko",game:"501",legs:3,sel:{},gast:"",los:"los",third:true,gc:0,adv:2,name:""};
+const BYE="—";let TU=null,TUM={};const TUS={mode:"ko",game:"501",legs:3,sel:{},los:"los",third:true,gc:0,adv:2,name:""};
 try{TU=JSON.parse(localStorage.getItem("wt-turnier")||"null")}catch(e){}
 const tuSave=()=>{try{localStorage.setItem("wt-turnier",JSON.stringify(TU))}catch(e){}};
 const seedOrder=n=>{let a=[1];while(a.length<n){const L=a.length*2;a=a.flatMap(s=>[s,L+1-s])}return a};
@@ -482,7 +489,7 @@ function tuSet(id){const m=TUM[id],x=$("#tua_"+id).value,y=$("#tub_"+id).value;
  if(+x==+y){alert("Unentschieden geht nicht – bitte den Sieger mit mehr Legs eintragen.");return}
  const n=tuLegs(m.k),need=(n+1)/2;if(Math.max(+x,+y)!=need&&!confirm(`Bei Best of ${n} gewinnt, wer ${need} Legs hat. Trotzdem ${x}:${y} speichern?`))return;
  delete TUP[id];TU.res[id]=[m.a,m.b,+x,+y];tuSave();tuRedraw()}
-const tuList=()=>[...S.players.map(p=>p.name).filter(n=>TUS.sel[n]),...TUS.gast.split(",").map(s=>s.trim()).filter(Boolean)].filter((n,i,a)=>a.indexOf(n)==i);
+const tuList=()=>allNames().filter(n=>TUS.sel[n]);
 function tuPick(i,c){TUS.sel[S.players[i].name]=c;const e=$("#tucn");if(e)e.textContent=tuList().length}
 function tuStart(){const ps=tuList(),min=TUS.mode=="grp"?4:TUS.mode=="dko"?3:2;
  if(ps.length<min){alert("Für diese Turnierform braucht ihr mindestens "+min+" Teilnehmer.");return}
@@ -498,7 +505,8 @@ function tuSetup(){const MO=[["ko","K.O.-System","Wer verliert, ist raus"],["dko
  <div class="sec">Spielmodus</div><div class="row"><select aria-label="Spiel" onchange="TUS.game=this.value">${["501","301","501 Double In/Double Out","701","Cricket"].map(o=>`<option ${TUS.game==o?"selected":""}>${o}</option>`).join("")}</select><select aria-label="Legs zum Start" onchange="TUS.legs=+this.value">${[1,3,5,7,9].map(n=>`<option value="${n}" ${TUS.legs==n?"selected":""}>Best of ${n}</option>`).join("")}</select></div>
  <p class="mu" style="font-size:12px;margin:2px 0 0">Gilt ${TUS.mode=="grp"?"für die Gruppenphase":"zum Start"}. Für spätere Runden (z. B. Halbfinale, Finale) lässt sich die Länge während des Turniers bei jeder Runde einzeln erhöhen.</p>
  <div class="sec">Teilnehmer (<span id="tucn">${tuList().length}</span>)</div><div class="tupk">${S.players.map((p,i)=>`<label><input type="checkbox" ${TUS.sel[p.name]?"checked":""} onchange="tuPick(${i},this.checked)">${esc(p.name)}</label>`).join("")}</div>
- <div class="row"><input placeholder="Gäste, mit Komma getrennt" value="${esc(TUS.gast)}" oninput="TUS.gast=this.value;$('#tucn').textContent=tuList().length"></div>
+ ${GU.length?`<div class="tupk">${GU.map((g,i)=>`<label><input type="checkbox" ${TUS.sel[g]?"checked":""} onchange="TUS.sel[GU[${i}]]=this.checked;$('#tucn').textContent=tuList().length">${esc(g)} <small class="mu">Gast</small><button class="gux" aria-label="${esc(g)} entfernen" onclick="event.preventDefault();guDel(${i})">✕</button></label>`).join("")}</div>`:""}
+ ${guForm("tu")}
  <div class="sec">Auslosung</div><div class="row"><select aria-label="Auslosung" onchange="TUS.los=this.value"><option value="los" ${TUS.los=="los"?"selected":""}>Zufällig auslosen</option><option value="stat" ${TUS.los=="stat"?"selected":""}>Setzliste nach Statistik (Stärkste treffen sich spät)</option></select></div>
  ${TUS.mode=="ko"?`<label class="row" style="gap:10px"><input type="checkbox" ${TUS.third?"checked":""} onchange="TUS.third=this.checked">Spiel um Platz 3</label>`:""}
  ${TUS.mode=="grp"?`<div class="row"><select aria-label="Gruppen" style="flex-basis:100%" onchange="TUS.gc=+this.value">${[0,1,2,3,4].map(v=>`<option value="${v}" ${TUS.gc==v?"selected":""}>${v?v+(v==1?" Gruppe":" Gruppen"):"Gruppen automatisch"}</option>`).join("")}</select><select aria-label="Weiterkommen" style="flex-basis:100%" onchange="TUS.adv=+this.value"><option value="1" ${TUS.adv==1?"selected":""}>Gruppensieger kommen weiter</option><option value="2" ${TUS.adv==2?"selected":""}>Die Besten 2 je Gruppe kommen weiter</option></select></div>`:""}
@@ -605,35 +613,45 @@ function pic(id){const m=S.matches.find(x=>x.id==id),K=m&&(m.sp||m.id),L=m?IMGS[
  document.body.appendChild(o)}
 async function saveI(sp,i){const x=IMGS[sp][i],b=await (await fetch(x[1])).blob();try{if(dl)await dl.save({filename:`white-tigers-${sp}-${x[0].toLowerCase().replace("ä","ae")}.jpg`,data:b});else alert("Bild lang drücken bzw. Rechtsklick → Bild speichern")}catch(e){}}
 /* Trainingskarten: Zufallsspiel fürs Training. Dauer geschätzt für 2 Spieler mit 40–60 Average (501-Leg ≈ 5–6 Min.).
-   [id, Name, min. Spieler, max. Spieler, Dauer, Regel, eure Karte] – welche Karten im Stapel sind, merkt sich das Gerät */
+   [id, Name, min. Spieler, max. Spieler, Dauer, Anleitung (Schritte mit | getrennt), eure Karte] – welche Karten im Stapel sind, merkt sich das Gerät */
 const TK=[
- ["301b7","301 · Best of 7",2,4,"15–25 Min.","Single In, Double Out. Wer zuerst 4 Legs hat, gewinnt.",1],
- ["501b5","501 · Best of 5",2,4,"18–28 Min.","Single In, Double Out. Wer zuerst 3 Legs hat, gewinnt.",1],
- ["501dido","501 Double In / Double Out · Best of 3",2,4,"13–20 Min.","Der erste Treffer muss ein Doppel sein, beendet wird auch mit einem Doppel. Wer zuerst 2 Legs hat, gewinnt.",1],
- ["170","170er-Spiel",1,4,"10–15 Min.","Jeder startet bei 170 und hat 3 Aufnahmen (9 Darts) zum Auschecken. Geschafft = 1 Punkt. Wer zuerst 5 Punkte hat, gewinnt.",1],
- ["fuchs","Fuchs und Jäger",2,2,"10–15 Min.","Der Fuchs startet auf D20, der Jäger zwei Felder dahinter auf D12. Beide wandern im Uhrzeigersinn über die Doppel: Jeder Doppel-Treffer auf das eigene Feld bringt ein Feld weiter. Holt der Jäger den Fuchs ein, gewinnt er – schafft der Fuchs eine ganze Runde, gewinnt der Fuchs.",1],
- ["501b3","501 · Best of 3",2,4,"10–17 Min.","Single In, Double Out. Wer zuerst 2 Legs hat, gewinnt."],
- ["301b5","301 · Best of 5",2,4,"10–18 Min.","Single In, Double Out. Wer zuerst 3 Legs hat, gewinnt."],
- ["301dido","301 Double In / Double Out · Best of 3",2,4,"10–16 Min.","Start und Ende jeweils mit einem Doppel. Wer zuerst 2 Legs hat, gewinnt."],
- ["501mo","501 Master Out · Best of 3",2,4,"10–15 Min.","Auschecken mit Doppel oder Triple. Wer zuerst 2 Legs hat, gewinnt."],
- ["501dop","501 im Doppel · Best of 3",4,4,"12–18 Min.","Zwei gegen zwei, die Partner werfen abwechselnd. Double Out, wer zuerst 2 Legs hat, gewinnt."],
- ["701dop","701 im Doppel · 1 Leg",4,6,"12–18 Min.","Teams zu zweit (bei 6 Spielern zu dritt), alle werfen reihum. Double Out."],
- ["cricket","Cricket · 1 Leg",2,4,"15–20 Min.","Zahlen 15–20 und Bull je 3× treffen, um sie zu schließen. Auf eigenen offenen Zahlen punkten, solange der Gegner sie nicht geschlossen hat. Wer alles zu und mehr Punkte hat, gewinnt."],
- ["scram","Scram",2,2,"15–20 Min.","Spieler A schließt die Zahlen 15–20 und Bull (je 3 Treffer), Spieler B punktet nur auf noch offenen Zahlen. Sind alle zu, Rollen tauschen. Mehr Punkte gewinnt."],
- ["atc","Around the Clock",1,4,"10–15 Min.","Der Reihe nach 1 bis 20 und zum Schluss Bull treffen. Double zählt 2 Felder, Triple 3 Felder weiter. Wer zuerst das Bull trifft, gewinnt."],
- ["shanghai","Shanghai 1–10",1,6,"10–15 Min.","10 Runden, in Runde 1 zählt nur die 1, in Runde 2 nur die 2 usw. Single, Double und Triple derselben Zahl in einer Aufnahme = Shanghai und sofortiger Sieg. Sonst gewinnt die höchste Summe."],
- ["halveit","Halve-It",2,6,"10–15 Min.","Ziele der Reihe nach: 15, 16, beliebiges Doppel, 17, 18, beliebiges Triple, 19, 20, Bull. Wer in einer Runde sein Ziel nicht trifft, halbiert seinen Punktestand."],
- ["killer","Killer",3,8,"15–20 Min.","Jeder bekommt eine Zahl (mit der schwachen Hand werfen). Mit 3 Treffern im eigenen Doppel wird man Killer und kann dann Leben der anderen über deren Doppel abziehen. Jeder hat 3 Leben, der Letzte gewinnt."],
- ["baseball","Baseball",2,6,"10–15 Min.","9 Innings: in Inning 1 auf die 1, in Inning 2 auf die 2 usw. Single = 1 Run, Double = 2, Triple = 3. Die meisten Runs gewinnen."],
- ["gotcha","Gotcha 301",2,4,"15–20 Min.","Hochzählen bis genau 301. Trifft man genau den Stand eines Gegners, fällt der auf 0 zurück. Überwerfen zählt nicht."],
- ["bobs27","Bob's 27",1,4,"10–15 Min.","Start mit 27 Punkten. Runde 1 auf D1, Runde 2 auf D2 … bis D20. Jeder Treffer bringt den Doppelwert, keiner kostet ihn. Wer unter 0 fällt, ist raus. Höchster Stand gewinnt."],
- ["checkout","Checkout-Challenge 61–100",1,4,"10–15 Min.","Jeder bekommt 10 zufällige Reste zwischen 61 und 100 und hat dafür je 6 Darts. Wer die meisten auscheckt, gewinnt."],
- ["121","121-Spiel",1,4,"10–15 Min.","Start bei 121 mit 9 Darts zum Auschecken. Geschafft → nächstes Ziel +1, nicht geschafft → zurück zum letzten geschafften Ziel. 10 Versuche, höchstes Ziel gewinnt."],
- ["highscore","Highscore-Duell · Best of 3",2,6,"10–15 Min.","Jeder wirft 10 Aufnahmen, die höchste Gesamtsumme gewinnt die Runde. Wer zuerst 2 Runden hat, gewinnt."],
- ["bull","Bull-Duell",1,6,"5–10 Min.","10 Aufnahmen nur aufs Bull: 25 = 1 Punkt, Bullseye = 2 Punkte. Die meisten Punkte gewinnen. Gut als Abschluss."]];
+ ["301b7","301 · Best of 7",2,4,"15–25 Min.","Jeder startet bei 301 und zählt pro Aufnahme (3 Darts) herunter.|Beliebiger Start (Single In), beendet wird genau auf 0 mit einem Doppel.|Überworfen (unter 0, auf 1 oder 0 ohne Doppel) – die Aufnahme zählt nicht.|Wer zuerst 4 Legs gewinnt, gewinnt das Spiel.",1],
+ ["501b5","501 · Best of 5",2,4,"18–28 Min.","Jeder startet bei 501 und zählt pro Aufnahme (3 Darts) herunter.|Beliebiger Start (Single In), beendet wird genau auf 0 mit einem Doppel.|Überworfen (unter 0, auf 1 oder 0 ohne Doppel) – die Aufnahme zählt nicht.|Wer zuerst 3 Legs gewinnt, gewinnt das Spiel.",1],
+ ["501dido","501 Double In / Double Out · Best of 3",2,4,"13–20 Min.","Jeder startet bei 501.|Gezählt wird erst ab dem ersten Doppel-Treffer (Double In) – dieses Doppel zählt schon mit.|Beendet wird genau auf 0 mit einem Doppel (Double Out), überworfen zählt nicht.|Wer zuerst 2 Legs gewinnt, gewinnt das Spiel.",1],
+ ["170","170er-Spiel",1,4,"10–15 Min.","Jeder startet bei 170.|Pro Versuch gibt es 3 Aufnahmen (9 Darts), um genau mit einem Doppel auf 0 zu kommen.|Geschafft = 1 Punkt, danach beginnt der nächste Versuch wieder bei 170.|Wer zuerst 5 Punkte hat, gewinnt.",1],
+ ["fuchs","Fuchs und Jäger",2,2,"10–15 Min.","Der Fuchs startet auf D20, der Jäger zwei Felder dahinter auf D12.|Beide wandern im Uhrzeigersinn über die Doppelfelder: 12 → 5 → 20 → 1 → 18 …|Jeder Treffer im Doppel des eigenen Feldes bringt ein Feld weiter – in einer Aufnahme sind mehrere Felder möglich.|Holt der Jäger den Fuchs ein, gewinnt der Jäger. Schafft der Fuchs eine ganze Runde zurück bis D20, gewinnt der Fuchs.",1],
+ ["501b3","501 · Best of 3",2,4,"10–17 Min.","Jeder startet bei 501 und zählt pro Aufnahme (3 Darts) herunter.|Beliebiger Start (Single In), beendet wird genau auf 0 mit einem Doppel.|Überworfen – die Aufnahme zählt nicht.|Wer zuerst 2 Legs gewinnt, gewinnt das Spiel."],
+ ["301b5","301 · Best of 5",2,4,"10–18 Min.","Jeder startet bei 301 und zählt pro Aufnahme (3 Darts) herunter.|Beliebiger Start (Single In), beendet wird genau auf 0 mit einem Doppel.|Überworfen – die Aufnahme zählt nicht.|Wer zuerst 3 Legs gewinnt, gewinnt das Spiel."],
+ ["301dido","301 Double In / Double Out · Best of 3",2,4,"10–16 Min.","Jeder startet bei 301.|Gezählt wird erst ab dem ersten Doppel-Treffer (Double In) – dieses Doppel zählt schon mit.|Beendet wird genau auf 0 mit einem Doppel (Double Out), überworfen zählt nicht.|Wer zuerst 2 Legs gewinnt, gewinnt das Spiel."],
+ ["501mo","501 Master Out · Best of 3",2,4,"10–15 Min.","Jeder startet bei 501, beliebiger Start.|Beendet wird genau auf 0 mit einem Doppel oder einem Triple (Master Out).|Überworfen – die Aufnahme zählt nicht.|Wer zuerst 2 Legs gewinnt, gewinnt das Spiel."],
+ ["501dop","501 im Doppel · Best of 3",4,4,"12–18 Min.","Zwei Teams zu je 2 Spielern, jedes Team hat einen gemeinsamen Stand ab 501.|Geworfen wird abwechselnd: A1, B1, A2, B2, A1 …|Double Out, überworfen zählt nicht.|Das Team, das zuerst 2 Legs gewinnt, gewinnt."],
+ ["701dop","701 im Doppel · 1 Leg",4,6,"12–18 Min.","Zwei Teams (2 gegen 2 oder 3 gegen 3), jedes Team hat einen gemeinsamen Stand ab 701.|Alle werfen reihum, abwechselnd zwischen den Teams.|Double Out, überworfen zählt nicht.|Das Team, das zuerst auf 0 kommt, gewinnt."],
+ ["cricket","Cricket · 1 Leg",2,4,"15–20 Min.","Gespielt wird nur auf 15 bis 20 und Bull.|Jede Zahl wird mit 3 Treffern geschlossen (Double zählt 2, Triple 3 Treffer).|Weitere Treffer auf eigene geschlossene Zahlen bringen Punkte, solange der Gegner sie noch offen hat.|Wer alle Zahlen geschlossen hat und mindestens gleich viele Punkte hat, gewinnt."],
+ ["scram","Scram",2,2,"15–20 Min.","Vorher auslosen, wer Stopper und wer Scorer ist.|Der Stopper schließt die Zahlen 15 bis 20 und Bull (je 3 Treffer).|Der Scorer punktet nur auf Zahlen, die noch offen sind.|Sind alle zu, Rollen tauschen. Wer als Scorer mehr Punkte hatte, gewinnt."],
+ ["atc","Around the Clock",1,4,"10–15 Min.","Der Reihe nach 1, 2, 3 … bis 20 treffen, zum Schluss das Bull.|Single bringt 1 Feld weiter, Double 2 und Triple 3 Felder.|Jeder wirft 3 Darts pro Aufnahme.|Wer zuerst das Bull trifft, gewinnt."],
+ ["shanghai","Shanghai 1–10",1,6,"10–15 Min.","10 Runden: In Runde 1 zählt nur die 1, in Runde 2 nur die 2 … bis zur 10.|Punkte = Zahl × 1, 2 oder 3 (Single, Double, Triple).|Single, Double und Triple derselben Zahl in einer Aufnahme ist ein Shanghai und sofortiger Sieg.|Sonst gewinnt die höchste Gesamtsumme."],
+ ["halveit","Halve-It",2,6,"10–15 Min.","Jede Runde hat ein festes Ziel: 15, 16, beliebiges Doppel, 17, 18, beliebiges Triple, 19, 20, Bull.|Treffer auf das Ziel geben Punkte.|Wer in einer Runde sein Ziel gar nicht trifft, halbiert seinen Punktestand.|Nach dem Bull gewinnt die höchste Punktzahl."],
+ ["killer","Killer",3,8,"15–20 Min.","Jeder wirft mit der schwachen Hand einen Dart – die getroffene Zahl gehört ihm (doppelte Zahlen neu werfen).|Wer sein eigenes Doppel 3× trifft, wird Killer.|Killer nehmen anderen mit Treffern auf deren Doppel je ein Leben ab – jeder hat 3 Leben.|Wer keine Leben mehr hat, ist raus. Der Letzte gewinnt."],
+ ["baseball","Baseball",2,6,"10–15 Min.","9 Innings: In Inning 1 zielt man auf die 1, in Inning 2 auf die 2 … bis zur 9.|Single = 1 Run, Double = 2 Runs, Triple = 3 Runs.|Jeder hat pro Inning eine Aufnahme (3 Darts).|Nach 9 Innings gewinnen die meisten Runs."],
+ ["gotcha","Gotcha 301",2,4,"15–20 Min.","Alle starten bei 0 und zählen hoch – Ziel ist genau 301.|Wer genau den Stand eines Gegners erreicht, setzt diesen auf 0 zurück.|Wer über 301 kommt, dessen Aufnahme zählt nicht.|Wer zuerst genau 301 hat, gewinnt."],
+ ["bobs27","Bob's 27",1,4,"10–15 Min.","Jeder startet mit 27 Punkten.|Runde 1 auf D1, Runde 2 auf D2 … bis D20, je 3 Darts.|Jeder Treffer bringt den Doppelwert dazu, ohne Treffer wird der Doppelwert einmal abgezogen.|Wer unter 0 fällt, ist raus – nach D20 gewinnt der höchste Stand."],
+ ["checkout","Checkout-Challenge 61–100",1,4,"10–15 Min.","Ein Mitspieler nennt einen zufälligen Rest zwischen 61 und 100.|Der Werfer hat 6 Darts (2 Aufnahmen), um genau mit einem Doppel auszuchecken.|Jeder hat 10 Versuche, dann wird gewechselt.|Wer die meisten Checkouts schafft, gewinnt."],
+ ["121","121-Spiel",1,4,"10–15 Min.","Start bei 121 mit 9 Darts (3 Aufnahmen) zum Auschecken, Double Out.|Geschafft → das nächste Ziel ist 122, dann 123 …|Nicht geschafft → zurück zum letzten geschafften Ziel.|Nach 10 Versuchen gewinnt, wer das höchste Ziel geschafft hat."],
+ ["highscore","Highscore-Duell · Best of 3",2,6,"10–15 Min.","Jeder wirft 10 Aufnahmen auf beliebige Felder.|Alle Punkte werden zusammengezählt.|Die höchste Summe gewinnt die Runde.|Wer zuerst 2 Runden gewinnt, gewinnt das Spiel."],
+ ["bull","Bull-Duell",1,6,"5–10 Min.","Jeder wirft 10 Aufnahmen nur aufs Bull.|Single Bull (25) = 1 Punkt, Bullseye (50) = 2 Punkte.|Die meisten Punkte gewinnen.|Gut als Abschluss oder zum Ausbullen fürs nächste Spiel."]];
 let TKN=2,TKP={},TKC=null,TKD=[],TKS="",TKX={};try{TKX=JSON.parse(localStorage.getItem("wt-tk-aus")||"{}")}catch(e){}
 const tkSaveX=()=>{try{localStorage.setItem("wt-tk-aus",JSON.stringify(TKX))}catch(e){}};
-const tkNames=()=>S.players.map(p=>p.name).filter(n=>TKP[n]),tkCount=()=>tkNames().length||TKN;
+/* Gäste: weitere Leute aus dem Training (nicht in der Statistik), gemeinsam für Trainingskarten und Turnier, gespeichert auf dem Gerät */
+let GU=[];try{GU=JSON.parse(localStorage.getItem("wt-gaeste")||"[]")}catch(e){}
+const guSave=()=>{try{localStorage.setItem("wt-gaeste",JSON.stringify(GU))}catch(e){}};
+function guAdd(ctx){const e=$("#guin"),n=(e&&e.value||"").trim();if(!n)return;
+ if(GU.includes(n)||S.players.some(p=>p.name==n)){alert(n+" steht schon in der Liste.");return}
+ GU.push(n);guSave();(ctx=="tu"?TUS.sel:TKP)[n]=true;draw();const f=$("#guin");if(f)f.focus()}
+function guDel(i){const n=GU[i];if(!confirm(n+" aus der Gästeliste entfernen?"))return;GU.splice(i,1);guSave();delete TKP[n];delete TUS.sel[n];draw()}
+const guForm=ctx=>`<div class="row guf"><input id="guin" placeholder="Weitere Person (Gast) hinzufügen" onkeydown="if(event.key=='Enter')guAdd('${ctx}')"><button class="b g" onclick="guAdd('${ctx}')">＋ Hinzufügen</button></div>`;
+const allNames=()=>[...S.players.map(p=>p.name),...GU];
+const tkNames=()=>allNames().filter(n=>TKP[n]),tkCount=()=>tkNames().length||TKN;
+const tkSteps=c=>`<ol class="tko">${c[5].split("|").map(s=>`<li>${s}</li>`).join("")}</ol>`;
 // Seid ihr mehr als die Karte erlaubt, wird sie in Paaren gespielt (geht bei allen Karten ab 2 Spielern)
 const tkPool=()=>{const n=tkCount();return TK.filter(c=>!TKX[c[0]]&&n>=c[2]&&(n<=c[3]||c[2]<=2))};
 function tkDraw(){const pool=tkPool().map(c=>c[0]);if(!pool.length){alert("Für "+tkCount()+" Spieler ist keine Karte im Stapel. Bitte unten Karten anwählen oder die Spielerzahl ändern.");return}
@@ -649,13 +667,14 @@ function tkAll(on){TK.forEach(c=>{if(on)delete TKX[c[0]];else TKX[c[0]]=1});tkSa
 function Trainingskarten(){const n=tkCount(),pool=tkPool(),c=TKC&&TK.find(x=>x[0]==TKC),nm=tkNames();
  return `<div class="card"><h2>🃏 Trainingskarte ziehen</h2>
  <div class="row"><span>Wie viele seid ihr?</span><select aria-label="Anzahl Spieler" ${nm.length?"disabled":""} onchange="TKN=+this.value;draw()">${[1,2,3,4,5,6,7,8].map(v=>`<option ${v==n?"selected":""}>${v}</option>`).join("")}</select></div>
- <div class="sec">Wer ist da? (optional – dann gibt es auch Paarungen)</div><div class="tkp">${S.players.map((p,i)=>`<label class="${TKP[p.name]?"on":""}"><input type="checkbox" ${TKP[p.name]?"checked":""} onchange="TKP[S.players[${i}].name]=this.checked;draw()">${esc(p.name)}</label>`).join("")}</div>
+ <div class="sec">Wer ist da? (optional – dann gibt es auch Paarungen)</div><div class="tkp">${S.players.map((p,i)=>`<label class="${TKP[p.name]?"on":""}"><input type="checkbox" ${TKP[p.name]?"checked":""} onchange="TKP[S.players[${i}].name]=this.checked;draw()">${esc(p.name)}</label>`).join("")}
+ ${GU.map((g,i)=>`<label class="gu ${TKP[g]?"on":""}"><input type="checkbox" ${TKP[g]?"checked":""} onchange="TKP[GU[${i}]]=this.checked;draw()">${esc(g)}<button class="gux" aria-label="${esc(g)} entfernen" onclick="event.preventDefault();guDel(${i})">✕</button></label>`).join("")}</div>${guForm("tk")}
  <button class="b tkgo" onclick="tkDraw()">🎲 ${c?"Nächste Karte ziehen":"Karte ziehen"}</button>
  <div class="mu" style="font-size:12px;margin-top:6px">${pool.length} passende Karten für ${n} ${n==1?"Spieler":"Spieler"} im Stapel</div></div>
- ${c?`<div class="tkc"><div class="tkh"><span>${c[6]?"⭐ Eure Karte":"🃏 Trainingskarte"}</span><span>⏱ ${c[4]}</span></div><b class="tkn">${c[1]}</b><div class="tkm">👥 ${c[2]==c[3]?c[2]:c[2]+"–"+c[3]} Spieler</div><p>${c[5]}</p>${TKS?`<div class="tks">${TKS}</div>`:""}</div>`:""}
+ ${c?`<div class="tkc"><div class="tkh"><span>${c[6]?"⭐ Eure Karte":"🃏 Trainingskarte"}</span><span>⏱ ${c[4]}</span></div><b class="tkn">${c[1]}</b><div class="tkm">👥 ${c[2]==c[3]?c[2]:c[2]+"–"+c[3]} Spieler</div><div class="tka">📖 So geht's</div>${tkSteps(c)}${TKS?`<div class="tks">${TKS}</div>`:""}</div>`:""}
  <details class="card tkl"><summary><b>Karten im Stapel</b> <span class="mu">(${TK.filter(x=>!TKX[x[0]]).length} von ${TK.length})</span></summary>
  <div class="row" style="margin-top:8px"><button class="b g" onclick="tkAll(1)">Alle an</button><button class="b g" onclick="tkAll(0)">Alle aus</button></div>
- ${TK.map((x,i)=>`<label class="tki"><input type="checkbox" ${TKX[x[0]]?"":"checked"} onchange="if(this.checked)delete TKX['${x[0]}'];else TKX['${x[0]}']=1;tkSaveX();draw()"><span><b>${x[6]?"⭐ ":""}${x[1]}</b><small class="mu">👥 ${x[2]==x[3]?x[2]:x[2]+"–"+x[3]} · ⏱ ${x[4]}</small></span></label>`).join("")}
+ ${TK.map(x=>`<div class="tki"><label><input type="checkbox" ${TKX[x[0]]?"":"checked"} onchange="if(this.checked)delete TKX['${x[0]}'];else TKX['${x[0]}']=1;tkSaveX();draw()"><span><b>${x[6]?"⭐ ":""}${x[1]}</b><small class="mu">👥 ${x[2]==x[3]?x[2]:x[2]+"–"+x[3]} · ⏱ ${x[4]}</small></span></label><details><summary>📖 Regeln</summary>${tkSteps(x)}</details></div>`).join("")}
  <p class="mu" style="font-size:12px">Zeiten geschätzt für 2 Spieler mit 40–60 Average. Deine Auswahl merkt sich dieses Gerät.</p></details>`}
 /* Minispiele */
 const DV={},DL=[];for(let i=1;i<=20;i++)[["S",1,0],["D",2,1],["T",3,0]].forEach(([p,m,d])=>{DV[p+i]=[m*i,d];DL.push(p+i)});DV["25"]=[25,0];DV["Bull"]=[50,1];DL.push("25","Bull");

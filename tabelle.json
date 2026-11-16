@@ -1,5 +1,5 @@
 {
- "stand": "09.11.2026, 06:51 Uhr",
+ "stand": "16.11.2026, 06:57 Uhr",
  "quelle": "https://www.badischedartliga.de/results/leagueTable_bzo1.html",
  "rows": [
   {
@@ -17,6 +17,19 @@
   },
   {
    "pl": 2,
+   "team": "DC Irish 26 e. V. 1",
+   "sp": 5,
+   "g": 3,
+   "u": 1,
+   "v": 1,
+   "sets": "41:19",
+   "legs": "145:91",
+   "pkt": 7,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 3,
    "team": "Teamplayers 1",
    "sp": 5,
    "g": 3,
@@ -29,7 +42,7 @@
    "zone": ""
   },
   {
-   "pl": 3,
+   "pl": 4,
    "team": "501 Jacky Darts I",
    "sp": 5,
    "g": 2,
@@ -38,19 +51,6 @@
    "sets": "35:25",
    "legs": "127:104",
    "pkt": 6,
-   "str": "",
-   "zone": ""
-  },
-  {
-   "pl": 4,
-   "team": "DC Irish 26 e. V. 1",
-   "sp": 4,
-   "g": 2,
-   "u": 1,
-   "v": 1,
-   "sets": "31:17",
-   "legs": "112:77",
-   "pkt": 5,
    "str": "",
    "zone": ""
   },
@@ -70,12 +70,12 @@
   {
    "pl": 6,
    "team": "DC Moskitos 1",
-   "sp": 5,
+   "sp": 6,
    "g": 2,
    "u": 0,
-   "v": 3,
-   "sets": "31:29",
-   "legs": "118:112",
+   "v": 4,
+   "sets": "33:39",
+   "legs": "132:145",
    "pkt": 4,
    "str": "",
    "zone": ""

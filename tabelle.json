@@ -1,9 +1,22 @@
 {
- "stand": "16.11.2026, 06:57 Uhr",
+ "stand": "21.11.2026, 09:53 Uhr",
  "quelle": "https://www.badischedartliga.de/results/leagueTable_bzo1.html",
  "rows": [
   {
    "pl": 1,
+   "team": "501 Jacky Darts I",
+   "sp": 6,
+   "g": 3,
+   "u": 2,
+   "v": 1,
+   "sets": "43:29",
+   "legs": "156:121",
+   "pkt": 8,
+   "str": "",
+   "zone": "auf"
+  },
+  {
+   "pl": 2,
    "team": "PSK Darts Team Blue",
    "sp": 5,
    "g": 4,
@@ -13,10 +26,10 @@
    "legs": "123:109",
    "pkt": 8,
    "str": "",
-   "zone": "auf"
+   "zone": ""
   },
   {
-   "pl": 2,
+   "pl": 3,
    "team": "DC Irish 26 e. V. 1",
    "sp": 5,
    "g": 3,
@@ -29,7 +42,7 @@
    "zone": ""
   },
   {
-   "pl": 3,
+   "pl": 4,
    "team": "Teamplayers 1",
    "sp": 5,
    "g": 3,
@@ -42,33 +55,33 @@
    "zone": ""
   },
   {
-   "pl": 4,
-   "team": "501 Jacky Darts I",
-   "sp": 5,
-   "g": 2,
-   "u": 2,
-   "v": 1,
-   "sets": "35:25",
-   "legs": "127:104",
-   "pkt": 6,
-   "str": "",
-   "zone": ""
-  },
-  {
    "pl": 5,
    "team": "Taraxacuma 26er",
-   "sp": 4,
+   "sp": 5,
    "g": 2,
    "u": 1,
-   "v": 1,
-   "sets": "25:23",
-   "legs": "93:97",
+   "v": 2,
+   "sets": "29:31",
+   "legs": "110:126",
    "pkt": 5,
    "str": "",
    "zone": ""
   },
   {
    "pl": 6,
+   "team": "D.T.C.",
+   "sp": 5,
+   "g": 1,
+   "u": 2,
+   "v": 2,
+   "sets": "32:28",
+   "legs": "128:113",
+   "pkt": 4,
+   "str": "",
+   "zone": ""
+  },
+  {
+   "pl": 7,
    "team": "DC Moskitos 1",
    "sp": 6,
    "g": 2,
@@ -81,7 +94,7 @@
    "zone": ""
   },
   {
-   "pl": 7,
+   "pl": 8,
    "team": "SV Göcklingen White Tigers 1",
    "sp": 4,
    "g": 1,
@@ -94,27 +107,14 @@
    "zone": ""
   },
   {
-   "pl": 8,
-   "team": "D.T.C.",
-   "sp": 4,
-   "g": 0,
-   "u": 2,
-   "v": 2,
-   "sets": "21:27",
-   "legs": "93:103",
-   "pkt": 2,
-   "str": "",
-   "zone": ""
-  },
-  {
    "pl": 9,
    "team": "TSV Etzenrot",
-   "sp": 4,
+   "sp": 5,
    "g": 0,
    "u": 0,
-   "v": 4,
-   "sets": "8:40",
-   "legs": "48:128",
+   "v": 5,
+   "sets": "9:51",
+   "legs": "58:163",
    "pkt": 0,
    "str": "",
    "zone": "ab"

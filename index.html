@@ -250,7 +250,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const fd=d=>d?new Date(d+"T12:00").toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}):"";
 const setStatus=t=>$("#st").textContent=t;
 let tm;function save(){clearTimeout(tm);tm=setTimeout(async()=>{try{if(db){await db.doc("team/state").set({json:JSON.stringify(S)});setStatus("Gespeichert ✓")}}catch(e){setStatus("Speichern nicht möglich")}},400)}
-const SEITE="29.10.2026, 17:34 Uhr";
+const SEITE="21.11.2026, 10:00 Uhr";
 async function init(){
  dl={async save({filename,data}){const f=new File([data],filename,{type:data.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=="AbortError")return}}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}};
  try{const r=await fetch("daten.json?v="+Date.now());if(!r.ok)throw 0;const j=await r.json();S={players:j.players||[],matches:j.matches||[]};IMGS=j.imgs||{};REPS=j.reps||{};LOGOS=j.logos||{};setStatus("Spieldaten vom "+(j.stand||"–"))}catch(e){setStatus("Daten konnten nicht geladen werden (daten.json fehlt?)")}
@@ -430,11 +430,25 @@ function lineup(){
  const zf=+$("#zf").value;
  const sc=p=>qs(p).q*[0,.85,1,1.15][AV[p.name].form]+Math.random()*zf/5;
  const here=S.players.filter(p=>AV[p.name]&&AV[p.name].here).map(p=>({n:p.name,s:sc(p)})).sort((a,b)=>b.s-a.s);
- if(here.length<2){$("#lu").innerHTML=`<div class="card no">Mindestens 2 Spieler auswählen.</div>`;return}
- const r=i=>here[i%here.length];const b1=[0,3,4,7].map(r),b2=[1,2,5,6].map(r);
- const duos=b=>[[[0,1],[2,3]],[[0,2],[1,3]],[[0,3],[1,2]]].map(o=>({o,v:Math.abs(b[o[0][0]].s+b[o[0][1]].s-b[o[1][0]].s-b[o[1][1]].s)+Math.random()*.6})).sort((a,b)=>a.v-b.v)[0].o.map(([x,y])=>b[x].n+" & "+b[y].n);
- const blk=[["Einzel (Block 1)",b1.map(x=>x.n)],["Doppel (Block 1)",duos(b1)],["Einzel (Block 2)",b2.map(x=>x.n)],["Doppel (Block 2)",duos(b2)]];
- $("#lu").innerHTML=`<div class="card"><h2>Vorschlag</h2>${blk.map(([t,a])=>`<b>${t}</b><ol style="margin:4px 0 12px">${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`).join("")}${here.length<8?`<p class="mu">Nur ${here.length} Spieler: ${b1.filter(x=>b2.includes(x)).map(x=>esc(x.n)).join(" & ")} spielen in beiden Einzel-Blöcken.</p>`:""}${here.length>8?`<p class="mu">Nicht eingesetzt: ${here.slice(8).map(x=>esc(x.n)).join(", ")}</p>`:""}<p class="mu" style="font-size:13px">Basis: Siegquote aus Liga und Pokal (Spieler mit wenigen Spielen werden zum Durchschnitt hin gezogen) und Tagesform. Doppel werden möglichst ausgewogen gepaart.</p></div>`;fxL()}
+ if(here.length<3){$("#lu").innerHTML=`<div class="card no">Mindestens 3 Spieler auswählen – laut Spielbogen muss jedes Team mindestens drei Spieler einsetzen.</div>`;return}
+ const P=luPlan(here),cnt=P.cnt,ein=here.filter(x=>cnt[x.n]).map(x=>`${esc(x.n)} ${cnt[x.n]}×`),aus=here.filter(x=>!cnt[x.n]).map(x=>esc(x.n));
+ $("#lu").innerHTML=`<div class="card"><h2>Vorschlag</h2>${P.blocks.map(([t,a])=>`<b>${t}</b><ol style="margin:4px 0 12px">${a.map(x=>x?`<li>${esc(x)}</li>`:`<li class="mu">unbesetzt (kampflos)</li>`).join("")}</ol>`).join("")}
+ <p class="mu" style="font-size:13px">Einsätze: ${ein.join(" · ")}${aus.length?`<br>Nicht eingesetzt: ${aus.join(", ")}`:""}</p>
+ <p class="mu" style="font-size:13px">Nach den Regeln vom Spielbogen: jeder höchstens einmal pro Block, kein Doppel zweimal. Basis: Siegquote aus Liga und Pokal (Spieler mit wenigen Spielen werden zum Durchschnitt hin gezogen) und Tagesform. Wer seltener dran war, kommt zuerst, Doppel werden möglichst ausgewogen gepaart.</p></div>`;fxL()}
+/* Aufstellung nach Spielbogen: Block 1 = 4 Einzel, Block 2 = 2 Doppel, Block 3 = 4 Einzel, Block 4 = 2 Doppel.
+   Pro Block jeder Spieler höchstens einmal, kein Doppel zweimal; wer seltener eingesetzt ist, kommt zuerst dran.
+   here = [{n:Name, s:Stärke}] absteigend nach Stärke. Fehlende Plätze bleiben null (kampflos). */
+function luPlan(here){
+ const cnt={};here.forEach(x=>cnt[x.n]=0);const used=new Set(),key=(a,b)=>[a.n,b.n].sort().join("|");
+ const pick=k=>[...here].sort((a,b)=>cnt[a.n]-cnt[b.n]||b.s-a.s).slice(0,k);
+ const einzel=()=>{const b=pick(4);b.forEach(x=>cnt[x.n]++);return [...b.map(x=>x.n),...Array(4-b.length).fill(null)]};
+ const doppel=()=>{const b=pick(4);let pairs;
+  if(b.length==4){pairs=[[[0,1],[2,3]],[[0,2],[1,3]],[[0,3],[1,2]]].filter(o=>o.every(([x,y])=>!used.has(key(b[x],b[y]))))
+    .map(o=>({o,v:Math.abs(b[o[0][0]].s+b[o[0][1]].s-b[o[1][0]].s-b[o[1][1]].s)+Math.random()*.6})).sort((p,q)=>p.v-q.v)[0].o.map(([x,y])=>[b[x],b[y]])}
+  else{const c=[[0,1],[0,2],[1,2]].map(([x,y])=>[b[x],b[y]]).find(([x,y])=>!used.has(key(x,y)));pairs=c?[c]:[]}
+  pairs.forEach(([x,y])=>{used.add(key(x,y));cnt[x.n]++;cnt[y.n]++});return [...pairs.map(([x,y])=>x.n+" & "+y.n),...Array(2-pairs.length).fill(null)]};
+ const blocks=[["Block 1 · Einzel",einzel()],["Block 2 · Doppel",doppel()],["Block 3 · Einzel",einzel()],["Block 4 · Doppel",doppel()]];
+ return {blocks,cnt}}
 /* Turnierplaner: K.O., Doppel-K.O., Gruppen + K.O. Der Stand liegt nur auf diesem Gerät (localStorage).
    Die Paarungen werden bei jedem Zeichnen aus Setzliste + Ergebnissen neu berechnet; ein Ergebnis gilt nur,
    solange dieselben zwei Spieler im Spiel stehen. */

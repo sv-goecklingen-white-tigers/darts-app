@@ -1,17 +1,17 @@
 {
- "stand": "24.10.2026, 14:50 Uhr",
+ "stand": "21.11.2026, 09:53 Uhr",
  "players": [
   {
    "name": "Marcel Schulz",
    "str": 3,
    "s": {
     "ew": 7,
-    "el": 1,
-    "dw": 1,
-    "dl": 4,
+    "el": 3,
+    "dw": 2,
+    "dl": 5,
     "a180": 1,
-    "hf": 1,
-    "sl": 1
+    "hf": 2,
+    "sl": 2
    },
    "sp": {
     "ew": 1,
@@ -41,12 +41,12 @@
    "str": 3,
    "s": {
     "ew": 4,
-    "el": 2,
+    "el": 3,
     "dw": 5,
-    "dl": 3,
+    "dl": 5,
     "a180": 1,
     "hf": 0,
-    "sl": 2
+    "sl": 3
    }
   },
   {
@@ -67,8 +67,8 @@
    "str": 3,
    "s": {
     "ew": 0,
-    "el": 2,
-    "dw": 2,
+    "el": 3,
+    "dw": 3,
     "dl": 2,
     "a180": 0,
     "hf": 0,
@@ -102,9 +102,9 @@
    "str": 3,
    "s": {
     "ew": 1,
-    "el": 0,
+    "el": 2,
     "dw": 2,
-    "dl": 2,
+    "dl": 3,
     "a180": 0,
     "hf": 0,
     "sl": 0
@@ -124,10 +124,10 @@
    "str": 3,
    "s": {
     "ew": 0,
-    "el": 2,
-    "dw": 0,
+    "el": 4,
+    "dw": 2,
     "dl": 0,
-    "a180": 0,
+    "a180": 2,
     "hf": 0,
     "sl": 0
    },
@@ -322,7 +322,34 @@
    "time": "20:00",
    "opp": "Teamplayers 1",
    "home": true,
-   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen"
+   "loc": "Vereinsheim (Kaiserberghalle) - Hauptstr. 114, 76831 Göcklingen",
+   "sa": 2,
+   "sb": 10,
+   "la": 19,
+   "lb": 32,
+   "g": "000010000001",
+   "dbl": [
+    [
+     "Jannes Rogge",
+     "Marcel Schulz",
+     1
+    ],
+    [
+     "Thomas Bauer",
+     "Etienne Völlinger",
+     0
+    ],
+    [
+     "Thomas Bauer",
+     "Marcel Schulz",
+     0
+    ],
+    [
+     "Christopher Lamb",
+     "Jannes Rogge",
+     1
+    ]
+   ]
   },
   {
    "id": "sp7",
@@ -579,6 +606,12 @@
    [
     "Original-Spielbogen",
     "bilder/bericht-pk1-1.jpg"
+   ]
+  ],
+  "6": [
+   [
+    "Original-Spielbogen",
+    "bilder/bericht-6-1.jpg"
    ]
   ]
  }

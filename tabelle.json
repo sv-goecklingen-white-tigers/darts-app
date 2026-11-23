@@ -1,9 +1,22 @@
 {
- "stand": "21.11.2026, 09:53 Uhr",
+ "stand": "23.11.2026, 06:54 Uhr",
  "quelle": "https://www.badischedartliga.de/results/leagueTable_bzo1.html",
  "rows": [
   {
    "pl": 1,
+   "team": "Teamplayers 1",
+   "sp": 6,
+   "g": 4,
+   "u": 1,
+   "v": 1,
+   "sets": "42:30",
+   "legs": "161:131",
+   "pkt": 9,
+   "str": "",
+   "zone": "auf"
+  },
+  {
+   "pl": 2,
    "team": "501 Jacky Darts I",
    "sp": 6,
    "g": 3,
@@ -13,10 +26,10 @@
    "legs": "156:121",
    "pkt": 8,
    "str": "",
-   "zone": "auf"
+   "zone": ""
   },
   {
-   "pl": 2,
+   "pl": 3,
    "team": "PSK Darts Team Blue",
    "sp": 5,
    "g": 4,
@@ -29,7 +42,7 @@
    "zone": ""
   },
   {
-   "pl": 3,
+   "pl": 4,
    "team": "DC Irish 26 e. V. 1",
    "sp": 5,
    "g": 3,
@@ -37,19 +50,6 @@
    "v": 1,
    "sets": "41:19",
    "legs": "145:91",
-   "pkt": 7,
-   "str": "",
-   "zone": ""
-  },
-  {
-   "pl": 4,
-   "team": "Teamplayers 1",
-   "sp": 5,
-   "g": 3,
-   "u": 1,
-   "v": 1,
-   "sets": "32:28",
-   "legs": "129:112",
    "pkt": 7,
    "str": "",
    "zone": ""
@@ -96,12 +96,12 @@
   {
    "pl": 8,
    "team": "SV Göcklingen White Tigers 1",
-   "sp": 4,
+   "sp": 5,
    "g": 1,
    "u": 1,
-   "v": 2,
-   "sets": "23:25",
-   "legs": "101:102",
+   "v": 3,
+   "sets": "25:35",
+   "legs": "120:134",
    "pkt": 3,
    "str": "",
    "zone": ""
